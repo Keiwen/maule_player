@@ -5,17 +5,17 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+        fixed_users:
+            memory:
+                users:
+                    maule_admin: { password: '$2y$13$A7g995yPL8qQyGkN0i9use0LL9PNxsIDQ16JuB/zH0Q3SYfMT9WPO', roles: ['ROLE_ADMIN'] }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: fixed_users
             custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: user_logout
