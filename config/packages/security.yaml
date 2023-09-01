@@ -17,8 +17,6 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
-            user_checker: App\Security\UserNotLockedChecker
-            switch_user: { role: ROLE_ADMIN, parameter: _impersonate_user }
             logout:
                 path: user_logout
 
