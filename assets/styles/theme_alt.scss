@@ -1,0 +1,36 @@
+// customize some Bootstrap variables
+//$primary: darken(#428bca, 40%);
+$primary: #5C9531;
+$secondary: #543195;
+$tertiary: #71AB94;
+
+$success: #1DAF70;
+$danger: #E02815;
+$warning: #EDB91D;
+$info: #696FDD;
+$light: #D1EDBC;
+$dark: #1A5E63;
+
+
+$link-color: #B85600;
+$link-decoration: $link-color;
+$link-hover-color: $link-color;
+$link-hover-decoration: $link-color;
+
+$font-weight-base: 500;
+
+@import "~bootstrap/scss/bootstrap";
+
+$background: #EAF7E0;
+$base-color: #424B54;
+@import "common";
+
+
+//*****SPECIFIC*****
+$brown: #955c31;
+
+.alert {
+  border: 1px solid;
+}
+
+

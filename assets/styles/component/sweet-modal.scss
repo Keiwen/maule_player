@@ -1,0 +1,54 @@
+/*
+This is for sweet-modal override styles
+ */
+
+.sweet-modal {
+
+  h2 {
+    color: $base-color;
+    line-height: 64px;
+  }
+
+  .sweet-modal-icon {
+    &.sweet-modal-info {
+      border-color: var(--info);
+      &:before {
+        background-color: var(--info);
+      }
+      &:after {
+        background-color: var(--info);
+      }
+    }
+    &.sweet-modal-warning {
+      border-color: var(--warning);
+      &:before {
+        background-color: var(--warning);
+      }
+      &:after {
+        background-color: var(--warning);
+      }
+    }
+    &.sweet-modal-danger {
+      border-color: var(--danger);
+      &:before {
+        background-color: var(--danger);
+      }
+      &:after {
+        background-color: var(--danger);
+      }
+    }
+    &.sweet-modal-success {
+      border-color: var(--success);
+      &:before {
+        background-color: var(--success);
+      }
+      &:after {
+        background-color: var(--success);
+      }
+    }
+  }
+
+  .text-muted {
+    text-align: justify;
+  }
+}

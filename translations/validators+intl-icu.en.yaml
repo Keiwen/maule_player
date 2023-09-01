@@ -1,0 +1,4 @@
+must_agree: You must agree terms to continue
+password_not_blank: Your password cannot be empty
+password_min: Your password should be at least {limit} characters
+password_no_match: Password and confirmation does not match

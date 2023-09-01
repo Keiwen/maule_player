@@ -1,0 +1,220 @@
+// customize some Bootstrap variables
+//$primary: darken(#428bca, 40%);
+$primary: #9F4F89;
+$secondary: #9f884f;
+
+$success: #419D78;
+$danger: #B54053;
+$warning: #C7B21A;
+$info: #96ABED;
+$light: #E0B8D6;
+$dark: #522C73;
+
+$link-color: #2E86AB;
+$link-decoration: $link-color;
+$link-hover-color: $link-color;
+$link-hover-decoration: $link-color;
+
+$font-family-sans-serif: Neucha, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-weight-base: 500;
+$headings-font-family: "Cabin Sketch", cursive;
+
+@import "~bootstrap/scss/bootstrap";
+
+$background: #F9F1F7;
+$base-color: #30343F;
+@import "common";
+
+
+//*****SPECIFIC*****
+@font-face {
+  font-family: 'Cabin Sketch';
+  src: url('/public/font/CabinSketch-Regular.ttf');
+}
+
+$border-radius-sketchy:    255px 25px 225px 25px / 25px 225px 25px 255px;
+$border-radius-lg-sketchy: 55px 225px 15px 25px / 25px 25px 35px 355px;
+$border-radius-sm-sketchy: 255px 25px 225px 25px / 25px 225px 25px 255px;
+
+// Navbar
+.navbar {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
+
+  &.fixed-top {
+    border-width: 0 0 2px;
+    border-radius: 0 25px 225px 0/25px 0 25px 255px;
+  }
+
+  &.fixed-bottom {
+    border-width: 2px 0 0;
+    border-radius: 255px 25px 0 25px/25px 225px 25px 0;
+  }
+
+  &-brand {
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .app-locale, .app-user {
+    color: $base-color;
+  }
+}
+
+// Buttons
+
+.btn {
+  text-decoration: none;
+  border-radius: $border-radius-sketchy;
+
+  &-lg {
+    border-radius: $border-radius-lg-sketchy;
+  }
+
+  &-sm {
+    border-radius: $border-radius-sm-sketchy;
+  }
+}
+
+.btn-check {
+  display: inline-block;
+  opacity: 0;
+}
+
+//table
+.table {
+  &.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255,255,255,.05);
+  }
+}
+.table-bordered {
+  border-radius: 5px 25px 5px 25px/25px 5px 25px 5px;
+
+  th,
+  td {
+    border-radius: 5px 5px 25px 4px/5px 4px 3px 5px;
+  }
+}
+
+
+//Forms
+input, .form-control, .input-group-text {
+  border-radius: $border-radius-sketchy;
+}
+
+textarea, textarea.form-control, select, select.form-control {
+  border-radius: $border-radius-lg-sketchy !important;
+}
+
+.form-check-input {
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.form-switch {
+  padding-left: 0;
+
+  .form-check-input {
+    position: relative;
+    margin-left: 0;
+
+    &::before {
+      width: 32px;
+      border-radius: 30% 35% 30% 30% / 30% 50% 30% 45%;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      content: "";
+      background-color: $light;
+      border: 2px solid $dark;
+      border-radius: 50% 45% 40% 50% / 40% 50% 50% 45%;
+      transition: left .15s ease-in-out;
+    }
+  }
+
+}
+
+// Indicators
+.pagination {
+  .page-link {
+    border-radius: 425px 255px 25px 25px/25px 25px 5px 25px;
+  }
+}
+
+.badge {
+  border-radius: $border-radius-sm-sketchy;
+  &-pill {
+    border-radius: 7rem 8rem 8rem 8rem / 4rem 5rem 6rem 6rem;
+  }
+}
+
+.alert {
+  border-radius: $border-radius-sketchy;
+  border: 1px solid;
+  .btn-close {
+    &::before {
+      color: inherit;
+    }
+  }
+}
+
+// Progress bars
+.progress {
+  border: 2px solid $dark;
+  border-radius: $border-radius-sm-sketchy;
+}
+
+// Containers
+
+.card {
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+
+  &-outline {
+    &-primary, &-success, &-info, &-warning, &-danger {
+      border-width: 2px;
+    }
+  }
+
+  &-header {
+    border-color: inherit;
+    border-bottom-width: 2px;
+
+    &:first-child {
+      border-radius: 3px 3px 0 0/23px 23px 0 0;
+    }
+  }
+
+  &-footer {
+    border-top-width: 2px;
+  }
+}
+
+.modal {
+  &-content {
+    border-radius: 15px 5px 5px 25px/5px 25px 25px 5px;
+  }
+}
+
+.img {
+  &-thumbnail {
+    border-radius: $border-radius-sketchy;
+  }
+}
+
+//others
+blockquote {
+  border-radius: 15px 27px 25px 25px/25px 25px 305px 635px;
+}
+
+.nav-tabs .nav-link {
+    border-radius: $border-radius-sm-sketchy;
+}
+

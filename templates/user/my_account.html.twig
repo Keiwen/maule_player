@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title.short.account'|trans|ucfirst }}{% endblock %}
+{% block content_title %}<h1>{{ 'title.long.account'|trans }}</h1>{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+         <div class="row">
+            <span class="col-sm-3 col-lg-2">{{ 'user.email'|trans([], 'entity')|ucfirst|label }}</span>
+            <span class="col-sm-9 col-lg-10">
+                {{ app.user.email }}
+                {% if app.user.emailVerified %}
+                    <span class="fa fa-check-circle text-success ml-2"></span>
+                    <span class="font-small">
+                        {{ 'user.email_verified'|trans|ucfirst }}
+                    </span>
+                {% else %}
+                    <span class="fa fa-exclamation-circle text-warning ml-2"></span>
+                    <span class="font-small">
+                        {{ 'user.email_not_verified'|trans|ucfirst }}
+                    </span>
+                    <a href="{{ url('user_send_verification_mail') }}" class="btn btn-secondary ml-2">{{ 'user.verify_email'|trans|ucfirst }}</a>
+                {% endif %}
+            </span>
+        </div>
+        <hr/>
+        <div class="row">
+            <span class="col-sm-3 col-lg-2">{{ 'user.change_password'|trans|ucfirst|label }}</span>
+            <div class="col-sm-9 col-lg-10">
+                {{ form_start(changePwdForm) }}
+                {{ form_row(changePwdForm.currentPassword) }}
+                {{ form_row(changePwdForm.newPassword.plainPassword) }}
+                <button type="submit" class="btn btn-primary">{{ 'user.change_password'|trans|ucfirst }}</button>
+                {{ form_end(changePwdForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

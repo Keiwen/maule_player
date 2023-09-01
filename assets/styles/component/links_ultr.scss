@@ -1,0 +1,29 @@
+/*
+This is for links underlined when hover. Animation left to right
+ */
+
+a:not(.btn):not(.img-link):not(.nav-link) {
+    display: inline-block;
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 100%;
+        bottom: 0;
+        background: $primary;
+        height: 2px;
+        -webkit-transition-property: right;
+        transition-property: right;
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+        -webkit-transition-timing-function: ease-out;
+    }
+
+    &:hover:before {
+        right: 0;
+        transition-timing-function: ease-out;
+    }
+
+}

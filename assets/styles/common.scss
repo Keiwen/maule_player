@@ -1,0 +1,136 @@
+html,body {
+    height: auto;
+    background-color: $background;
+    color: $base-color;
+    text-align: justify;
+}
+
+h1,h2,h3 {
+    color: $primary;
+}
+
+h2 {
+    margin-top: 10px;
+    padding-left: 10px;
+    border-top: 1px solid $primary;
+    border-bottom: 1px solid $primary;
+}
+
+#menu {
+    text-align: left;
+}
+
+.font-small {
+    font-size: x-small;
+}
+
+/** inlined DL*/
+dd::after {
+    content: '\A';
+    white-space: pre-line;
+}
+dd:last-of-type::after {
+    content: '';
+}
+dd, dt {
+    display: inline;
+}
+
+a[target="_blank"] {
+    background-image: url('../../public/img/external-ltr.svg');
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding-right: 18px;
+}
+
+.fa {
+    display: inline-block;
+    width: 16px;
+}
+
+.form-group label.required::after {
+    content: " *";
+    color: $danger;
+}
+
+.navbar-nav {
+    .nav-item {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        &.active {
+            border-top: 1px solid $primary;
+            border-bottom: 1px solid $primary;
+        }
+    }
+}
+
+.nav-tabs {
+    border-width: 2px;
+    border-color: $light;
+    border-bottom: 0;
+    .nav-link {
+        border-width: 2px;
+        &.active {
+            color: $base-color;
+            border-color: $light;
+        }
+    }
+}
+
+.tab-content {
+    border: 2px solid $light;
+    padding: 5px;
+}
+
+img {
+    &.img-icon {
+        height: 25px;
+    }
+    &.img-icon-small {
+        height: 20px;
+    }
+    &.img-logo {
+        height: 40px;
+    }
+}
+
+
+.todo {
+    color: $background;
+    background-color: $base-color;
+    margin-top: 10px;
+    padding: 5px;
+    h1,h2,h3 {
+        color: $background;
+        border-color: $background;
+    }
+    &:before {
+        content: 'TODO';
+        display: block;
+        border-top: 1px solid $background;
+        border-bottom: 1px solid $background;
+        color: $background;
+    }
+}
+
+
+.card {
+    margin-bottom: 10px;
+    background-color: transparent;
+
+    .toggle_collapse {
+        &:before {
+            content: "\21D3";
+        }
+        &.collapsed {
+            &:before {
+                content: "\21D2";
+            }
+        }
+    }
+}
+
+
+@import "component/links_ultr";
+@import "component/sweet-modal";
+

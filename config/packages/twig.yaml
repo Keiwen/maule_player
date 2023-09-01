@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['app_form_layout.html.twig']
+    globals:
+        global_app_name: 'Skeleton'
+
+when@test:
+    twig:
+        strict_variables: true

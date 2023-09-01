@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% set display_status_code = status_code %}
+{% if status_code not in [403, 404] %}
+    {% set display_status_code = 0 %}
+{% endif %}
+
+{% block title %}{{ ('http_error.'~display_status_code~'.title')|trans|ucfirst }}{% endblock %}
+
+{% block content_title %}<h1 class="text-danger">{{ ('http_error.'~display_status_code~'.title')|trans }}</h1>{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        <p>{{ ('http_error.'~display_status_code~'.text')|trans }}</p>
+
+        {% if status_code not in [403, 404] %}
+            <p class="text_help">{{ 'http_error.help'|trans({'error_code': custom_code}) }}</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

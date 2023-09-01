@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/img/main_icon.png" sizes="32x32" type="image/png">
+        <title>{{ global_app_name }} - {% block title %}{{ 'title.short.homepage'|trans|ucfirst }}{% endblock %}</title>
+
+        <script>
+            const APP_LOCALE = '{{ app.request.locale }}';
+        </script>
+
+        {% block stylesheets %}
+            {% if getRequestCookie('app_theme') == 'alt' %}
+                {{ encore_entry_link_tags('alt') }}
+            {% else %}
+                {{ encore_entry_link_tags('default') }}
+            {% endif %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('vue') }}
+            {% block vueapps %}
+            {% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+
+    <div class="container-fluid">
+        {% block navbar %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                {% include 'navbar.html.twig' %}
+            </nav>
+        {% endblock %}
+
+        {% block header %}{% endblock %}
+
+        <div class="container-fluid" id="rootApp">
+            {% block content_title %}{% endblock %}
+            <div class="flashMessages">
+                {% for label, messages in app.flashes %}
+                    {% set messageIcon = 'info-circle' %}
+                    {% set bsClassType = label %}
+                    {% if label == 'success' %}{% set messageIcon = 'check-circle' %}{% endif %}
+                    {% if label == 'warning' %}{% set messageIcon = 'exclamation-circle' %}{% endif %}
+                    {% if label == 'error' %}{% set messageIcon = 'times-circle' %}{% set bsClassType = 'danger' %}{% endif %}
+                    {% for message in messages %}
+
+                        <div class="alert alert-{{ bsClassType }} alert-dismissible fade show" role="alert">
+                            <span class="fa fa-lg fa-{{ messageIcon }}"></span>
+                            <b>{{ ('flashmessage.'~label)|trans|ucfirst|label }}</b>
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block footer %}{% endblock %}
+    </div>
+
+    </body>
+</html>

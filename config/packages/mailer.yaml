@@ -1,0 +1,7 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+          sender: '%email_sender%'
+        headers:
+          From: 'Skeleton <7403c23a6682e3@inbox.mailtrap.io>'

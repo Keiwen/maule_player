@@ -1,0 +1,12 @@
+{% extends 'email/base.html.twig' %}
+
+{% block title %}{{ 'verify_email.title'|trans({}, 'email')|ucfirst }}{% endblock %}
+
+{% block content %}
+    <div>
+        <p>{{ 'verify_email.content.click_below'|trans({}, 'email') }}</p>
+        <a href="{{ url }}">{{ 'user.verify_email'|trans|ucfirst }}</a>
+        <p>{{ 'verify_email.content.copy_paste'|trans({}, 'email') }}</p>
+        <p>{{ url }}</p>
+    </div>
+{% endblock %}

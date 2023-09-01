@@ -1,0 +1,4 @@
+must_agree: Vous devez accepter les conditions d'utilisations pour continuer
+password_not_blank: Votre mot de passe ne peut pas être vide
+password_min: Votre mot de passe doit contenir au moins {limit} caractères
+password_no_match: Votre mot de passe et sa confirmation ne correspondent pas

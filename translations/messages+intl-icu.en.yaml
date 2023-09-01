@@ -1,0 +1,86 @@
+user:
+  register: register
+  login: login
+  logout: logout
+  username: username
+  password: password
+  logged: You are logged in as {username}
+  agree_terms: Agree terms
+  no_account: no account yet?
+  reset_password: reset password
+  forgot_password: password forgotten?
+  existing_account: already have an account?
+  registration_link: register here
+  forgot_link: click here to reset it
+  login_link: login here
+  verify_email: email verification
+  email_verification_ok: Your email has been verified, thank you!
+  email_verification_ko: Your email cannot be verified right now. Maybe the link is malformed.
+  reset_password_ok: Your password has been changed.
+  reset_password_ko: Your reset password link is not valid.
+  email_verified: email verified
+  email_not_verified: email not verified
+  change_password: change password
+  current_password: current password
+  invalid_password: Your current password is not valid
+  password_changed: Your password has been modified
+  email_needs_verification: Your email address has not been verified. You should have received a mail including a verification link (look into you spams if needed).
+  locked: Your account is currently locked. Please contact your administrator.
+  exit_impersonation: exit impersonation
+settings: settings
+cookie.about: about cookies
+cookie.disclaimer: this application is using some cookies to run properly. However, it does *not* use third-party cookies. These cookie does not store any personnal identification data.
+change.theme: change theme
+change.locale: change locale
+back_homepage: Back to homepage
+email_sent_ok: Email sent.
+email_sent_ko: We encounter an issue while sending email. Please retry later or contact an administrator.
+email_sent_password_ok: An email has been sent to you with a link to reset your password. Please check your mailbox.
+http_error:
+  help: "Please contact your administrator and specify following code: {error_code}"
+  0:
+    title: Error
+    text: Something went wrong.
+  403:
+    title: Forbidden
+    text: You are not allowed to access this page.
+  404:
+    title: Page not found
+    text: The requested page cannot be found.
+title:
+  short:
+    homepage: homepage
+    admin: administration
+    account: account
+  long:
+    homepage: Greetings universe!
+    account: Account management
+flashmessage:
+  info: info
+  success: success
+  warning: warning
+  error: error
+button:
+  validate: validate
+  create: create
+  delete: delete
+  search: search
+  new: new
+  save: save
+theme:
+  default: default
+  alt: alternate
+toggle:
+  yes: yes
+  no: no
+  confirm: confirm
+  cancel: cancel
+  ko: KO
+  ok: OK
+  from: from
+  to: to
+  ascendent: ascendent
+  descendent: descendent
+tooltip:
+  click:
+    edit: click to edit

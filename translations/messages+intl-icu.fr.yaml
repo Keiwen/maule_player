@@ -1,0 +1,86 @@
+user:
+  register: inscription
+  login: connexion
+  logout: déconnexion
+  username: nom d'utilisateur
+  password: mot de passe
+  logged: Vous êtes connecté en tant que {username}
+  agree_terms: J'accepte les conditions d'utilisations
+  no_account: vous n'avez pas de compte ?
+  reset_password: réinitialiser le mot de passe
+  forgot_password: vous avez oublié votre mot de passe?
+  existing_account: vous avez déjà un compte ?
+  registration_link: inscrivez-vous ici
+  forgot_link: cliquez ici pour le réinitialiser
+  login_link: connectez-vous ici
+  verify_email: vérification de l'email
+  email_verification_ok: Merci, votre adresse email a été vérifiée.
+  email_verification_ko: Votre adresse email ne peut pas être vérifiée actuellement. Le lien est peut-être incorrect.
+  reset_password_ok: Votre mot de passe a été réinitialisé.
+  reset_password_ko: Votre lien de réinitialisation de mot de passe n'est pas valide.
+  email_verified: email vérifié
+  email_not_verified: email non vérifié
+  change_password: modifier le mot de passe
+  current_password: mot de passe actuel
+  invalid_password: Votre mot de passe actuel n'est pas valide
+  password_changed: Votre mot de passe a été modifié
+  email_needs_verification: Votre adresse email n'a pas été vérifiée. Vous avez dû recevoir un mail contenant un lien de vérification (contrôlez vos spams si nécessaire).
+  locked: Votre compte est actuellement verrouillé. Merci de contacter votre administrateur.
+  exit_impersonation: quitter l'impersonnalisation
+settings: paramètres
+cookie.about: À propos des cookies
+cookie.disclaimer: cette application utilise des cookies pour fonctionner correctement. Toutefois, elle n'utilise *pas* de cookie tiers provenant d'autres sites. Ces cookies ne stockent aucune information d’identification personnelle.
+change.theme: thème alternatif
+change.locale: langue
+back_homepage: Retour à la page d''accueil
+email_sent_ok: Email envoyé.
+email_sent_ko: Un problème est survenu lors de l'envoi de l'email. Veuillez réessayer plus tard ou contacter un administrateur.
+email_sent_password_ok: Un email vous a été envoyé avec un lien pour réinitialiser votre mot de passe. Merci de vérifier votre boîte mail.
+http_error:
+  help: "Merci de contacter votre administrateur et de spécifier le code suivant : {error_code}"
+  0:
+    title: Erreur
+    text: Une erreur est survenue.
+  403:
+    title: Non autorisé
+    text: Vous n'êtes pas autorisé à accéder à cette page.
+  404:
+    title: Page introuvable
+    text: La page demandée est introuvable.
+title:
+  short:
+    homepage: accueil
+    admin: administration
+    account: compte
+  long:
+    homepage: Bienvenue
+    account: Gestion du compte
+flashmessage:
+  info: info
+  success: succès
+  warning: alerte
+  error: erreur
+button:
+  validate: valider
+  create: créer
+  delete: supprimer
+  search: rechercher
+  new: nouveau
+  save: enregistrer
+theme:
+  default: défaut
+  alt: alternatif
+toggle:
+  yes: oui
+  no: non
+  confirm: confirmer
+  cancel: annuler
+  ko: KO
+  ok: OK
+  from: de
+  to: à
+  ascendent: croissant
+  descendent: décroissant
+tooltip:
+  click:
+    edit: cliquer pour éditer
