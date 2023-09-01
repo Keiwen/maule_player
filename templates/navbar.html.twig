@@ -3,6 +3,7 @@
     <img src="/img/main_icon.png" class="img-logo"/>
 </a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    Menu
     <span class="navbar-toggler-icon"></span>
 </button>
 
@@ -12,11 +13,6 @@
             <li class="nav-item {{ checkActiveRoute('index') }}">
                 <a class="nav-link nav-link " href="{{ url('index') }}">{{ 'title.short.homepage'|trans|ucfirst }}</a>
             </li>
-            {% if hasRole('admin') %}
-                <li class="nav-item {{ checkActiveRoute('test_theme') }}">
-                    <a class="nav-link nav-link " href="{{ url('test_theme') }}">Theme preview</a>
-                </li>
-            {% endif %}
         {% endblock %}
 
         <li class="nav-item">
@@ -31,21 +27,12 @@
     {% if app.user %}
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle app-user img-link" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% if is_granted('IS_IMPERSONATOR') %}
-                    <img src="/img/user_icon_impersonated.png" class="img-icon" />
-                {% else %}
-                    <img src="/img/user_icon.png" class="img-icon" />
-                {% endif %}
+                <img src="/img/user_icon.png" class="img-icon" />
                 <span>{{ app.user.username }}</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
-                <a href="{{ url('user_my_account') }}" class="dropdown-item"><span class="fa fa-cog"></span> {{ 'title.short.account'|trans|ucfirst }}</a>
                 {% if hasRole('admin') %}
                     <a href="{{ url('admin_index') }}" class="dropdown-item"><span class="fa fa-tools"></span> {{ 'title.short.admin'|trans|ucfirst }}</a>
-                {% endif %}
-                {% if is_granted('IS_IMPERSONATOR') %}
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ impersonation_exit_path(path(app.request.routeName)) }}" class="dropdown-item">{{ 'user.exit_impersonation'|trans|ucfirst }}</a>
                 {% endif %}
                 <div class="dropdown-divider"></div>
                 <a href="{{ url('user_logout') }}" class="btn btn-secondary btn-sm float-right mr-2">{{ 'user.logout'|trans|ucfirst }}</a>
