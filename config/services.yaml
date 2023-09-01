@@ -5,8 +5,17 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app_locale: fr|en|transCode
-#    email_sender: '7403c23a6682e3@inbox.mailtrap.io'
-    email_sender: keiwen@ik.me
+    app_name: 'Maule player'
+    app_version: '1.0.0'
+    token_generator_secret: '%env(TOKEN_GENERATOR_SECRET)%'
+
+keiwen_cacofony:
+    token_generator:
+        secret:               '%token_generator_secret%'
+        # see openSSL allowed algo
+        cipher_algo:          aes-128-cbc
+        # have to be exactly 16-chars long
+        openssl_iv:           KW-MAULE_init_iv
 
 services:
     # default configuration for services in *this* file

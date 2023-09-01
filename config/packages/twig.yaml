@@ -2,7 +2,8 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['app_form_layout.html.twig']
     globals:
-        global_app_name: 'Maule player'
+        global_app_name: '%app_name%'
+        global_app_version: '%app_version%'
 
 when@test:
     twig:
