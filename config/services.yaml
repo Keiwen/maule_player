@@ -8,6 +8,7 @@ parameters:
     app_name: 'Maule player'
     app_version: '1.0.0'
     token_generator_secret: '%env(TOKEN_GENERATOR_SECRET)%'
+    # email_sender: keiwen@ik.me
 
 keiwen_cacofony:
     token_generator:
