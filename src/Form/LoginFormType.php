@@ -13,14 +13,12 @@ class LoginFormType extends AbstractType
     {
         $builder
             ->add('email', null, [
-                'label' => 'user.email',
-                'translation_domain' => 'entity'
+                'label' => 'user.username',
             ])
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'label' => 'user.password',
                 'attr' => ['autocomplete' => 'new-password'],
-                'translation_domain' => 'entity'
             ])
         ;
     }

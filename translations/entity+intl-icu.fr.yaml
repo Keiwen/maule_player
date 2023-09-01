@@ -1,5 +1,0 @@
-user:
-  username: nom d'utilisateur
-  password: mot de passe
-  password_repeat: confirmer le mot de passe
-  email: email
