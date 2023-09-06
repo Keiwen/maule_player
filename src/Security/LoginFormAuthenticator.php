@@ -30,12 +30,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     protected $formFactory;
     /** @var EntityRegistry */
     protected $entityRegistry;
+    /** @var UserProvider */
+    protected $userProvider;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, FormFactoryInterface $formFactory, EntityRegistry $entityRegistry)
+    public function __construct(UrlGeneratorInterface $urlGenerator, FormFactoryInterface $formFactory, EntityRegistry $entityRegistry, UserProvider $userProvider)
     {
         $this->urlGenerator = $urlGenerator;
         $this->formFactory = $formFactory;
         $this->entityRegistry = $entityRegistry;
+        $this->userProvider = $userProvider;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -43,9 +46,16 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $form = $this->formFactory->create(AdminLoginFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            return new Passport(
-                new UserBadge('maule_admin'),
-                new PasswordCredentials($form->get('plainPassword')->getData()), []);
+            $passport = new Passport(
+                new UserBadge(
+                    'maule_admin',
+                    // declare customer provider as callable
+                    array($this->userProvider, 'loadUserByIdentifier')
+                ),
+                new PasswordCredentials($form->get('plainPassword')->getData()),
+                []
+            );
+            return $passport;
         }
 
         throw new AuthenticationException('form not submitted');

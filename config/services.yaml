@@ -8,7 +8,9 @@ parameters:
     app_name: 'Maule player'
     app_version: '1.0.0'
     token_generator_secret: '%env(TOKEN_GENERATOR_SECRET)%'
-    # email_sender: keiwen@ik.me
+    # email_sender: something@something.com
+    user_passwords:
+        maule_admin: '%env(USER_PASSWORD_MAULE_ADMIN)%'
 
 keiwen_cacofony:
     token_generator:
@@ -35,3 +37,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Security\UserProvider:
+        arguments:
+            $userPlainPasswords: '%user_passwords%'
+
