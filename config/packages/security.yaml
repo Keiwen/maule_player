@@ -8,10 +8,6 @@ security:
     providers:
         custom_provider:
             id: App\Security\UserProvider
-#        fixed_users:
-#            memory:
-#                users:
-#                    maule_admin: { password: '$2y$13$A7g995yPL8qQyGkN0i9use0LL9PNxsIDQ16JuB/zH0Q3SYfMT9WPO', roles: ['ROLE_ADMIN'] }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
