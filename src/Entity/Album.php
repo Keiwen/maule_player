@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Keiwen\Cacofony\EntitiesManagement\ExportableEntityTrait;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AlbumRepository::class)
@@ -19,16 +20,19 @@ class Album
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"album"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"album"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Track::class, mappedBy="album")
+     * @Groups({"albumAndTracks"})
      */
     private $tracks;
 
