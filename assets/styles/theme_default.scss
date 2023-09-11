@@ -15,8 +15,10 @@ $link-decoration: $link-color;
 $link-hover-color: $link-color;
 $link-hover-decoration: $link-color;
 
-$font-family-sans-serif: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$font-family-sans-serif: "Junge", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 $font-weight-base: 500;
+$headings-font-family: "Junge", "Segoe UI", cursive;
+$headings-font-weight: 700;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -27,6 +29,10 @@ $base-color: #010000;
 
 
 //*****SPECIFIC*****
+@font-face {
+  font-family: 'Junge';
+  src: url('/public/font/Junge-Regular.ttf');
+}
 
 .btn-danger, .btn-info {
   color: #212529;
