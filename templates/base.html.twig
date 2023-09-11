@@ -28,11 +28,13 @@
     <body>
 
     <div class="container-fluid">
+        {#
         {% block navbar %}
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 {% include 'navbar.html.twig' %}
             </nav>
         {% endblock %}
+        #}
 
         {% block header %}{% endblock %}
 

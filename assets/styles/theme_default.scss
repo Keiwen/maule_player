@@ -44,14 +44,19 @@ $base-color: #010000;
   background-color: #CCC8CC;
 }
 
-html, body {
+html {
+  height: 100%;
+}
+
+body {
   // radial gradient from center to border
   background: $background;
   background: -moz-radial-gradient(center, ellipse cover, $background 0%, $background-gradient 100%);
   background: -webkit-radial-gradient(center, ellipse cover, $background 0%, $background-gradient 100%);
   background: radial-gradient(ellipse at center, $background 0%, $background-gradient 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdad72', endColorstr='#963546',GradientType=1 );
-
+  height: 100%;
+  padding-top: 20px;
 }
 
 
