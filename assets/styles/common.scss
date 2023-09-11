@@ -16,10 +16,6 @@ h2 {
     border-bottom: 1px solid $primary;
 }
 
-#menu {
-    text-align: left;
-}
-
 .font-small {
     font-size: x-small;
 }
@@ -90,6 +86,23 @@ img {
                 content: "\21D2";
             }
         }
+    }
+}
+
+footer {
+    padding: 5px;
+}
+
+.btn-menu {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    line-height: 65px;
+    &.btn-menu-middle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        line-height: 85px;
     }
 }
 
