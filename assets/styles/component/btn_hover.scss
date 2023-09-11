@@ -30,7 +30,7 @@ This is for a pulse effect when hovering button
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 
-    &:hover {
+    &:hover, &:active, &:focus {
         -webkit-animation-name: maule-pulse;
         animation-name: maule-pulse;
         -webkit-animation-duration: 0.7s;
