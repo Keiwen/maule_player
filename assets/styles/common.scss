@@ -6,7 +6,7 @@ html,body {
 }
 
 h1,h2,h3 {
-    color: $primary;
+    color: $base-color;
 }
 
 h2 {
@@ -22,18 +22,6 @@ h2 {
 
 .font-small {
     font-size: x-small;
-}
-
-/** inlined DL*/
-dd::after {
-    content: '\A';
-    white-space: pre-line;
-}
-dd:last-of-type::after {
-    content: '';
-}
-dd, dt {
-    display: inline;
 }
 
 a[target="_blank"] {
@@ -53,30 +41,6 @@ a[target="_blank"] {
     color: $danger;
 }
 
-.navbar-nav {
-    .nav-item {
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
-        &.active {
-            border-top: 1px solid $primary;
-            border-bottom: 1px solid $primary;
-        }
-    }
-}
-
-.nav-tabs {
-    border-width: 2px;
-    border-color: $light;
-    border-bottom: 0;
-    .nav-link {
-        border-width: 2px;
-        &.active {
-            color: $base-color;
-            border-color: $light;
-        }
-    }
-}
-
 .tab-content {
     border: 2px solid $light;
     padding: 5px;
@@ -93,7 +57,6 @@ img {
         height: 40px;
     }
 }
-
 
 .todo {
     color: $background;
@@ -133,4 +96,5 @@ img {
 
 @import "component/links_ultr";
 @import "component/sweet-modal";
+@import "component/btn_hover";
 
