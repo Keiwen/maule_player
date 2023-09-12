@@ -4,14 +4,17 @@ import store from './store'
 import router from './router'
 import CxltToastr from 'cxlt-vue2-toastr'
 import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
-import flashMessage from './components/flashMessage'
-import appMenu from './components/menu'
 import { mapGetters, mapActions } from 'vuex'
-import transPlugin from "./plugins/transPlugin"
-import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
 import { SweetModal } from 'sweet-modal-vue'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons'
+
+import transPlugin from "./plugins/transPlugin"
+import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
+
+import flashMessage from './components/flashMessage'
+import appMenu from './components/menu'
+import mediaPlayer from './components/mediaPlayer'
 
 /************
  WARNINGS (yeah, multiple)
@@ -64,7 +67,7 @@ new Vue({
             text: 'Message'
         }
     },
-    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu },
+    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu, mediaPlayer },
     computed: {
         ...mapGetters(['messageBag'])
     },
