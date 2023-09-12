@@ -2,7 +2,6 @@
 import Vue from 'vue'
 import store from './store'
 import router from './router'
-import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
 import CxltToastr from 'cxlt-vue2-toastr'
 import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
 import flashMessage from './components/flashMessage'
@@ -36,13 +35,13 @@ import 'vue-awesome/icons'
 ************/
 
 const toastrConfig = {
-    position: 'bottom right',
+    position: 'custom',
     timeOut: 5000,
     progressBar: true,
     hideDuration: 500,
     closeButton: false,
     showMethod: 'bounceInRight',
-    hideMethod: 'rotateOutDownRight'
+    hideMethod: 'fadeOutRight'
 }
 
 Vue.use(CxltToastr, toastrConfig)
