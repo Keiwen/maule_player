@@ -6,6 +6,7 @@ import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
 import CxltToastr from 'cxlt-vue2-toastr'
 import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
 import flashMessage from './components/flashMessage'
+import appMenu from './components/menu'
 import { mapGetters, mapActions } from 'vuex'
 import transPlugin from "./plugins/transPlugin"
 import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
@@ -64,7 +65,7 @@ new Vue({
             text: 'Message'
         }
     },
-    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal },
+    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu },
     computed: {
         ...mapGetters(['messageBag'])
     },

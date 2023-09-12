@@ -36,9 +36,9 @@
         {% endblock %}
         #}
 
-        {% block header %}{% endblock %}
-
         <div class="container-fluid" id="rootApp">
+            {% block header %}{% endblock %}
+
             {% block content_title %}{% endblock %}
             <div class="flashMessages">
                 {% for label, messages in app.flashes %}
@@ -63,13 +63,17 @@
             </div>
 
             {% block body %}{% endblock %}
+
+            {% block footer %}
+                <footer class="fixed-bottom">
+
+                    <app-menu></app-menu>
+
+                </footer>
+            {% endblock %}
+
         </div>
 
-        {% block footer %}
-            <footer class="fixed-bottom">
-                {% include 'menu.html.twig' %}
-            </footer>
-        {% endblock %}
     </div>
 
     </body>
