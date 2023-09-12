@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import store from './store'
+import router from './router'
 import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
 import CxltToastr from 'cxlt-vue2-toastr'
 import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
@@ -9,6 +10,8 @@ import { mapGetters, mapActions } from 'vuex'
 import transPlugin from "./plugins/transPlugin"
 import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
 import { SweetModal } from 'sweet-modal-vue'
+import Icon from 'vue-awesome/components/Icon'
+import 'vue-awesome/icons'
 
 /************
  WARNINGS (yeah, multiple)
@@ -46,10 +49,13 @@ Vue.use(CxltToastr, toastrConfig)
 Vue.use(transPlugin)
 Vue.use(urlBuilderPlugin)
 
+Vue.component('icon', Icon)
+
 /* eslint-disable no-new */
 new Vue({
     el: '#rootApp',
     store,
+    router,
     delimiters: ['${', '}$'],
     data: {
         toastBackup: {
