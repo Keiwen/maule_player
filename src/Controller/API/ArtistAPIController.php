@@ -84,9 +84,9 @@ class ArtistAPIController extends APIController
      */
     public function artist(Artist $artist): JsonResponse
     {
-        $artists = $artist->toArray(array('tracks'));
+        $artistData = $artist->toArray(array('tracks'));
 
-        return $this->renderJson($artists);
+        return $this->renderJson($artistData);
     }
 
 
