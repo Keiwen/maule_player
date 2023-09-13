@@ -7,6 +7,9 @@ parameters:
     app_locale: fr|en|transCode
     app_name: 'Maule player'
     app_version: '1.0.0'
+    media_path_separator: '%env(MEDIA_PATH_SEPARATOR)%'
+    # below parameter use previous parameter pathSeparator, bit complex to read ;)
+    medialib_folder: '%kernel.project_dir%%media_path_separator%public%media_path_separator%media_lib%media_path_separator%'
     token_generator_secret: '%env(TOKEN_GENERATOR_SECRET)%'
     # email_sender: something@something.com
     user_passwords:
@@ -41,3 +44,7 @@ services:
         arguments:
             $userPlainPasswords: '%user_passwords%'
 
+    App\Command\ImportTracksCommand:
+        arguments:
+            $medialibFolder: '%medialib_folder%'
+            $pathSeparator : '%media_path_separator%'
