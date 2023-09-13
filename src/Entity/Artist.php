@@ -43,6 +43,11 @@ class Artist
         $this->tracks = new ArrayCollection();
     }
 
+    public static function retrieveExportFields()
+    {
+        return ['id', 'name'];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
