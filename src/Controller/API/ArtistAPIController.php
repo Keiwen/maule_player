@@ -42,7 +42,7 @@ class ArtistAPIController extends APIController
         $artistObjects = $artistRepository->findAll();
         $artists = array();
         foreach ($artistObjects as $artistObject) {
-            $artist = $artistObject->toArray(array('tracks'));
+            $artist = $artistObject->toArray();
             $this->addApiLink(
                 $artist,
                 'api_artist_get',
@@ -73,7 +73,11 @@ class ArtistAPIController extends APIController
      *          response=200,
      *          description="artist",
      *          @OA\JsonContent(
-     *              ref=@Model(type=Artist::class, groups={"artist"})
+     *              type="object",
+     *              @OA\Property(
+     *                  property="artist",
+     *                  ref=@Model(type=Artist::class, groups={"artist"})
+     *              )
      *          )
      *     ),
      *     @OA\Response (
@@ -84,9 +88,19 @@ class ArtistAPIController extends APIController
      */
     public function artist(Artist $artist): JsonResponse
     {
-        $artistData = $artist->toArray(array('tracks'));
+        $artistData = $artist->toArray();
+        $jsonReturn = array(
+            'artist' => $artistData
+        );
+        $this->addApiLink(
+            $jsonReturn,
+            'api_artist_list',
+            array(),
+            'collection'
+        );
 
-        return $this->renderJson($artistData);
+
+        return $this->renderJson($jsonReturn);
     }
 
 
