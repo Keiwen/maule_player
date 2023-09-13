@@ -24,3 +24,88 @@ could access to application.
 We do not manage users as this application
 aimed to be quite 'private'.
 
+## Setup
+All steps described in this section
+are based on computer/server
+that will run the application,
+not on connected devices that will use it.
+
+### Requirements
+This application require PHP, a SQL DataBase,
+as well as package managers composer and NPM.
+It could use a built-in server such as WAMP/LAMP.
+
+### Initialization
+In the application target directory,
+copy the source code. You can download it directly.
+
+If you are using Git, you will be able
+to easily update the application.
+In target empty directory, initialize wth git:
+
+``git remote add origin
+https://github.com/Keiwen/maule_player.git``
+
+---
+In directory, copy ``.env`` file
+to create ``.env.local`` file.
+You will need to change:
+- APP_ENV: use ``prod`` to run like a production application
+- DATABASE_URL: set up you own DB connexion
+- USER_PASSWORD_MAULE_ADMIN: set up the admin password
+
+!! TODO !! define .htaccess if needed
+
+Then follow update process once before
+you can use the application
+
+### Update
+If you are using Git, you can update source code:
+
+``git pull origin master``
+
+Then update PHP libraries with composer
+
+``composer install --no-dev --optimize-autoloader``
+
+Ensure your database is also up-to-date
+
+``php bin/console doctrine:migrations:migrate``
+
+Update JavaScript libraries with NPM
+``npm install``
+
+!! TODO !! add public/build to git or rebuild
+locally (but require more complex manipulation)
+
+Finally clear the application cache
+
+``php bin/console cache:clear``
+
+### Media Lib directory
+All media files will be tracked inside
+``/public/media_lib/`` directory.
+At initialization, there is an existing
+``_samples`` folder with some files but
+you can remove it.
+
+!! TODO !! if _samples removed locally,
+what about git update?
+
+The easiest way to add some directory in Media Lib
+is to add a symlink.
+Instead of copying the directory where you
+store your media files, it will create a link.
+Application will have access to all files
+without having them in both places.
+
+!! TODO !! script to symlink in media_lib
+
+Open a command interface in application folder
+and run
+
+``php bin/console app:import-tracks``
+
+That will check all files inside Media Lib and
+load them all to the application DataBase.
+
