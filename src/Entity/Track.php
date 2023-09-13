@@ -137,25 +137,27 @@ class Track
     }
 
     /**
+     * @param string $pathSeparator
      * @return string|null folder containing file
      */
-    public function getFolder(): ?string
+    public function getFolder(string $pathSeparator = '/'): ?string
     {
         $path = $this->getFilepath();
         if (empty($path)) return null;
-        $pathParts = explode('/', $path);
+        $pathParts = explode($pathSeparator, $path);
         array_pop($pathParts);
-        return '/' . implode('/', $pathParts);
+        return $pathSeparator . implode($pathSeparator, $pathParts);
     }
 
     /**
+     * @param string $pathSeparator
      * @return string|null filename, without path, including extension
      */
-    public function getFilename(): ?string
+    public function getFilename(string $pathSeparator = '/'): ?string
     {
         $path = $this->getFilepath();
         if (empty($path)) return null;
-        $pathParts = explode('/', $path);
+        $pathParts = explode($pathSeparator, $path);
         return array_pop($pathParts);
     }
 
