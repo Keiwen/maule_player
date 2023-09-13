@@ -1674,16 +1674,16 @@
         },
         {
             "name": "keiwen/utils",
-            "version": "2.5",
+            "version": "2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Keiwen/Utils.git",
-                "reference": "90dcc949eedbe756ddd4a08f2a2e68b9b18ec400"
+                "reference": "af3a281d6602a017b595b49c6b1d0335af17f8bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Keiwen/Utils/zipball/90dcc949eedbe756ddd4a08f2a2e68b9b18ec400",
-                "reference": "90dcc949eedbe756ddd4a08f2a2e68b9b18ec400",
+                "url": "https://api.github.com/repos/Keiwen/Utils/zipball/af3a281d6602a017b595b49c6b1d0335af17f8bd",
+                "reference": "af3a281d6602a017b595b49c6b1d0335af17f8bd",
                 "shasum": ""
             },
             "require": {
@@ -1705,9 +1705,9 @@
             "description": "Common utils functions",
             "support": {
                 "issues": "https://github.com/Keiwen/Utils/issues",
-                "source": "https://github.com/Keiwen/Utils/tree/2.5"
+                "source": "https://github.com/Keiwen/Utils/tree/2.6"
             },
-            "time": "2023-08-31T10:30:10+00:00"
+            "time": "2023-09-08T14:10:48+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -10972,5 +10972,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
