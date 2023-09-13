@@ -1,0 +1,23 @@
+{% extends '@!NelmioApiDoc/SwaggerUi/index.html.twig' %}
+
+
+{% block title %}{{ parent() }} - API documentation{% endblock title %}
+
+    {% block meta %}
+        {{ parent() }}
+        <link rel="icon" type="image/x-icon" href="/img/main_icon.png">
+    {% endblock meta %}
+
+
+{# Change documentation logo #}
+{% block header %}
+    <a id="logo" href="/">
+        <img src="/img/main_icon.png" alt="API Documentation">
+    </a>
+{% endblock header %}
+
+{# Import your own stylesheet #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/custom-swagger-styles.css') }}">
+{% endblock stylesheets %}

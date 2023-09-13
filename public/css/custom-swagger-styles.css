@@ -1,0 +1,26 @@
+
+:root {
+    --main-swagger-color: #963546;
+}
+
+header:before {
+    background-color: var(--main-swagger-color);
+}
+
+header #logo img {
+    background-color: transparent;
+}
+
+#swagger-ui.api-platform .info .title {
+    color: var(--main-swagger-color);
+}
+
+#swagger-ui.api-platform .opblock.opblock-get .opblock-summary-method {
+    background-color: var(--main-swagger-color);
+}
+
+
+#swagger-ui.api-platform .btn.execute {
+    background-color: var(--main-swagger-color);
+    border-color: var(--main-swagger-color);
+}
