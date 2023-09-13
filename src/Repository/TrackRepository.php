@@ -23,6 +23,42 @@ class TrackRepository extends ServiceEntityRepository
         parent::__construct($registry, Track::class);
     }
 
+    /**
+     * @param $id
+     * @return Track|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findFullTrack($id)
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('a', 'al')
+            ->innerJoin('t.artist', 'a')
+            ->innerJoin('t.album', 'al')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    /**
+     * @return Track[]
+     */
+    public function findAllFullTrack()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->addSelect('a', 'al')
+            ->innerJoin('t.artist', 'a')
+            ->innerJoin('t.album', 'al')
+            ;
+        foreach ($this->getBasicOrderBy() as $field => $order) {
+            $qb->addOrderBy($field, $order);
+        }
+        return $qb->getQuery()
+            ->getResult();
+
+    }
+
     public function add(Track $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
