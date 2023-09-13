@@ -95,4 +95,60 @@ class TrackRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @param string[] $searchedNames
+     * @return Track[]
+     */
+    public function findNames(array $searchedNames): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name in (:names)')
+            ->setParameter('names', $searchedNames)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @param string[] $searchedPaths
+     * @return Track[]
+     */
+    public function findPaths(array $searchedPaths): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.filepath in (:paths)')
+            ->setParameter('paths', $searchedPaths)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    /**
+     * @param array $names
+     * @param bool $searchByPath set to true if using names of paths instead of track title
+     * @return Track[] name => entity|null
+     */
+    public function loadPersistedEntities(array $names, bool $searchByPath = false): array
+    {
+        $names = array_unique($names);
+        $allNames = array_combine($names, array_fill(0, count($names), null));
+        // allNames key is entity name, value is null. Now fill with entities found
+        if ($searchByPath) {
+            $entities = $this->findPaths($names);
+        } else {
+            $entities = $this->findNames($names);
+        }
+        foreach ($entities as $entity) {
+            if ($searchByPath) {
+                $allNames[$entity->getFilepath()] = $entity;
+            } else {
+                $allNames[$entity->getName()] = $entity;
+            }
+        }
+        return $allNames;
+    }
+
+
+
 }

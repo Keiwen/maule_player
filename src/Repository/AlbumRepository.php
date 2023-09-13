@@ -54,6 +54,38 @@ class AlbumRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param string[] $searchedNames
+     * @return Album[]
+     */
+    public function findNames(array $searchedNames): array
+    {
+        return $this->createQueryBuilder('al')
+            ->where('al.name in (:names)')
+            ->setParameter('names', $searchedNames)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    /**
+     * @param array $names
+     * @return Album[] name => entity|null
+     */
+    public function loadPersistedEntities(array $names): array
+    {
+        $names = array_unique($names);
+        $allNames = array_combine($names, array_fill(0, count($names), null));
+        // allNames key is entity name, value is null. Now fill with entities found
+        $entities = $this->findNames($names);
+        foreach ($entities as $entity) {
+            $allNames[$entity->getName()] = $entity;
+        }
+        return $allNames;
+    }
+
+
 
 //    /**
 //     * @return Album[] Returns an array of Album objects
