@@ -59,6 +59,11 @@ class Track
      */
     private $filepath;
 
+    public function __construct(string $name = '')
+    {
+        $this->setName($name);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

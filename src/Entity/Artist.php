@@ -37,8 +37,9 @@ class Artist
      */
     private $tracks;
 
-    public function __construct()
+    public function __construct(string $name = '')
     {
+        $this->setName($name);
         $this->tracks = new ArrayCollection();
     }
 
