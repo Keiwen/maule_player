@@ -52,7 +52,7 @@ class TrackRepository extends ServiceEntityRepository
             ->innerJoin('t.album', 'al')
             ;
         foreach ($this->getBasicOrderBy() as $field => $order) {
-            $qb->addOrderBy($field, $order);
+            $qb->addOrderBy('t.'.$field, $order);
         }
         return $qb->getQuery()
             ->getResult();

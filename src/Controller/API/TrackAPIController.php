@@ -40,7 +40,7 @@ class TrackAPIController extends APIController
      */
     public function list(TrackRepository $trackRepository): JsonResponse
     {
-        $trackObjects = $trackRepository->findAll();
+        $trackObjects = $trackRepository->findAllFullTrack();
         $tracks = array();
         foreach ($trackObjects as $trackObject) {
             $track = $trackObject->toArray();
