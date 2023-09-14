@@ -15,6 +15,10 @@ const persistOptions = {
 
 export default new Vuex.Store({
   getters: {
+    limitTitle: () => (title, limit = 20) => {
+      if (title.length <= limit) return title
+      return title.substring(0, limit - 1) + '...'
+    }
   },
   actions: {
   },
