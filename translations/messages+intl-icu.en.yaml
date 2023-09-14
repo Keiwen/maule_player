@@ -57,3 +57,14 @@ toggle:
 tooltip:
   click:
     edit: click to edit
+track:
+  title: title
+  year: year
+  track_number: '#'
+  filepath: filepath
+  list:
+    empty: no track available
+artist:
+  name: artist
+album:
+  name: album
