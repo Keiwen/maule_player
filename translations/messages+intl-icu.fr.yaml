@@ -64,6 +64,7 @@ track:
   filepath: chemin
   list:
     empty: aucune piste disponible
+    error: impossible de charger les pistes
 artist:
   name: artiste
 album:

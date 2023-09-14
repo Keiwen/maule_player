@@ -64,6 +64,7 @@ track:
   filepath: filepath
   list:
     empty: no track available
+    error: cannot load tracks
 artist:
   name: artist
 album:
