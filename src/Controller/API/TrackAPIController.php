@@ -49,7 +49,6 @@ class TrackAPIController extends APIController
                 'api_track_get',
                 array('id' => $trackObject->getId()),
             );
-            $track['filepath'] = str_replace('\\', '', $track['filepath']);
             $tracks[] = $track;
         }
 
