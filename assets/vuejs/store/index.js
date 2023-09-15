@@ -15,7 +15,7 @@ const persistOptions = {
 
 export default new Vuex.Store({
   state: {
-    playedMediaFilepath: '_samples/01 - Birds In The Sky.mp3'
+    playedMediaFilepath: ''
   },
   getters: {
     playedMediaFilepath: state => state.playedMediaFilepath,
@@ -28,6 +28,11 @@ export default new Vuex.Store({
     setPlayerSrc ({commit}, filepath) {
       commit(types.SET_PLAYED_MEDIA_FILEPATH, filepath)
     },
+    resetState () {
+      // call this.$store.dispatch('resetState') from a component action
+      localStorage.removeItem(persistOptions.key)
+      location.reload()
+    }
   },
   mutations: {
     [types.SET_PLAYED_MEDIA_FILEPATH] (state, filepath) {
