@@ -14,13 +14,25 @@ const persistOptions = {
 }
 
 export default new Vuex.Store({
+  state: {
+    playedMediaFilepath: '_samples/01 - Birds In The Sky.mp3'
+  },
   getters: {
+    playedMediaFilepath: state => state.playedMediaFilepath,
     limitTitle: () => (title, limit = 20) => {
       if (title.length <= limit) return title
       return title.substring(0, limit - 1) + '...'
     }
   },
   actions: {
+    setPlayerSrc ({commit}, filepath) {
+      commit(types.SET_PLAYED_MEDIA_FILEPATH, filepath)
+    },
+  },
+  mutations: {
+    [types.SET_PLAYED_MEDIA_FILEPATH] (state, filepath) {
+      state.playedMediaFilepath = filepath
+    }
   },
   modules: {
     messageBag
