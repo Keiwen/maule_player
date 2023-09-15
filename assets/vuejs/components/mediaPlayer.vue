@@ -1,7 +1,7 @@
 <template>
   <div class="audio-container">
-    <audio controls>
-      <source ref="audio_player" :src="mediaSrc">
+    <audio controls id="audio_player">
+      <source :src="mediaSrc">
     </audio>
   </div>
 </template>
@@ -11,6 +11,13 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "mediaPlayer",
+  watch: {
+    playedMediaFilepath: function(newValue, oldValue) {
+      var audio = document.getElementById("audio_player");
+      audio.load() // reload audio component
+      audio.play()
+    }
+  },
   computed: {
     ...mapGetters(['playedMediaFilepath']),
     mediaSrc () {
