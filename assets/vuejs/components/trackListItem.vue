@@ -11,7 +11,7 @@
 
       <div class="col-2">
         <button class="btn btn-primary btn-play" @click="selectTrack">
-          <v-icon name="play"/>
+          <i class="fa fa-play" />
         </button>
       </div>
       <div class="col-10 row">
