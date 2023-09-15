@@ -25,6 +25,10 @@ $background: #EAF7E0;
 $base-color: #424B54;
 @import "common";
 
+:root {
+  --background: #EAF7E0;
+  --background-dark: #424B54;
+}
 
 //*****SPECIFIC*****
 $brown: #955c31;

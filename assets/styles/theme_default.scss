@@ -27,6 +27,10 @@ $background-gradient: #963546;
 $base-color: #010000;
 @import "common";
 
+:root {
+  --background: #FDAD72;
+  --background-dark: #963546;
+}
 
 //*****SPECIFIC*****
 @font-face {
