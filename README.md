@@ -56,6 +56,8 @@ You will need to change:
 
 !! TODO !! define .htaccess if needed
 
+Create ``/public/media_lib/`` directory if not exists.
+
 Then follow update process once before
 you can use the application
 
@@ -86,11 +88,9 @@ Finally clear the application cache
 All media files will be tracked inside
 ``/public/media_lib/`` directory.
 At initialization, there is an existing
-``_samples`` folder with some files but
-you can remove it.
-
-!! TODO !! if _samples removed locally,
-what about git update?
+``/public/media_lib_samples`` folder with some files.
+You can copy it inside ``/public/media_lib/``
+if needed or ignore it.
 
 The easiest way to add some directory in Media Lib
 is to add a symlink.
