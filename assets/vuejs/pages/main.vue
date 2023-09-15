@@ -11,7 +11,7 @@ import TrackList from "../components/trackList";
 import {mapActions} from "vuex";
 
 export default {
-  name: "main",
+  name: "mainPage",
   components: { TrackList },
   data () {
     return {
