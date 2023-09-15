@@ -52,7 +52,7 @@ Vue.use(CxltToastr, toastrConfig)
 Vue.use(transPlugin)
 Vue.use(urlBuilderPlugin)
 
-Vue.component('icon', Icon)
+Vue.component('v-icon', Icon)
 
 /* eslint-disable no-new */
 new Vue({
