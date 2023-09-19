@@ -1,5 +1,16 @@
 <template>
-  <div class="audio-container">
+  <div class="container audio-container">
+    <div class="custom-player-container row">
+      <div class="col-2">
+        <div @click="togglePlay()">
+          <play-button :playing="playingAudio" />
+        </div>
+      </div>
+      <div class="col-8">Custom player middle</div>
+      <div class="col-2">right</div>
+    </div>
+
+
     <audio controls id="audio_player">
       <source :src="mediaSrc">
     </audio>
@@ -8,12 +19,15 @@
 
 <script>
 import {mapGetters} from "vuex";
+import playButton from "./playButton";
 
 export default {
   name: "mediaPlayer",
+  components: { playButton },
   data () {
     return {
-      audioElement: null
+      audioElement: null,
+      playingAudio: false,
     }
   },
   watch: {
@@ -29,6 +43,11 @@ export default {
     ...mapGetters(['playedMediaFilepath']),
     mediaSrc () {
       return '/media_lib/' + this.playedMediaFilepath;
+    }
+  },
+  methods: {
+    togglePlay () {
+      this.playingAudio = !this.playingAudio
     }
   }
 }
