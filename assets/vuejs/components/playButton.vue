@@ -57,6 +57,7 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  cursor: pointer;
   .play-border {
     &.play-border-dotted {
       opacity: 0;
@@ -84,13 +85,6 @@ export default {
     transform-origin: 50% 50%;
     transition: transform 200ms ease-out;
     transform: scale(0);
-  }
-
-  svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
   }
 
   &.play-button-playing {

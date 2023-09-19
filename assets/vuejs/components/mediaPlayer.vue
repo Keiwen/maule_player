@@ -3,7 +3,7 @@
     <div class="custom-player-container row">
       <div class="col-2">
         <div>
-          <play-button :playing="playingAudio" @click-play="togglePlay" />
+          <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
         </div>
       </div>
       <div class="col-8">Custom player middle</div>
@@ -58,6 +58,14 @@ export default {
 .audio-container {
   width: 100%;
 }
+
+.custom-player-container {
+  background-color: var(--primary);
+  .play-button {
+    background-color: var(--secondary);
+  }
+}
+
 
 /* container */
 audio::-webkit-media-controls-panel {
