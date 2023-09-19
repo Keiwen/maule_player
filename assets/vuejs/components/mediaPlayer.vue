@@ -2,7 +2,7 @@
   <div class="container audio-container">
     <div class="custom-player-container row">
       <div class="col-2">
-        <div>
+        <div class="row">
           <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
         </div>
       </div>
