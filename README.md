@@ -98,10 +98,13 @@ Instead of copying the directory where you
 store your media files, it will create a link.
 Application will have access to all files
 without having them in both places.
+You can execute the script included in bin folder
+``add_media_symlink.bat`` as administrator.
+This script will prompt for the targeted folder,
+the name of the link, and then will create the symlink.
 
-!! TODO !! script to symlink in media_lib
-
-Open a command interface in application folder
+Once medias are added in Media Lib,
+open a command interface in application folder
 and run
 
 ``php bin/console app:import-tracks``
