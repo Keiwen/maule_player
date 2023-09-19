@@ -2,8 +2,8 @@
   <div class="container audio-container">
     <div class="custom-player-container row">
       <div class="col-2">
-        <div @click="togglePlay()">
-          <play-button :playing="playingAudio" />
+        <div>
+          <play-button :playing="playingAudio" @click-play="togglePlay" />
         </div>
       </div>
       <div class="col-8">Custom player middle</div>
