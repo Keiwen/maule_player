@@ -11,12 +11,19 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "mediaPlayer",
+  data () {
+    return {
+      audioElement: null
+    }
+  },
   watch: {
     playedMediaFilepath: function(newValue, oldValue) {
-      var audio = document.getElementById("audio_player");
-      audio.load() // reload audio component
-      audio.play()
+      this.audioElement.load() // reload audio component
+      this.audioElement.play()
     }
+  },
+  mounted () {
+    this.audioElement = document.getElementById("audio_player");
   },
   computed: {
     ...mapGetters(['playedMediaFilepath']),
