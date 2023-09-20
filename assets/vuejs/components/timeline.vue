@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-player-timeline">
+  <div class="custom-player-timeline" :style="cssVars">
     <input type="range" max="100" value="0">
   </div>
 </template>
@@ -11,6 +11,13 @@ export default {
     percentProgress: {
       type: Number,
       required: true
+    }
+  },
+  computed: {
+    cssVars () {
+      return {
+        '--custom-player-percent-progress': this.percentProgress + '%'
+      }
     }
   }
 }
@@ -57,7 +64,7 @@ export default {
       content: "";
       top: 11px;
       left: 10px;
-      width: 50px;
+      width: var(--custom-player-percent-progress);
       height: 3px;
       background-color: var(--dark);
     }
