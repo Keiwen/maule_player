@@ -1,6 +1,6 @@
 <template>
   <div class="custom-player-timeline" :style="cssVars">
-    <input type="range" max="100" :value="percentProgress">
+    <input type="range" max="100" :value="currentProgress" @change="changeTime">
   </div>
 </template>
 
@@ -13,11 +13,29 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      currentProgress: 0
+    }
+  },
+  mounted () {
+    this.currentProgress = this.percentProgress
+  },
+  watch: {
+    percentProgress: function(newValue, oldValue) {
+      this.currentProgress = this.percentProgress
+    }
+  },
   computed: {
     cssVars () {
       return {
         '--custom-player-percent-progress': this.percentProgress + '%'
       }
+    }
+  },
+  methods: {
+    changeTime (e) {
+      this.$emit('change-progress', e.srcElement.value)
     }
   }
 }
@@ -33,7 +51,7 @@ export default {
     -webkit-appearance: none;
     height: 30px;
     background-color: var(--background);
-    padding: 5px 10px;
+    padding: 5px 0;
     border-radius: 25px;
     position: relative;
 
@@ -64,7 +82,7 @@ export default {
       position: absolute;
       content: "";
       top: 12px;
-      left: 10px;
+      left: 0;
       width: var(--custom-player-percent-progress);
       height: 5px;
       background-color: var(--dark);

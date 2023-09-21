@@ -12,7 +12,7 @@
       </div>
       <div class="col-10 custom-player-middle">
         <div class="row custom-player-timeline">
-          <timeline :percent-progress="50" />
+          <timeline :percent-progress="percentProgress" @change-progress="changeProgress"  />
         </div>
         <div class="row">
           <span class="custom-player-time">
@@ -43,6 +43,7 @@ export default {
     return {
       audioElement: null,
       duration: '',
+      percentProgress: 50,
       playingAudio: false,
     }
   },
@@ -78,6 +79,9 @@ export default {
         this.audioElement.pause()
       }
       this.playingAudio = !this.playingAudio
+    },
+    changeProgress (percentProgress) {
+      this.percentProgress = parseInt(percentProgress)
     },
     audioLoaded (e) {
       this.duration = this.getDisplayTime(this.audioElement.duration)
