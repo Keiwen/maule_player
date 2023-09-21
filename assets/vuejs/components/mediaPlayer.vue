@@ -64,6 +64,8 @@ export default {
     this.audioElement.addEventListener('timeupdate', this.audioTimeUpdate)
     this.audioElement.addEventListener('ended', this.audioEnded)
     this.audioElement.addEventListener('error', this.audioError)
+    this.audioElement.addEventListener('pause', this.audioPaused)
+    this.audioElement.addEventListener('play', this.audioPlayed)
   },
   computed: {
     ...mapGetters(['currentTrack', 'getDisplayTime']),
@@ -102,6 +104,12 @@ export default {
     },
     audioError (e) {
       this.playingAudio = false
+    },
+    audioPaused (e) {
+      this.playingAudio = false
+    },
+    audioPlayed (e) {
+      this.playingAudio = true
     }
   }
 }
