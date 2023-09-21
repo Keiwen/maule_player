@@ -30,12 +30,12 @@ export default new Vuex.Store({
       let partMinutes = 0
       let timeToWork = 0
       let partSeconds = Math.round(timeInSecond)
-      if (partSeconds > 60) {
+      if (partSeconds >= 60) {
         timeToWork = partSeconds / 60
         partMinutes = Math.floor(timeToWork)
         partSeconds = Math.round((timeToWork - partMinutes) * 60)
       }
-      if (partMinutes > 60) {
+      if (partMinutes >= 60) {
         timeToWork = partMinutes / 60
         partHours = Math.floor(timeToWork)
         partMinutes = Math.round((timeToWork - partHours) * 60)
