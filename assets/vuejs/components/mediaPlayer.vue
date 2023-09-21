@@ -50,6 +50,7 @@ export default {
     currentTrack: function(newValue, oldValue) {
       this.audioElement.load() // reload audio component
       this.audioElement.play()
+      this.playingAudio = true
     }
   },
   mounted () {
@@ -71,6 +72,11 @@ export default {
   },
   methods: {
     togglePlay () {
+      if (this.audioElement.paused) {
+        this.audioElement.play()
+      } else {
+        this.audioElement.pause()
+      }
       this.playingAudio = !this.playingAudio
     },
     audioLoaded (e) {
