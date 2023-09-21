@@ -161,6 +161,8 @@ export default {
 
 
 audio {
+  display: none;
+  /*
   // CHROME DEFAULT AUDIO
   // container
   &::-webkit-media-controls-panel {
@@ -192,6 +194,7 @@ audio {
     margin-left: 10px;
     margin-right: 10px;
   }
+  */
 }
 
 
