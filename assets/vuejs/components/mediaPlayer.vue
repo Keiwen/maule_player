@@ -7,18 +7,24 @@
         </div>
       </div>
       <div class="col-7 custom-player-middle">
-        <div class="row custom-player-text">Text</div>
+        <div class="row custom-player-text-wrapper">
+          <div class="row custom-player-text">
+            Title of the Track
+            - Artist name
+            (Album name)
+          </div>
+        </div>
         <div class="row custom-player-timeline">
           <timeline percent-progress="50" />
         </div>
       </div>
       <div class="col-3 custom-player-prevnext">
-        <div class="row">Right</div>
+        <div class="row"><br/></div>
         <div class="row">
           <span class="custom-player-time">
-            <span class="custom-player-current-time">0:00</span>
+            <span class="custom-player-current-time">00:00</span>
             /
-            <span class="custom-player-duration">0:00</span>
+            <span class="custom-player-duration">00:00</span>
           </span>
         </div>
       </div>
@@ -74,10 +80,39 @@ export default {
   width: 100%;
 }
 
+@keyframes movingText {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
 .custom-player-container {
   background-color: var(--primary);
   .play-button {
     background-color: var(--secondary);
+  }
+  .custom-player-time {
+    font-size: small;
+    color: var(--light);
+    text-shadow: var(--secondary) 0 0 10px;
+  }
+  .custom-player-text-wrapper {
+    max-width: 100%;
+    overflow: hidden;
+    .custom-player-text {
+      color: var(--light);
+      text-shadow: var(--secondary) 0 0 10px;
+      white-space: nowrap;
+      display: inline-block;
+      animation: movingText 10s infinite linear;
+      padding-left: 100%;
+      &:hover {
+        animation-play-state: paused;
+      }
+  }
   }
 }
 
