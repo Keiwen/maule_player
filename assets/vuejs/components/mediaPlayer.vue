@@ -12,7 +12,7 @@
       </div>
       <div class="col-10 custom-player-middle">
         <div class="row custom-player-timeline">
-          <timeline percent-progress="50" />
+          <timeline :percent-progress="50" />
         </div>
         <div class="row">
           <span class="custom-player-time">
@@ -60,9 +60,9 @@ export default {
       return '/media_lib/' + this.currentTrack.filepath;
     },
     mediaText () {
-      const trackTitle = this.currentTrack.name;
-      const trackArtist = this.currentTrack.artist.name;
-      const trackAlbum = this.currentTrack.album.name;
+      const trackTitle = this.currentTrack.name
+      const trackArtist = this.currentTrack.artist.name
+      const trackAlbum = this.currentTrack.album.name
       return trackTitle + ' - ' + trackArtist + ' (' + trackAlbum + ')'
     }
   },
