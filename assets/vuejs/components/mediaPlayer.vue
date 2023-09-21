@@ -84,15 +84,14 @@ export default {
       this.playingAudio = !this.playingAudio
     },
     changeProgress (percentProgress) {
-      this.percentProgress = parseInt(percentProgress)
-      let currentTimeInSeconds = (parseInt(percentProgress) / 100) * this.audioElement.duration
-      this.currentTime = this.getDisplayTime(currentTimeInSeconds)
+      this.audioElement.currentTime = (parseInt(percentProgress) / 100) * this.audioElement.duration
     },
     audioLoaded (e) {
       this.duration = this.getDisplayTime(this.audioElement.duration)
     },
     audioTimeUpdate (e) {
       this.currentTime = this.getDisplayTime(Math.floor(this.audioElement.currentTime))
+      this.percentProgress = Math.round((this.audioElement.currentTime / this.audioElement.duration) * 100)
     }
   }
 }
