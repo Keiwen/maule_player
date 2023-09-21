@@ -2,11 +2,7 @@
   <div class="container audio-container">
     <div class="custom-player-container row">
       <div class="col-12 custom-player-text-wrapper">
-        <div class="row custom-player-text">
-          Title of the Track
-          - Artist name
-          (Album name)
-        </div>
+        <div class="row custom-player-text">{{ mediaText }}</div>
       </div>
 
       <div class="col-2 custom-player-play">
@@ -62,6 +58,12 @@ export default {
     ...mapGetters(['currentTrack']),
     mediaSrc () {
       return '/media_lib/' + this.currentTrack.filepath;
+    },
+    mediaText () {
+      const trackTitle = this.currentTrack.name;
+      const trackArtist = this.currentTrack.artist.name;
+      const trackAlbum = this.currentTrack.album.name;
+      return trackTitle + ' - ' + trackArtist + ' (' + trackAlbum + ')'
     }
   },
   methods: {
