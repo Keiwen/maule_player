@@ -44,12 +44,13 @@ export default {
       audioElement: null,
       duration: '',
       currentTime: '',
-      percentProgress: 50,
+      percentProgress: 0,
       playingAudio: false,
     }
   },
   watch: {
     currentTrack: function(newValue, oldValue) {
+      this.percentProgress = 0
       this.audioElement.load() // reload audio component
       this.audioElement.play()
       this.playingAudio = true
@@ -87,6 +88,7 @@ export default {
       this.audioElement.currentTime = (parseInt(percentProgress) / 100) * this.audioElement.duration
     },
     audioLoaded (e) {
+      this.percentProgress = 0
       this.duration = this.getDisplayTime(this.audioElement.duration)
     },
     audioTimeUpdate (e) {
