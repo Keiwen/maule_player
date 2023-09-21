@@ -1,6 +1,6 @@
 <template>
   <div class="custom-player-timeline" :style="cssVars">
-    <input type="range" max="100" value="0">
+    <input type="range" max="100" :value="percentProgress">
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
       width: 18px;
       border-radius: 50%;
       background-color: var(--secondary);
+      border: 1px solid var(--light);
       margin: -8px 0 0 0;
     }
     &:active::-webkit-slider-thumb {
@@ -86,6 +87,7 @@ export default {
       width: 18px;
       border-radius: 50%;
       background-color: var(--secondary);
+      border: 1px solid var(--light);
       margin: -8px 0 0 0;
     }
     &:active::-moz-range-thumb {
@@ -115,6 +117,7 @@ export default {
       width: 18px;
       border-radius: 50%;
       background-color: var(--secondary);
+      border: 1px solid var(--light);
       margin: -8px 0 0 0;
     }
     &:active::-ms-thumb {
