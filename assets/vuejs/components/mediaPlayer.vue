@@ -60,6 +60,7 @@ export default {
     this.currentTime = this.getDisplayTime(0)
     this.audioElement = document.getElementById("audio_player")
     this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
+    this.audioElement.addEventListener('timeupdate', this.audioTimeUpdate)
   },
   computed: {
     ...mapGetters(['currentTrack', 'getDisplayTime']),
@@ -89,6 +90,9 @@ export default {
     },
     audioLoaded (e) {
       this.duration = this.getDisplayTime(this.audioElement.duration)
+    },
+    audioTimeUpdate (e) {
+      this.currentTime = this.getDisplayTime(Math.floor(this.audioElement.currentTime))
     }
   }
 }
