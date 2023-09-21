@@ -3,7 +3,7 @@
 
     <div class="container-fluid row">
       <div class="col-12">
-        <span class="track-title">{{ limitTitle(track.name, 30) }}</span>
+        <span class="track-title">{{ getLimitedTitle(track.name, 30) }}</span>
       </div>
     </div>
 
@@ -16,14 +16,14 @@
       </div>
       <div class="col-10 row">
         <div class="col-12">
-          <span class="track-artist">{{ limitTitle(track.artist.name, 30) }}</span>
+          <span class="track-artist">{{ getLimitedTitle(track.artist.name, 30) }}</span>
         </div>
 
         <div class="col-2">
           <span class="track-number">#{{ track.trackNumber }}</span>
         </div>
         <div class="col-8">
-          <span class="track-album">{{ limitTitle(track.album.name, 20) }}</span>
+          <span class="track-album">{{ getLimitedTitle(track.album.name, 20) }}</span>
         </div>
         <div class="col-2">
           <span class="track-year">{{ track.year }}</span>
@@ -46,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['limitTitle'])
+    ...mapGetters(['getLimitedTitle'])
   },
   methods: {
     ...mapActions(['setCurrentTrack']),

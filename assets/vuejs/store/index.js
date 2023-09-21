@@ -21,7 +21,7 @@ export default new Vuex.Store({
   getters: {
     currentTrack: state => state.currentTrack,
     playedMediaFilepath: state => state.currentTrack.filepath,
-    limitTitle: () => (title, limit = 20) => {
+    getLimitedTitle: () => (title, limit = 20) => {
       if (title.length <= limit) return title
       return title.substring(0, limit - 1) + '...'
     }
