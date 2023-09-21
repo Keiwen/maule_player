@@ -50,7 +50,7 @@ export default {
     }
   },
   watch: {
-    playedMediaFilepath: function(newValue, oldValue) {
+    currentTrack: function(newValue, oldValue) {
       this.audioElement.load() // reload audio component
       this.audioElement.play()
     }
@@ -59,9 +59,9 @@ export default {
     this.audioElement = document.getElementById("audio_player");
   },
   computed: {
-    ...mapGetters(['playedMediaFilepath']),
+    ...mapGetters(['currentTrack']),
     mediaSrc () {
-      return '/media_lib/' + this.playedMediaFilepath;
+      return '/media_lib/' + this.currentTrack.filepath;
     }
   },
   methods: {

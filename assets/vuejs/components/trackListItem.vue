@@ -49,9 +49,9 @@ export default {
     ...mapGetters(['limitTitle'])
   },
   methods: {
-    ...mapActions(['setPlayerSrc']),
+    ...mapActions(['setCurrentTrack']),
     selectTrack() {
-      this.setPlayerSrc(this.track.filepath)
+      this.setCurrentTrack(this.track)
     }
   }
 }
