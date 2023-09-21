@@ -1,25 +1,23 @@
 <template>
   <div class="container audio-container">
     <div class="custom-player-container row">
+      <div class="col-12 custom-player-text-wrapper">
+        <div class="row custom-player-text">
+          Title of the Track
+          - Artist name
+          (Album name)
+        </div>
+      </div>
+
       <div class="col-2 custom-player-play">
         <div class="row">
           <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
         </div>
       </div>
-      <div class="col-7 custom-player-middle">
-        <div class="row custom-player-text-wrapper">
-          <div class="row custom-player-text">
-            Title of the Track
-            - Artist name
-            (Album name)
-          </div>
-        </div>
+      <div class="col-10 custom-player-middle">
         <div class="row custom-player-timeline">
           <timeline percent-progress="50" />
         </div>
-      </div>
-      <div class="col-3 custom-player-prevnext">
-        <div class="row"><br/></div>
         <div class="row">
           <span class="custom-player-time">
             <span class="custom-player-current-time">00:00</span>
@@ -95,7 +93,8 @@ export default {
     background-color: var(--secondary);
   }
   .custom-player-time {
-    font-size: small;
+    width: 100%;
+    text-align: center;
     color: var(--light);
     text-shadow: var(--secondary) 0 0 10px;
   }
@@ -103,6 +102,7 @@ export default {
     max-width: 100%;
     overflow: hidden;
     .custom-player-text {
+      font-size: x-large;
       color: var(--light);
       text-shadow: var(--secondary) 0 0 10px;
       white-space: nowrap;

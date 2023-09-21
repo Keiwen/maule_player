@@ -31,7 +31,7 @@ export default {
     width: 100%;
     cursor: pointer;
     -webkit-appearance: none;
-    height: 25px;
+    height: 30px;
     background-color: var(--background);
     padding: 5px 10px;
     border-radius: 25px;
@@ -40,7 +40,7 @@ export default {
 
     //CHROME
     &::-webkit-slider-runnable-track {
-      height: 3px;
+      height: 5px;
       background: rgba(0, 0, 0, 0.3);
     }
     &::-webkit-slider-thumb {
@@ -63,17 +63,17 @@ export default {
     &::before {
       position: absolute;
       content: "";
-      top: 11px;
+      top: 12px;
       left: 10px;
       width: var(--custom-player-percent-progress);
-      height: 3px;
+      height: 5px;
       background-color: var(--dark);
     }
 
 
     //FIREFOX
     &::-moz-range-track {
-      height: 3px;
+      height: 5px;
       background: rgba(0, 0, 0, 0.3);
     }
     &::-moz-range-progress {
@@ -98,7 +98,7 @@ export default {
     //EDGE
     &::-ms-track {
       width: 100%;
-      height: 3px;
+      height: 5px;
       background: transparent;
       border: solid transparent;
       color: transparent;
