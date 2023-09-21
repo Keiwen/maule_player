@@ -1,6 +1,6 @@
 <template>
   <div class="custom-player-timeline" :style="cssVars">
-    <input type="range" max="100" :value="currentProgress" @change="changeTime">
+    <input type="range" max="100" :value="percentProgress" @change="changeTime">
   </div>
 </template>
 
@@ -11,19 +11,6 @@ export default {
     percentProgress: {
       type: Number,
       required: true
-    }
-  },
-  data () {
-    return {
-      currentProgress: 0
-    }
-  },
-  mounted () {
-    this.currentProgress = this.percentProgress
-  },
-  watch: {
-    percentProgress: function(newValue, oldValue) {
-      this.currentProgress = this.percentProgress
     }
   },
   computed: {
