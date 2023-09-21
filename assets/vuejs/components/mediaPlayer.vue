@@ -62,6 +62,8 @@ export default {
     this.audioElement = document.getElementById("audio_player")
     this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
     this.audioElement.addEventListener('timeupdate', this.audioTimeUpdate)
+    this.audioElement.addEventListener('ended', this.audioEnded)
+    this.audioElement.addEventListener('error', this.audioError)
   },
   computed: {
     ...mapGetters(['currentTrack', 'getDisplayTime']),
@@ -94,6 +96,12 @@ export default {
     audioTimeUpdate (e) {
       this.currentTime = this.getDisplayTime(Math.floor(this.audioElement.currentTime))
       this.percentProgress = Math.round((this.audioElement.currentTime / this.audioElement.duration) * 100)
+    },
+    audioEnded (e) {
+      this.playingAudio = false
+    },
+    audioError (e) {
+      this.playingAudio = false
     }
   }
 }
