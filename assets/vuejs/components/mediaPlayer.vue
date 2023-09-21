@@ -16,7 +16,7 @@
         </div>
         <div class="row">
           <span class="custom-player-time">
-            <span class="custom-player-current-time">00:00</span>
+            <span class="custom-player-current-time">{{ currentTime }}</span>
             /
             <span class="custom-player-duration">{{ duration }}</span>
           </span>
@@ -43,6 +43,7 @@ export default {
     return {
       audioElement: null,
       duration: '',
+      currentTime: '',
       percentProgress: 50,
       playingAudio: false,
     }
@@ -56,6 +57,7 @@ export default {
   },
   mounted () {
     this.duration = this.getDisplayTime(0)
+    this.currentTime = this.getDisplayTime(0)
     this.audioElement = document.getElementById("audio_player")
     this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
   },
@@ -82,6 +84,8 @@ export default {
     },
     changeProgress (percentProgress) {
       this.percentProgress = parseInt(percentProgress)
+      let currentTimeInSeconds = (parseInt(percentProgress) / 100) * this.audioElement.duration
+      this.currentTime = this.getDisplayTime(currentTimeInSeconds)
     },
     audioLoaded (e) {
       this.duration = this.getDisplayTime(this.audioElement.duration)
