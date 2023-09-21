@@ -18,7 +18,7 @@
           <span class="custom-player-time">
             <span class="custom-player-current-time">00:00</span>
             /
-            <span class="custom-player-duration">00:00</span>
+            <span class="custom-player-duration">{{ duration }}</span>
           </span>
         </div>
       </div>
@@ -42,6 +42,7 @@ export default {
   data () {
     return {
       audioElement: null,
+      duration: '',
       playingAudio: false,
     }
   },
@@ -52,10 +53,12 @@ export default {
     }
   },
   mounted () {
-    this.audioElement = document.getElementById("audio_player");
+    this.duration = this.getDisplayTime(0)
+    this.audioElement = document.getElementById("audio_player")
+    this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
   },
   computed: {
-    ...mapGetters(['currentTrack']),
+    ...mapGetters(['currentTrack', 'getDisplayTime']),
     mediaSrc () {
       return '/media_lib/' + this.currentTrack.filepath;
     },
@@ -69,6 +72,9 @@ export default {
   methods: {
     togglePlay () {
       this.playingAudio = !this.playingAudio
+    },
+    audioLoaded (e) {
+      this.duration = this.getDisplayTime(this.audioElement.duration)
     }
   }
 }
