@@ -77,8 +77,7 @@ Ensure your database is also up-to-date
 Update JavaScript libraries with NPM
 ``npm install``
 
-!! TODO !! add public/build to git or rebuild
-locally (but require more complex manipulation)
+!! TODO !! rebuild locally
 
 Finally clear the application cache
 
