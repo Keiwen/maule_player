@@ -59,6 +59,11 @@ class Track
      */
     private $filepath;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $duration;
+
     public function __construct(string $name = '')
     {
         $this->setName($name);
@@ -137,6 +142,18 @@ class Track
     public function setFilepath(string $filepath): self
     {
         $this->filepath = $filepath;
+
+        return $this;
+    }
+
+    public function getDuration(): ?float
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?float $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }
