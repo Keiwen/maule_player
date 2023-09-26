@@ -72,6 +72,10 @@ class ImportTracksCommand extends Command
                 null
             )
         ;
+        $this->addOption('limit', null, InputOption::VALUE_REQUIRED,
+            'How many track to consider before stop',
+            0
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -88,6 +92,8 @@ class ImportTracksCommand extends Command
         $candidatesCount = $dirParser->getFilesCount();
         $output->writeln(sprintf('Done with %d candidates files', $candidatesCount));
 
+        $limit = $input->getOption('limit');
+
         $output->writeln('Checking metatags...');
         $outputSectionMetadata = $output->section();
         $allFiles = $dirParser->getAllFiles();
@@ -101,9 +107,18 @@ class ImportTracksCommand extends Command
                 $mp3TagParser = new MP3TagParser($fullPathToFile);
                 $metadata = $mp3TagParser->getAllMetadataV1();
                 $this->addTrackToCandidate($fileRelPath, $metadata);
+                if ($limit > 0 && $fileIndex >= $limit) {
+                    break;
+                }
+            }
+            if ($limit > 0 && $fileIndex >= $limit) {
+                break;
             }
         }
         $outputSectionMetadata->clear();
+        if ($limit > 0) {
+            $output->writeln(sprintf('Reached limit of %d files', $limit));
+        }
 
         $output->writeln('Load persisted entities...');
         $outputSectionPersisted = $output->section();
