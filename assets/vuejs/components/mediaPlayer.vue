@@ -51,8 +51,10 @@ export default {
   watch: {
     currentTrack: function(newValue, oldValue) {
       this.percentProgress = 0
-      this.audioElement.load() // reload audio component
-      this.audioElement.play()
+      if (this.audioElement !== null) {
+        this.audioElement.load() // reload audio component
+        this.audioElement.play()
+      }
       this.playingAudio = true
     }
   },
@@ -60,12 +62,14 @@ export default {
     this.duration = this.getDisplayTime(0)
     this.currentTime = this.getDisplayTime(0)
     this.audioElement = document.getElementById("audio_player")
-    this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
-    this.audioElement.addEventListener('timeupdate', this.audioTimeUpdate)
-    this.audioElement.addEventListener('ended', this.audioEnded)
-    this.audioElement.addEventListener('error', this.audioError)
-    this.audioElement.addEventListener('pause', this.audioPaused)
-    this.audioElement.addEventListener('play', this.audioPlayed)
+    if (this.audioElement !== null) {
+      this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
+      this.audioElement.addEventListener('timeupdate', this.audioTimeUpdate)
+      this.audioElement.addEventListener('ended', this.audioEnded)
+      this.audioElement.addEventListener('error', this.audioError)
+      this.audioElement.addEventListener('pause', this.audioPaused)
+      this.audioElement.addEventListener('play', this.audioPlayed)
+    }
   },
   computed: {
     ...mapGetters(['currentTrack', 'getDisplayTime']),
@@ -73,6 +77,9 @@ export default {
       return '/media_lib/' + this.currentTrack.filepath;
     },
     mediaText () {
+      if (this.currentTrack.artist === undefined) {
+        return ''
+      }
       const trackTitle = this.currentTrack.name
       const trackArtist = this.currentTrack.artist.name
       const trackAlbum = this.currentTrack.album.name
@@ -81,15 +88,19 @@ export default {
   },
   methods: {
     togglePlay () {
-      if (this.audioElement.paused) {
-        this.audioElement.play()
-      } else {
-        this.audioElement.pause()
+      if (this.audioElement !== null) {
+        if (this.audioElement.paused) {
+          this.audioElement.play()
+        } else {
+          this.audioElement.pause()
+        }
+        this.playingAudio = !this.playingAudio
       }
-      this.playingAudio = !this.playingAudio
     },
     changeProgress (percentProgress) {
-      this.audioElement.currentTime = (parseInt(percentProgress) / 100) * this.audioElement.duration
+      if (this.audioElement !== null) {
+        this.audioElement.currentTime = (parseInt(percentProgress) / 100) * this.audioElement.duration
+      }
     },
     audioLoaded (e) {
       this.percentProgress = 0
