@@ -14,6 +14,7 @@ use Keiwen\Cacofony\EntitiesManagement\EntityRegistry;
 use Keiwen\Utils\ID3\MP3TagParser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportTracksCommand extends Command
@@ -55,6 +56,22 @@ class ImportTracksCommand extends Command
     protected function configure(): void
     {
         $this->setHelp('This command allows you to import files in media library folders');
+        $this
+            ->addOption(
+                // this is the name that users must type to pass this option (e.g. --test)
+                'no-db',
+                // this is the optional shortcut of the option name, which usually is just a letter
+                // (e.g. `t`, so users pass it as `-t`); use it for commonly used options
+                // or options with long names
+                null,
+                // this is the type of option (e.g. requires a value, can be passed more than once, etc.)
+                InputOption::VALUE_NONE,
+                // the option description displayed when showing the command help
+                'Used to process command without persisting in DB',
+                // the default value of the option (for those which allow to pass values)
+                null
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -146,7 +163,11 @@ class ImportTracksCommand extends Command
             $outputSectionEntitiesProgress->clear();
 
             $output->writeln(sprintf('%d new entities detected, store in DB', count($entitiesToStore)));
-            $this->entityRegistry->saveObjectList($entitiesToStore);
+            if ($input->getOption('no-db')) {
+                $output->writeln('Running as a test, no DB storage');
+            } else {
+                $this->entityRegistry->saveObjectList($entitiesToStore);
+            }
             $output->writeln('Import done!');
 
         }
