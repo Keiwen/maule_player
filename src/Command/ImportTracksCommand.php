@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Album;
+use App\Entity\AppParameters;
 use App\Entity\Artist;
 use App\Entity\Track;
 use App\Parser\MediaLibDirectoryParser;
@@ -29,6 +30,8 @@ class ImportTracksCommand extends Command
     protected $entityRegistry;
     protected $medialibFolder;
     protected $pathSeparator;
+    protected $lastExecutionParameter;
+    protected $startingTime;
     protected $candidateArtist = array();
     protected $candidateAlbums = array();
     protected $candidateTracks = array();
@@ -50,6 +53,12 @@ class ImportTracksCommand extends Command
         $this->entityRegistry = $entityRegistry;
         $this->medialibFolder = $medialibFolder;
         $this->pathSeparator = $pathSeparator;
+        $appParameterRegistry = $this->entityRegistry->getRepository(AppParameters::class);
+        /** @var AppParameters $lastExecution */
+        $this->lastExecutionParameter = $appParameterRegistry->find(AppParameters::IMPORT_TRACK_LAST_EXECUTION);
+        if (!$this->lastExecutionParameter) {
+            $this->lastExecutionParameter = new AppParameters(AppParameters::IMPORT_TRACK_LAST_EXECUTION, 0);
+        }
     }
 
 
@@ -80,6 +89,8 @@ class ImportTracksCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->startingTime = time();
+        $output->writeln(sprintf('Last execution was on %s', date('Y-m-d H:i:s', $this->lastExecutionParameter->getParamValue())));
         $output->writeln(sprintf('Start analyzing mediaLib directory: %s', $this->medialibFolder));
 
         $outputSectionParsing = $output->section();
@@ -87,14 +98,17 @@ class ImportTracksCommand extends Command
             $this->medialibFolder,
             $this->pathSeparator,
             array('mp3'),
-            $outputSectionParsing
+            $outputSectionParsing,
+            $this->lastExecutionParameter->getParamValue()
         );
         $candidatesCount = $dirParser->getFilesCount();
         $output->writeln(sprintf('Done with %d candidates files', $candidatesCount));
 
         $limit = $input->getOption('limit');
 
-        $output->writeln('Checking metatags...');
+        if ($candidatesCount) {
+            $output->writeln('Checking metatags...');
+        }
         $outputSectionMetadata = $output->section();
         $allFiles = $dirParser->getAllFiles();
         $fileIndex = 0;
@@ -115,25 +129,28 @@ class ImportTracksCommand extends Command
             }
         }
         $outputSectionMetadata->clear();
-        if ($limit > 0) {
+        if ($limit > 0 && $fileIndex == $limit) {
             $output->writeln(sprintf('Reached limit of %d files', $limit));
         }
 
-        $output->writeln('Load persisted entities...');
-        $outputSectionPersisted = $output->section();
-        //try to match with existing entities
-        $outputSectionPersisted->overwrite('...Artists');
-        $artistRepository = new ArtistRepository($this->managerRegistry);
-        $this->persistedArtists = $artistRepository->loadPersistedEntities($this->candidateArtist);
-        $outputSectionPersisted->overwrite('...Albums');
-        $albumRepository = new AlbumRepository($this->managerRegistry);
-        $this->persistedAlbums = $albumRepository->loadPersistedEntities($this->candidateAlbums);
-        $outputSectionPersisted->overwrite('...Tracks');
-        $trackRepository = new TrackRepository($this->managerRegistry);
-        $this->persistedTracks = $trackRepository->loadPersistedEntities($this->candidateTracks, true);
-        $outputSectionPersisted->clear();
+        if ($candidatesCount) {
+            $output->writeln('Load persisted entities...');
+            $outputSectionPersisted = $output->section();
+            //try to match with existing entities
+            $outputSectionPersisted->overwrite('...Artists');
+            $artistRepository = new ArtistRepository($this->managerRegistry);
+            $this->persistedArtists = $artistRepository->loadPersistedEntities($this->candidateArtist);
+            $outputSectionPersisted->overwrite('...Albums');
+            $albumRepository = new AlbumRepository($this->managerRegistry);
+            $this->persistedAlbums = $albumRepository->loadPersistedEntities($this->candidateAlbums);
+            $outputSectionPersisted->overwrite('...Tracks');
+            $trackRepository = new TrackRepository($this->managerRegistry);
+            $this->persistedTracks = $trackRepository->loadPersistedEntities($this->candidateTracks, true);
+            $outputSectionPersisted->clear();
 
-        $output->writeln('Checking for new data...');
+            $output->writeln('Checking for new data...');
+        }
+
         $outputSectionEntities = $output->section();
         $outputSectionEntitiesProgress = $output->section();
         $entitiesToStore = array();
@@ -160,32 +177,44 @@ class ImportTracksCommand extends Command
                     $percent = round(($fileIndex / $candidatesCount) * 100);
                     $outputSectionEntitiesProgress->overwrite($percent . '%');
                     $track = $this->persistedTracks[$filepath];
+                    $newTrackFlag = false;
                     if (!$track) {
-                        $track = new Track($metadata->tags['song'] ?? '');
-                        $track
-                            ->setArtist($artist)
-                            ->setAlbum($album)
-                            ->setFilepath($filepath)
-                            ->setTrackNumber($metadata->tags['track'] ?? null)
-                            ->setYear($metadata->tags['year'] ?? null)
-                        ;
-                        $entitiesToStore[] = $track;
-                        $this->persistedTracks[$filepath] = $track;
+                        // if does not exist, create one
+                        $newTrackFlag = true;
+                        $track = new Track();
+                    }
+                    $track
+                        ->setName($metadata->tags['song'] ?? '')
+                        ->setArtist($artist)
+                        ->setAlbum($album)
+                        ->setFilepath($filepath)
+                        ->setTrackNumber($metadata->tags['track'] ?? null)
+                        ->setYear($metadata->tags['year'] ?? null)
+                        ->setDuration($metadata->duration)
+                    ;
+                    $entitiesToStore[] = $track;
+                    $this->persistedTracks[$filepath] = $track;
+                    if ($newTrackFlag) {
                         $outputSectionEntities->writeln(sprintf('   Track to be created from %s', $filepath));
+                    } else {
+                        $outputSectionEntities->writeln(sprintf('   Track to be updated from %s', $filepath));
                     }
                 }
             }
             $outputSectionEntitiesProgress->clear();
 
             $output->writeln(sprintf('%d new entities detected, store in DB', count($entitiesToStore)));
-            if ($input->getOption('no-db')) {
-                $output->writeln('Running as a test, no DB storage');
-            } else {
-                $this->entityRegistry->saveObjectList($entitiesToStore);
-            }
-            $output->writeln('Import done!');
-
         }
+
+        if ($input->getOption('no-db')) {
+            $output->writeln('Running as a test, no DB storage');
+        } else {
+            $this->lastExecutionParameter->setParamValue($this->startingTime);
+            $entitiesToStore[] = $this->lastExecutionParameter;
+            $this->entityRegistry->saveObjectList($entitiesToStore);
+        }
+        $executionTime = time() - $this->startingTime;
+        $output->writeln(sprintf('Import done in %d seconds', $executionTime));
 
         return Command::SUCCESS;
     }
