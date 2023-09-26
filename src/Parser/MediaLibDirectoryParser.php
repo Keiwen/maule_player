@@ -47,18 +47,4 @@ class MediaLibDirectoryParser extends DirectoryParser
         return true;
     }
 
-    protected function doesConsiderFolder(string $directory, string $foldername): bool
-    {
-        if ($this->ignoreBeforeTimestamp >= 0 && filemtime($this->baseDirectory . $directory . $foldername) < $this->ignoreBeforeTimestamp) {
-            if ($this->output) {
-                $this->output->writeln(sprintf('   Ignored folder %s%s: not modified since last execution', $directory, $foldername));
-            }
-            return false;
-        }
-
-        return true;
-    }
-
-
-
 }
