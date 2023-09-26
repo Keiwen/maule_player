@@ -11,7 +11,7 @@ use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Keiwen\Cacofony\EntitiesManagement\EntityRegistry;
-use Keiwen\Utils\ID3\MP3TagParser;
+use wapmorgan\Mp3Info\Mp3Info;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -104,9 +104,8 @@ class ImportTracksCommand extends Command
                 $percent = round(($fileIndex / $candidatesCount) * 100);
                 $fileRelPath = str_replace($this->medialibFolder, '', $fullPathToFile);
                 $outputSectionMetadata->overwrite($percent . '%');
-                $mp3TagParser = new MP3TagParser($fullPathToFile);
-                $metadata = $mp3TagParser->getAllMetadataV1();
-                $this->addTrackToCandidate($fileRelPath, $metadata);
+                $audioInfo = new Mp3Info($fullPathToFile, true);
+                $this->addTrackToCandidate($fileRelPath, $audioInfo);
                 if ($limit > 0 && $fileIndex >= $limit) {
                     break;
                 }
@@ -156,18 +155,19 @@ class ImportTracksCommand extends Command
                     $outputSectionEntities->writeln(sprintf('   Album \'%s\' to be created', $albumName));
                 }
                 foreach ($albumsTracks as $filepath => $metadata) {
+                    /** @var Mp3Info $metadata */
                     $fileIndex++;
                     $percent = round(($fileIndex / $candidatesCount) * 100);
                     $outputSectionEntitiesProgress->overwrite($percent . '%');
                     $track = $this->persistedTracks[$filepath];
                     if (!$track) {
-                        $track = new Track($metadata['title'] ?? '');
+                        $track = new Track($metadata->tags['song'] ?? '');
                         $track
                             ->setArtist($artist)
                             ->setAlbum($album)
                             ->setFilepath($filepath)
-                            ->setTrackNumber($metadata['track'] ?? null)
-                            ->setYear($metadata['year'] ?? null)
+                            ->setTrackNumber($metadata->tags['track'] ?? null)
+                            ->setYear($metadata->tags['year'] ?? null)
                         ;
                         $entitiesToStore[] = $track;
                         $this->persistedTracks[$filepath] = $track;
@@ -208,10 +208,10 @@ class ImportTracksCommand extends Command
         }
     }
 
-    protected function addTrackToCandidate(string $filepath, array $metadata = array())
+    protected function addTrackToCandidate(string $filepath, Mp3Info $metadata)
     {
-        $artist = $metadata['artist'] ?? '';
-        $album = $metadata['album'] ?? '';
+        $artist = $metadata->tags['artist'] ?? '';
+        $album = $metadata->tags['album'] ?? '';
         $this->addAlbumToCandidate($artist, $album);
         if (!isset($this->candidatesTree[$artist][$album][$filepath])) {
             $this->candidateTracks[] = $filepath;
