@@ -31,7 +31,7 @@ class ImportTracksCommand extends Command
     protected $medialibFolder;
     protected $pathSeparator;
     protected $lastExecutionParameter;
-    protected $startingTime;
+    protected $startingDateTime;
     protected $candidateArtist = array();
     protected $candidateAlbums = array();
     protected $candidateTracks = array();
@@ -89,7 +89,7 @@ class ImportTracksCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->startingTime = time();
+        $this->startingDateTime = new \DateTime();
         $output->writeln(sprintf('Last execution was on %s', date('Y-m-d H:i:s', $this->lastExecutionParameter->getParamValue())));
         $output->writeln(sprintf('Start analyzing mediaLib directory: %s', $this->medialibFolder));
 
@@ -159,6 +159,7 @@ class ImportTracksCommand extends Command
             $artist = $this->persistedArtists[$artistName];
             if (!$artist) {
                 $artist = new Artist($artistName);
+                $artist->setImportDate($this->startingDateTime);
                 $entitiesToStore[] = $artist;
                 $this->persistedArtists[$artistName] = $artist;
                 $outputSectionEntities->writeln(sprintf('   Artist \'%s\' to be created', $artistName));
@@ -167,6 +168,7 @@ class ImportTracksCommand extends Command
                 $album = $this->persistedAlbums[$albumName];
                 if (!$album) {
                     $album = new Album($albumName);
+                    $album->setImportDate($this->startingDateTime);
                     $entitiesToStore[] = $album;
                     $this->persistedAlbums[$albumName] = $album;
                     $outputSectionEntities->writeln(sprintf('   Album \'%s\' to be created', $albumName));
@@ -191,6 +193,7 @@ class ImportTracksCommand extends Command
                         ->setTrackNumber($metadata->tags['track'] ?? null)
                         ->setYear($metadata->tags['year'] ?? null)
                         ->setDuration($metadata->duration)
+                        ->setImportDate($this->startingDateTime)
                     ;
                     $entitiesToStore[] = $track;
                     $this->persistedTracks[$filepath] = $track;
@@ -209,11 +212,11 @@ class ImportTracksCommand extends Command
         if ($input->getOption('no-db')) {
             $output->writeln('Running as a test, no DB storage');
         } else {
-            $this->lastExecutionParameter->setParamValue($this->startingTime);
+            $this->lastExecutionParameter->setParamValue($this->startingDateTime->getTimestamp());
             $entitiesToStore[] = $this->lastExecutionParameter;
             $this->entityRegistry->saveObjectList($entitiesToStore);
         }
-        $executionTime = time() - $this->startingTime;
+        $executionTime = time() - $this->startingDateTime->getTimestamp();
         $output->writeln(sprintf('Import done in %d seconds', $executionTime));
 
         return Command::SUCCESS;

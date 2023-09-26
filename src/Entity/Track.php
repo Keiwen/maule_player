@@ -64,9 +64,15 @@ class Track
      */
     private $duration;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $importDate;
+
     public function __construct(string $name = '')
     {
         $this->setName($name);
+        $this->setImportDate(new \DateTime());
     }
 
     public function getId(): ?int
@@ -154,6 +160,18 @@ class Track
     public function setDuration(?float $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getImportDate(): ?\DateTimeInterface
+    {
+        return $this->importDate;
+    }
+
+    public function setImportDate(\DateTimeInterface $importDate): self
+    {
+        $this->importDate = $importDate;
 
         return $this;
     }

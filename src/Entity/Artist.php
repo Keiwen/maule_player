@@ -37,10 +37,16 @@ class Artist
      */
     private $tracks;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $importDate;
+
     public function __construct(string $name = '')
     {
         $this->setName($name);
         $this->tracks = new ArrayCollection();
+        $this->setImportDate(new \DateTime());
     }
 
     public static function retrieveExportFields()
@@ -91,6 +97,18 @@ class Artist
                 $track->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImportDate(): ?\DateTimeInterface
+    {
+        return $this->importDate;
+    }
+
+    public function setImportDate(\DateTimeInterface $importDate): self
+    {
+        $this->importDate = $importDate;
 
         return $this;
     }
