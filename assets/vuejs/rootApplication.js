@@ -6,8 +6,8 @@ import CxltToastr from 'cxlt-vue2-toastr'
 import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
 import { mapGetters, mapActions } from 'vuex'
 import { SweetModal } from 'sweet-modal-vue'
-import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
 
 import transPlugin from "./plugins/transPlugin"
 import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
