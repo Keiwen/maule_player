@@ -12,6 +12,14 @@ nelmio_api_doc:
                         errorMessage:
                             type: string
                     required: [errorMessage]
+    models:
+        names:
+            - {alias: Artist (full), type: App\Entity\Artist}
+            - {alias: Album (full), type: App\Entity\Album}
+            - {alias: Track (full), type: App\Entity\Track}
+            - {alias: Artist (simplified), type: App\Entity\Artist, groups: [artist] }
+            - {alias: Album (simplified), type: App\Entity\Album, groups: [album] }
+            - {alias: Track (simplified), type: App\Entity\Track, groups: [track] }
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
