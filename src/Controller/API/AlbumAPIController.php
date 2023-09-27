@@ -12,7 +12,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
  * @Route("/api/album", name="api_album_")
- * @OA\Tag(name="album")
+ * @OA\Tag(name="Album")
  */
 class AlbumAPIController extends APIController
 {
