@@ -111,7 +111,7 @@ footer {
     height: 80px;
     border-radius: 40px;
     line-height: 57px;
-    border: 5px solid $primary;
+    border: 5px solid $secondary;
     &.btn-menu-middle {
         width: 100px;
         height: 100px;
@@ -119,13 +119,13 @@ footer {
         line-height: 75px;
     }
     &:hover, &:active {
-        border-color: $light;
-    }
-    &:focus {
         border-color: $primary;
     }
-    &.router-link-exact-active {
+    &:focus {
         border-color: $secondary;
+    }
+    &.router-link-exact-active {
+        border-color: $light;
     }
 }
 
