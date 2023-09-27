@@ -39,6 +39,7 @@ class Artist
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"artist"})
      */
     private $importDate;
 
@@ -101,6 +102,10 @@ class Artist
         return $this;
     }
 
+    /**
+     * @return int
+     * @Groups({"artist"})
+     */
     public function getTracksCount(): int
     {
         return $this->tracks->count();

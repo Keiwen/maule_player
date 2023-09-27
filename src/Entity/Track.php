@@ -61,11 +61,13 @@ class Track
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"track"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"track"})
      */
     private $importDate;
 
