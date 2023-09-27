@@ -67,5 +67,11 @@ track:
     error: cannot load tracks
 artist:
   name: artist
+  list:
+    empty: no artist available
+    error: cannot load artists
 album:
   name: album
+  list:
+    empty: no album available
+    error: cannot load albums

@@ -67,5 +67,11 @@ track:
     error: impossible de charger les pistes
 artist:
   name: artiste
+  list:
+    empty: aucun artiste disponible
+    error: impossible de charger les artistes
 album:
   name: album
+  list:
+    empty: aucun album disponible
+    error: impossible de charger les albums
