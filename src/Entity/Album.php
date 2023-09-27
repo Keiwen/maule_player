@@ -50,7 +50,7 @@ class Album
 
     public static function retrieveExportFields()
     {
-        return ['id', 'name'];
+        return ['id', 'name', 'tracksCount'];
     }
 
 
@@ -99,6 +99,11 @@ class Album
         }
 
         return $this;
+    }
+
+    public function getTracksCount(): int
+    {
+        return $this->tracks->count();
     }
 
     public function getImportDate(): ?\DateTimeInterface

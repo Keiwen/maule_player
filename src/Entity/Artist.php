@@ -51,7 +51,7 @@ class Artist
 
     public static function retrieveExportFields()
     {
-        return ['id', 'name'];
+        return ['id', 'name', 'tracksCount'];
     }
 
     public function getId(): ?int
@@ -99,6 +99,11 @@ class Artist
         }
 
         return $this;
+    }
+
+    public function getTracksCount(): int
+    {
+        return $this->tracks->count();
     }
 
     public function getImportDate(): ?\DateTimeInterface
