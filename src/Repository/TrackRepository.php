@@ -18,6 +18,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrackRepository extends ServiceEntityRepository
 {
+
+    const ORDER_RECENT = '';
+    const ORDER_NAME = 'name';
+    const ORDER_OLDEST = 'oldest';
+    const ORDER_IMPORTDATE = 'importDate';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Track::class);
@@ -91,11 +97,44 @@ class TrackRepository extends ServiceEntityRepository
 
     /**
      * @param Artist $artist
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
      * @return Track[]
      */
-    public function findByArtist(Artist $artist): array
+    public function findByArtist(Artist $artist, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
-        return $this->findBy(['artist' => $artist], $this->getBasicOrderBy());
+        $orderBy = $this->getBasicOrderBy();
+        switch ($order) {
+            case self::ORDER_NAME:
+                $orderBy = ['name' => 'ASC'];
+                break;
+            case self::ORDER_OLDEST:
+                $orderBy['year'] = 'ASC';
+                break;
+            case self::ORDER_IMPORTDATE:
+                $orderBy = ['importDate' => 'DESC'];
+                break;
+        }
+
+        $qb = $this->createQueryBuilder('t')
+            ->addSelect('a', 'al')
+            ->innerJoin('t.artist', 'a')
+            ->innerJoin('t.album', 'al')
+            ->where('t.artist = :artist')
+            ->setParameter('artist', $artist)
+        ;
+        foreach ($orderBy as $field => $order) {
+            $qb->addOrderBy('t.'.$field, $order);
+        }
+        if (!empty($limit)) {
+            $qb->setMaxResults($limit);
+        }
+        if (!empty($offset)) {
+            $qb->setFirstResult($offset);
+        }
+        return $qb->getQuery()
+            ->getResult();
     }
 
 
