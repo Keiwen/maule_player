@@ -39,7 +39,7 @@ class AlbumAPIController extends APIController
      */
     public function list(AlbumRepository $albumRepository): JsonResponse
     {
-        $albumObjects = $albumRepository->findAll();
+        $albumObjects = $albumRepository->findBy([], ['name' => 'ASC']);
         $albums = array();
         foreach ($albumObjects as $albumObject) {
             $album = $albumObject->toArray();

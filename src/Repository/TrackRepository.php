@@ -51,9 +51,10 @@ class TrackRepository extends ServiceEntityRepository
             ->innerJoin('t.artist', 'a')
             ->innerJoin('t.album', 'al')
             ;
-        foreach ($this->getBasicOrderBy() as $field => $order) {
-            $qb->addOrderBy('t.'.$field, $order);
-        }
+//        foreach ($this->getBasicOrderBy() as $field => $order) {
+//            $qb->addOrderBy('t.'.$field, $order);
+//        }
+        $qb->addOrderBy('t.name', 'ASC');
         return $qb->getQuery()
             ->getResult();
 
@@ -83,7 +84,7 @@ class TrackRepository extends ServiceEntityRepository
     public function getBasicOrderBy(): array
     {
         return array(
-            'year' => 'ASC',
+            'year' => 'DESC',
             'trackNumber' => 'ASC',
         );
     }

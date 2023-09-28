@@ -39,7 +39,7 @@ class ArtistAPIController extends APIController
      */
     public function list(ArtistRepository $artistRepository): JsonResponse
     {
-        $artistObjects = $artistRepository->findAll();
+        $artistObjects = $artistRepository->findBy([], ['name' => 'ASC']);
         $artists = array();
         foreach ($artistObjects as $artistObject) {
             $artist = $artistObject->toArray();
