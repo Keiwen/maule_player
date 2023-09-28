@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-4 text-center">
       <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu menu-active">
-        <i class="fa fa-users" />
+        <artist-icon class="artist-icon" />
       </router-link>
     </div>
     <div class="col-4 text-center">
@@ -18,9 +18,11 @@
 
 <script>
 import {mapActions} from "vuex";
+import artistIcon from "./artistIcon";
 
 export default {
   name: "appMenu",
+  components: { artistIcon },
   methods: {
     ...mapActions(['resetState'])
   }
@@ -39,6 +41,10 @@ svg {
   svg {
     display:none;
   }
+}
+
+.artist-icon {
+  padding-top: 0;
 }
 
 </style>
