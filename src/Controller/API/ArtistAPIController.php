@@ -3,7 +3,11 @@
 namespace App\Controller\API;
 
 use App\Entity\Artist;
+use App\Entity\Track;
 use App\Repository\ArtistRepository;
+use App\Repository\TrackRepository;
+use Keiwen\Cacofony\Http\Request;
+use Keiwen\Utils\Sanitize\StringSanitizer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Keiwen\Cacofony\Route\Annotation\Get;
@@ -103,6 +107,87 @@ class ArtistAPIController extends APIController
         return $this->renderJson($jsonReturn);
     }
 
+
+    /**
+     * @Get ("/{id}/tracks", name="tracks")
+     * @OA\Get (
+     *     summary="Get artist tacks",
+     *     description="Get all tracks from artist",
+     *     @OA\Parameter (
+     *          name="id",
+     *          in="path",
+     *          description="Artist ID",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter (
+     *          name="orderBy",
+     *          in="query",
+     *          description="Choose tracks order.
+     *                      Leave it empty for the most recent first.
+     *                      Use 'name' for alphabetical order.
+     *                      Use 'oldest' to reverse default order.
+     *                      use 'importDate' to get most recently imported first.
+     *          ",
+     *          @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter (
+     *          name="limit",
+     *          in="query",
+     *          description="Maximum number of tracks returned. 0 or empty to get all tracks.",
+     *          example="10",
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter (
+     *          name="offset",
+     *          in="query",
+     *          description="Displacement from the first matching result",
+     *          example="0",
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response (
+     *          response=200,
+     *          description="List of tracks",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="tracks",
+     *                  type="array",
+     *                  @OA\Items(ref=@Model(type=Track::class, groups={"track"}))
+     *              )
+     *          )
+     *     )
+     * )
+     */
+    public function tracks(Artist $artist, Request $request, TrackRepository $trackRepository): JsonResponse
+    {
+        $orderBy = $request->getRequestParam('orderBy', StringSanitizer::FILTER_ALPHA, '');
+        $limit = $request->getRequestParam('limit', StringSanitizer::FILTER_INT, 0);
+        $offset = $request->getRequestParam('offset', StringSanitizer::FILTER_INT, 0);
+
+        $trackObjects = $trackRepository->findByArtist($artist, $orderBy, $limit, $offset);
+
+        $tracks = array();
+        foreach ($trackObjects as $trackObject) {
+            $track = $trackObject->toArray();
+            $this->addApiLink(
+                $track,
+                'api_track_get',
+                array('id' => $trackObject->getId()),
+            );
+            $tracks[] = $track;
+        }
+        $jsonReturn = array(
+            'tracks' => $tracks
+        );
+        $this->addApiLink(
+            $jsonReturn,
+            'api_artist_get',
+            array('id' => $artist->getId()),
+        );
+
+        return $this->renderJson($jsonReturn);
+    }
 
 
 }
