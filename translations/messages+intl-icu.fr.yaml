@@ -63,15 +63,18 @@ track:
   track_number: '#'
   filepath: chemin
   list:
+    title: pistes
     empty: aucune piste disponible
     error: impossible de charger les pistes
 artist:
   name: artiste
   list:
+    title: artistes
     empty: aucun artiste disponible
     error: impossible de charger les artistes
 album:
   name: album
   list:
+    title: albums
     empty: aucun album disponible
     error: impossible de charger les albums

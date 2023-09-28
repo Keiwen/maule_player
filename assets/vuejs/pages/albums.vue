@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Albums list</h1>
+    <h1>{{ this.$trans('album.list.title', {}, null, true) }}</h1>
     <album-list :album-list="albumList"></album-list>
   </div>
 </template>
