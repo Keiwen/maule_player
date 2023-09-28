@@ -67,7 +67,6 @@ class Track
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"track"})
      */
     private $importDate;
 
@@ -75,6 +74,11 @@ class Track
     {
         $this->setName($name);
         $this->setImportDate(new \DateTime());
+    }
+
+    public static function retrieveExportFields()
+    {
+        return ['id', 'name', 'artist', 'album', 'year', 'trackNumber', 'filepath', 'duration', 'importDateIso'];
     }
 
     public function getId(): ?int
@@ -169,6 +173,15 @@ class Track
     public function getImportDate(): ?\DateTimeInterface
     {
         return $this->importDate;
+    }
+
+    /**
+     * @Groups({"track"})
+     * @return string
+     */
+    public function getImportDateIso(): string
+    {
+        return $this->getImportDate()->format('Y-m-d H:i:s');
     }
 
     public function setImportDate(\DateTimeInterface $importDate): self
