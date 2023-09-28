@@ -2,19 +2,29 @@
   <div class="row">
 
     <div class="container-fluid row">
-      <div class="col-12">
-        <span class="artist-title">{{ getLimitedTitle(artist.name, 30) }}</span>
-        <span class="trackCount badge badge-pill badge-secondary">{{ artist.tracksCount }}</span>
+
+      <div class="col-2 item-icon">
+        <artist-icon />
       </div>
+
+      <div class="col-10">
+        <div class="col-12">
+          <span class="artist-title">{{ getLimitedTitle(artist.name, 25) }}</span>
+          <span class="trackCount badge badge-pill badge-secondary">{{ artist.tracksCount }}</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import artistIcon from "./artistIcon";
 
 export default {
   name: "artistListItem",
+  components: { artistIcon },
   props: {
     artist: {
       type: Object,
@@ -38,6 +48,11 @@ export default {
   position: absolute;
   right: 0;
   margin-right: -15px;
+}
+
+.item-icon svg {
+  height: 100%;
+  max-height: 50px;
 }
 
 

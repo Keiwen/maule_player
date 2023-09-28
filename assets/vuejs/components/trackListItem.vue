@@ -3,7 +3,7 @@
 
     <div class="container-fluid row">
       <div class="col-12">
-        <span class="track-title">{{ getLimitedTitle(track.name, 30) }}</span>
+        <span class="track-title">{{ getLimitedTitle(track.name, 32) }}</span>
       </div>
     </div>
 
@@ -16,16 +16,15 @@
       </div>
       <div class="col-10 row">
         <div class="col-12">
-          <span class="track-artist">{{ getLimitedTitle(track.artist.name, 30) }}</span>
+          <span class="track-artist">{{ getLimitedTitle(track.artist.name, 25) }}</span>
+          <span class="track-duration">{{ trackDuration }}</span>
         </div>
 
         <div class="col-2">
           <span class="track-number">#{{ track.trackNumber }}</span>
         </div>
-        <div class="col-8">
-          <span class="track-album">{{ getLimitedTitle(track.album.name, 20) }}</span>
-        </div>
-        <div class="col-2">
+        <div class="col-10">
+          <span class="track-album">{{ getLimitedTitle(track.album.name, 18) }}</span>
           <span class="track-year">{{ track.year }}</span>
         </div>
       </div>
@@ -46,7 +45,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getLimitedTitle'])
+    ...mapGetters(['getLimitedTitle', 'getDisplayTime']),
+    trackDuration () {
+      return this.getDisplayTime(this.track.duration)
+    }
   },
   methods: {
     ...mapActions(['setCurrentTrack']),
@@ -70,5 +72,18 @@ export default {
 .btn-play {
   color: var(--background);
 }
+
+.track-duration {
+  position: absolute;
+  right: 0;
+  margin-right: -45px;
+}
+
+.track-year {
+  position: absolute;
+  right: 0;
+  margin-right: -45px;
+}
+
 
 </style>
