@@ -102,6 +102,12 @@ class ArtistAPIController extends APIController
             array(),
             'collection'
         );
+        $this->addApiLink(
+            $jsonReturn,
+            'api_artist_tracks',
+            array('id' => $artist->getId()),
+            'section'
+        );
 
 
         return $this->renderJson($jsonReturn);
