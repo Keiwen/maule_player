@@ -64,17 +64,20 @@ track:
   filepath: filepath
   list:
     title: tracks
+    search: search for tracks
     empty: no track available
     error: cannot load tracks
 artist:
   name: artist
   list:
     title: artists
+    search: search for artists
     empty: no artist available
     error: cannot load artists
 album:
   name: album
   list:
     title: albums
+    search: search for albums
     empty: no album available
     error: cannot load albums

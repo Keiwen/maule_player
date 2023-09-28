@@ -1,8 +1,16 @@
 <template>
   <div>
+    <div class="container-fluid" v-if="allowSearch">
+      <div class="form-inline row">
+        <input class="form-control" type="search" v-model="search"
+               :placeholder="this.$trans('artist.list.search', {}, null, true)" aria-label="Search">
+      </div>
+      <hr/>
+    </div>
+
     <ul class="list-group">
-      <li class="list-group-item container" v-for="artist in artistList">
-        <artist-list-item :artist="artist"></artist-list-item>
+      <li class="list-group-item container" v-for="artist in artistList" v-if="isItemMatchSearch(artist.name)">
+        <artist-list-item :artist="artist" />
       </li>
     </ul>
   </div>
@@ -18,6 +26,21 @@ export default {
     artistList: {
       type: Array,
       required: true
+    },
+    allowSearch: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {
+      search: ''
+    }
+  },
+  methods: {
+    isItemMatchSearch (name) {
+      if (this.search === '') return true
+      return name.toLowerCase().includes(this.search.toLowerCase())
     }
   }
 }
