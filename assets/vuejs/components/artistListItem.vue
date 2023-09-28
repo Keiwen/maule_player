@@ -4,6 +4,7 @@
     <div class="container-fluid row">
       <div class="col-12">
         <span class="artist-title">{{ getLimitedTitle(artist.name, 30) }}</span>
+        <span class="trackCount badge badge-pill badge-secondary">{{ artist.tracksCount }}</span>
       </div>
     </div>
   </div>
@@ -31,5 +32,13 @@ export default {
 .artist-title {
   font-weight: bold;
 }
+
+.trackCount {
+  font-size: 90%;
+  position: absolute;
+  right: 0;
+  margin-right: -15px;
+}
+
 
 </style>
