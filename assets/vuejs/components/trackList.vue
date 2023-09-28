@@ -1,9 +1,16 @@
 <template>
   <div>
+    <div class="container-fluid" v-if="allowSearch">
+      <div class="form-inline row">
+        <input class="form-control" type="search" v-model="search"
+               :placeholder="this.$trans('track.list.search', {}, null, true)" aria-label="Search">
+      </div>
+      <hr/>
+    </div>
 
     <ul class="list-group">
-      <li class="list-group-item container" v-for="track in trackList">
-        <track-list-item :track="track"></track-list-item>
+      <li class="list-group-item container" v-for="track in trackList" v-if="isItemMatchSearch(track.name)">
+        <track-list-item :track="track" />
       </li>
     </ul>
   </div>
@@ -19,6 +26,21 @@ export default {
     trackList: {
       type: Array,
       required: true
+    },
+    allowSearch: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {
+      search: ''
+    }
+  },
+  methods: {
+    isItemMatchSearch (name) {
+      if (this.search === '') return true
+      return name.toLowerCase().includes(this.search.toLowerCase())
     }
   }
 }
