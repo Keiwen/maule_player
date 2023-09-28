@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Assimilator\TrackCollectionAnalyser;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -42,6 +43,15 @@ class Album
      */
     private $importDate;
 
+
+
+    /**
+     * This is NOT a ORM field
+     * @var TrackCollectionAnalyser $trackCollectionAnalyser
+     */
+    private $trackCollectionAnalyser;
+
+
     public function __construct(string $name = '')
     {
         $this->setName($name);
@@ -51,7 +61,7 @@ class Album
 
     public static function retrieveExportFields()
     {
-        return ['id', 'name', 'tracksCount'];
+        return ['id', 'name', 'tracksCount', 'totalDuration', 'year'];
     }
 
 
@@ -85,6 +95,7 @@ class Album
         if (!$this->tracks->contains($track)) {
             $this->tracks[] = $track;
             $track->setAlbum($this);
+            $this->getTrackCollectionAnalyser()->addTrack($track);
         }
 
         return $this;
@@ -97,6 +108,7 @@ class Album
             if ($track->getAlbum() === $this) {
                 $track->setAlbum(null);
             }
+            $this->getTrackCollectionAnalyser()->removeTrack($track);
         }
 
         return $this;
@@ -122,4 +134,33 @@ class Album
 
         return $this;
     }
+
+    /**
+     * @return TrackCollectionAnalyser
+     */
+    protected function getTrackCollectionAnalyser(): TrackCollectionAnalyser
+    {
+        if (!$this->trackCollectionAnalyser) $this->trackCollectionAnalyser = new TrackCollectionAnalyser($this->tracks);
+        return $this->trackCollectionAnalyser;
+    }
+
+    /**
+     * @return float
+     * @Groups({"album"})
+     */
+    public function getTotalDuration(): float
+    {
+        return $this->getTrackCollectionAnalyser()->getTotalDuration();
+    }
+
+    /**
+     * @return string
+     * @Groups({"album"})
+     */
+    public function getYear(): string
+    {
+        return $this->getTrackCollectionAnalyser()->getYearExpression();
+    }
+
+
 }
