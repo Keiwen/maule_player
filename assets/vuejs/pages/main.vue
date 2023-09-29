@@ -43,7 +43,8 @@ export default {
   methods: {
     ...mapActions(['addError']),
     updateList () {
-      const {callData, callError} = useRemoteCall(URL_API.track_list)
+      const urlToCall = this.$url(URL_API.track_list, {})
+      const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallData = callData
       this.remoteCallError = callError
     }
