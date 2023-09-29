@@ -9,7 +9,7 @@
 
     <div class="container-fluid row">
 
-      <div class="col-2">
+      <div class="col-2 item-icon">
         <button class="btn btn-primary btn-play" @click="selectTrack">
           <i class="fa fa-play" />
         </button>
@@ -70,7 +70,11 @@ export default {
 }
 
 .btn-play {
-  color: var(--background);
+  width: 40px;
+  height: 40px;
+  svg {
+    height: 100%;
+  }
 }
 
 .track-duration {

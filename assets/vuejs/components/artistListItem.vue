@@ -52,16 +52,12 @@ export default {
   margin-right: -15px;
 }
 
-.item-icon svg {
-  height: 100%;
-  max-height: 50px;
-}
-
 .artist-link {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   svg {
     margin-left: -5px;
+    height: 100%;
   }
 }
 
