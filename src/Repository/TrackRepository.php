@@ -114,7 +114,9 @@ class TrackRepository extends ServiceEntityRepository
         foreach ($criteria as $field => $value) {
             if (strpos($field, '%') !== false) {
                 $field = str_replace('%', '', $field);
-                $qb->where('t.'.$field.' LIKE ?', '%' . $value . '%');
+                $qb->andWhere('t.'.$field.' LIKE :value_'.$field);
+                $qb->setParameter('value_'.$field, '%'.$value.'%');
+
             } else {
                 $qb->andWhere('t.'.$field.' = :value_'.$field);
                 $qb->setParameter(':value_'.$field, $value);

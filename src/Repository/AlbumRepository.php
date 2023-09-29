@@ -54,8 +54,9 @@ class AlbumRepository extends ServiceEntityRepository
     public function searchForName(string $search): array
     {
         return $this->createQueryBuilder('al')
-            ->where('al.name LIKE ?', '%' . $search . '%')
-            ->orderBy('name', 'ASC')
+            ->where('al.name LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->orderBy('al.name', 'ASC')
             ->getQuery()
             ->getResult()
             ;

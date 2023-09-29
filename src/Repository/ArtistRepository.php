@@ -47,8 +47,9 @@ class ArtistRepository extends ServiceEntityRepository
     public function searchForName(string $search): array
     {
         return $this->createQueryBuilder('a')
-            ->where('a.name LIKE ?', '%' . $search . '%')
-            ->orderBy('name', 'ASC')
+            ->where('a.name LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->orderBy('a.name', 'ASC')
             ->getQuery()
             ->getResult()
             ;
