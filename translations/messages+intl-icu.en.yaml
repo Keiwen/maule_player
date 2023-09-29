@@ -57,6 +57,10 @@ toggle:
 tooltip:
   click:
     edit: click to edit
+search:
+  global: search for track, artist or album
+  too_short: "It looks like your search query is too short. Please provide a more detailed query"
+  empty: no result found
 track:
   title: title
   year: year

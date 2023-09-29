@@ -9,6 +9,7 @@
         <script>
             const APP_LOCALE = '{{ app.request.locale }}';
             const URL_API = {
+                search: '{{ url('api_search', {q: ':q'}) }}',
                 track_list: '{{ url('api_track_list') }}',
                 artist_list: '{{ url('api_artist_list') }}',
                 album_list: '{{ url('api_album_list') }}',
