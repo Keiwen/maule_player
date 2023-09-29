@@ -4,7 +4,9 @@
     <div class="container-fluid row">
 
       <div class="col-2 item-icon">
-        <artist-icon />
+        <router-link :to="{ name: 'artist', params: { artist: artist }}" class="btn btn-primary artist-link">
+          <artist-icon />
+        </router-link>
       </div>
 
       <div class="col-10">
@@ -53,6 +55,14 @@ export default {
 .item-icon svg {
   height: 100%;
   max-height: 50px;
+}
+
+.artist-link {
+  width: 40px;
+  height: 40px;
+  svg {
+    margin-left: -5px;
+  }
 }
 
 

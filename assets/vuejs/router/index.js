@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '../pages/main'
 import Artists from '../pages/artists'
+import Artist from '../pages/artist'
 import Albums from '../pages/albums'
 
 Vue.use(Router)
@@ -22,6 +23,11 @@ export default new Router({
             path: '/artists/',
             name: 'artists',
             component: Artists
+        },
+        {
+            path: '/artist/',
+            name: 'artist',
+            component: Artist
         },
         {
             path: '/albums/',
