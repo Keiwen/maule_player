@@ -1626,16 +1626,16 @@
         },
         {
             "name": "keiwen/cacofony",
-            "version": "5.4.6",
+            "version": "5.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Keiwen/Cacofony.git",
-                "reference": "a53aac4b413b0b94b11d8c24be7c4e17748cdb02"
+                "reference": "0f38e4ee8d5dd37d0ab984fe50b6aa5219cf12e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Keiwen/Cacofony/zipball/a53aac4b413b0b94b11d8c24be7c4e17748cdb02",
-                "reference": "a53aac4b413b0b94b11d8c24be7c4e17748cdb02",
+                "url": "https://api.github.com/repos/Keiwen/Cacofony/zipball/0f38e4ee8d5dd37d0ab984fe50b6aa5219cf12e3",
+                "reference": "0f38e4ee8d5dd37d0ab984fe50b6aa5219cf12e3",
                 "shasum": ""
             },
             "require": {
@@ -1668,9 +1668,9 @@
             "description": "Custom Application Code Overlay for symfony",
             "support": {
                 "issues": "https://github.com/Keiwen/Cacofony/issues",
-                "source": "https://github.com/Keiwen/Cacofony/tree/5.4.6"
+                "source": "https://github.com/Keiwen/Cacofony/tree/5.4.8"
             },
-            "time": "2023-08-04T12:37:02+00:00"
+            "time": "2023-09-29T13:33:35+00:00"
         },
         {
             "name": "keiwen/utils",
