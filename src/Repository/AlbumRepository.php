@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Album;
+use App\Entity\Artist;
+use App\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,6 +18,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AlbumRepository extends ServiceEntityRepository
 {
+    const ORDER_RECENT = '';
+    const ORDER_NAME = 'name';
+    const ORDER_OLDEST = 'oldest';
+    const ORDER_IMPORTDATE = 'importDate';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Album::class);
@@ -86,29 +93,45 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param Artist $artist
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
+     * @return Album[]
+     */
+    public function searchByArtist(Artist $artist, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
+    {
+        $qb = $this->createQueryBuilder('al')
+            ->from(Track::class, 't')
+            ->where('t.artist = :artist')
+            ->setParameter('artist', $artist)
+            ->groupBy('al.id')
+            ;
 
-//    /**
-//     * @return Album[] Returns an array of Album objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        switch ($order) {
+            case self::ORDER_NAME:
+                $qb->addOrderBy('al.name', 'DESC');
+                break;
+            case self::ORDER_OLDEST:
+                $qb->addOrderBy('t.year', 'ASC');
+                break;
+            case self::ORDER_IMPORTDATE:
+                $qb->addOrderBy('al.importDate', 'DESC');
+                break;
+            default:
+                $qb->addOrderBy('t.year', 'DESC');
+        }
 
-//    public function findOneBySomeField($value): ?Album
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($limit)) {
+            $qb->setMaxResults($limit);
+        }
+        if (!empty($offset)) {
+            $qb->setFirstResult($offset);
+        }
+        return $qb->getQuery()
+            ->getResult();
+
+    }
+
 }

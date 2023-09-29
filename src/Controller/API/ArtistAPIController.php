@@ -4,6 +4,8 @@ namespace App\Controller\API;
 
 use App\Entity\Artist;
 use App\Entity\Track;
+use App\Entity\Album;
+use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
 use Keiwen\Cacofony\Http\Request;
@@ -108,6 +110,12 @@ class ArtistAPIController extends APIController
             array('id' => $artist->getId()),
             'section'
         );
+        $this->addApiLink(
+            $jsonReturn,
+            'api_artist_albums',
+            array('id' => $artist->getId()),
+            'section'
+        );
 
 
         return $this->renderJson($jsonReturn);
@@ -185,6 +193,88 @@ class ArtistAPIController extends APIController
         }
         $jsonReturn = array(
             'tracks' => $tracks
+        );
+        $this->addApiLink(
+            $jsonReturn,
+            'api_artist_get',
+            array('id' => $artist->getId()),
+        );
+
+        return $this->renderJson($jsonReturn);
+    }
+
+
+    /**
+     * @Get ("/{id}/albums", name="albums")
+     * @OA\Get (
+     *     summary="Get artist albums",
+     *     description="Get all albums where artist is included",
+     *     @OA\Parameter (
+     *          name="id",
+     *          in="path",
+     *          description="Artist ID",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter (
+     *          name="orderBy",
+     *          in="query",
+     *          description="Choose albums order.
+     *                      Leave it empty for the most recent first.
+     *                      Use 'name' for alphabetical order.
+     *                      Use 'oldest' to reverse default order.
+     *                      use 'importDate' to get most recently imported first.
+     *          ",
+     *          @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter (
+     *          name="limit",
+     *          in="query",
+     *          description="Maximum number of album returned. 0 or empty to get all albums.",
+     *          example="10",
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter (
+     *          name="offset",
+     *          in="query",
+     *          description="Displacement from the first matching result",
+     *          example="0",
+     *          @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response (
+     *          response=200,
+     *          description="List of albums",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="albums",
+     *                  type="array",
+     *                  @OA\Items(ref=@Model(type=Album::class, groups={"album"}))
+     *              )
+     *          )
+     *     )
+     * )
+     */
+    public function albums(Artist $artist, Request $request, AlbumRepository $albumRepository): JsonResponse
+    {
+        $orderBy = $request->getRequestParam('orderBy', StringSanitizer::FILTER_ALPHA, '');
+        $limit = $request->getRequestParam('limit', StringSanitizer::FILTER_INT, 0);
+        $offset = $request->getRequestParam('offset', StringSanitizer::FILTER_INT, 0);
+
+        $albumObjects = $albumRepository->searchByArtist($artist, $orderBy, $limit, $offset);
+
+        $albums = array();
+        foreach ($albumObjects as $albumObject) {
+            $album = $albumObject->toArray();
+            $this->addApiLink(
+                $album,
+                'api_album_get',
+                array('id' => $albumObject->getId()),
+            );
+            $albums[] = $album;
+        }
+        $jsonReturn = array(
+            'albums' => $albums
         );
         $this->addApiLink(
             $jsonReturn,
