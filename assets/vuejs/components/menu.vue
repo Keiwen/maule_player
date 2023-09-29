@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-4 text-center">
       <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu menu-active">
-        <artist-icon class="artist-icon" />
+        <band-icon class="band-icon" />
       </router-link>
     </div>
     <div class="col-4 text-center">
@@ -18,11 +18,11 @@
 
 <script>
 import {mapActions} from "vuex";
-import artistIcon from "./artistIcon";
+import bandIcon from "./bandIcon";
 
 export default {
   name: "appMenu",
-  components: { artistIcon },
+  components: { bandIcon },
   methods: {
     ...mapActions(['resetState'])
   }
@@ -43,7 +43,7 @@ svg {
   }
 }
 
-.artist-icon {
+.band-icon {
   padding-top: 0;
 }
 
