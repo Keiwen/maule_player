@@ -52,18 +52,7 @@ class TrackRepository extends ServiceEntityRepository
      */
     public function findAllFullTrack()
     {
-        $qb = $this->createQueryBuilder('t')
-            ->addSelect('a', 'al')
-            ->innerJoin('t.artist', 'a')
-            ->innerJoin('t.album', 'al')
-            ;
-//        foreach ($this->getBasicOrderBy() as $field => $order) {
-//            $qb->addOrderBy('t.'.$field, $order);
-//        }
-        $qb->addOrderBy('t.name', 'ASC');
-        return $qb->getQuery()
-            ->getResult();
-
+        return $this->findFullTracksBy(array(), self::ORDER_NAME);
     }
 
     public function add(Track $entity, bool $flush = false): void
@@ -96,13 +85,13 @@ class TrackRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Artist $artist
+     * @param array $criteria field => value. Prefix field with '%' to switch 'where field like %value%'
      * @param string $order use class constants
      * @param int $limit
      * @param int $offset
      * @return Track[]
      */
-    public function findByArtist(Artist $artist, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
+    public function findFullTracksBy(array $criteria, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
         $orderBy = $this->getBasicOrderBy();
         switch ($order) {
@@ -121,9 +110,16 @@ class TrackRepository extends ServiceEntityRepository
             ->addSelect('a', 'al')
             ->innerJoin('t.artist', 'a')
             ->innerJoin('t.album', 'al')
-            ->where('t.artist = :artist')
-            ->setParameter('artist', $artist)
         ;
+        foreach ($criteria as $field => $value) {
+            if (strpos($field, '%') !== false) {
+                $field = str_replace('%', '', $field);
+                $qb->where('t.'.$field.' LIKE ?', '%' . $value . '%');
+            } else {
+                $qb->andWhere('t.'.$field.' = :value_'.$field);
+                $qb->setParameter(':value_'.$field, $value);
+            }
+        }
         foreach ($orderBy as $field => $order) {
             $qb->addOrderBy('t.'.$field, $order);
         }
@@ -139,36 +135,52 @@ class TrackRepository extends ServiceEntityRepository
 
 
     /**
-     * @param Album $album
+     * @param Artist $artist
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
      * @return Track[]
      */
-    public function findByAlbum(Album $album): array
+    public function findByArtist(Artist $artist, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
-        return $this->findBy(['album' => $album], $this->getBasicOrderBy());
+        return $this->findFullTracksBy(array('artist' => $artist), $order, $limit, $offset);
+    }
+
+
+    /**
+     * @param Album $album
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
+     * @return Track[]
+     */
+    public function findByAlbum(Album $album, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
+    {
+        return $this->findFullTracksBy(array('album' => $album), $order, $limit, $offset);
     }
 
     /**
      * @param int|null $year
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
      * @return Track[]
      */
-    public function findByYear(?int $year): array
+    public function findByYear(?int $year, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
-        return $this->findBy(['year' => $year], $this->getBasicOrderBy());
+        return $this->findFullTracksBy(array('year' => $year), $order, $limit, $offset);
     }
 
     /**
      * @param string $search
+     * @param string $order use class constants
+     * @param int $limit
+     * @param int $offset
      * @return Track[]
      */
-    public function searchForName(string $search): array
+    public function searchForName(string $search, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.name LIKE ?', '%' . $search . '%')
-            ->orderBy('trackNumber', 'ASC')
-            ->orderBy('year', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findFullTracksBy(array('%name' => $search), $order, $limit, $offset);
     }
 
     /**
