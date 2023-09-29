@@ -69,6 +69,7 @@ track:
     error: cannot load tracks
 artist:
   name: artist
+  recent_tracks: 5 most recent tracks
   list:
     title: artists
     search: search for artists

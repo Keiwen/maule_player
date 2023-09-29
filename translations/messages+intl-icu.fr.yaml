@@ -69,6 +69,7 @@ track:
     error: impossible de charger les pistes
 artist:
   name: artiste
+  recent_tracks: 5 pistes les plus récentes
   list:
     title: artistes
     search: rechercher des artistes
