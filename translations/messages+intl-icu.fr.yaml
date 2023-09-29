@@ -70,6 +70,7 @@ track:
 artist:
   name: artiste
   recent_tracks: 5 pistes les plus récentes
+  discography: discographie
   list:
     title: artistes
     search: rechercher des artistes
