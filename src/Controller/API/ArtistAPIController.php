@@ -117,7 +117,7 @@ class ArtistAPIController extends APIController
     /**
      * @Get ("/{id}/tracks", name="tracks")
      * @OA\Get (
-     *     summary="Get artist tacks",
+     *     summary="Get artist tracks",
      *     description="Get all tracks from artist",
      *     @OA\Parameter (
      *          name="id",
