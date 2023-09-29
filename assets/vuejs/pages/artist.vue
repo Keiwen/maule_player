@@ -1,11 +1,18 @@
 <template>
   <div>
     <h1><artist-icon /> {{ artist.name }}</h1>
-    <h2>{{ this.$trans('artist.discography', {}, null, true) }}</h2>
-    <album-list :album-list="albumList" :allowSearch="false"></album-list>
 
-    <h2>{{ this.$trans('artist.recent_tracks', {}, null, true) }}</h2>
-    <track-list :track-list="trackList" :allowSearch="false"></track-list>
+    <vue-tiny-tabs id="artist-tabs" :anchor="false" :closable="false" :hideTitle="true">
+      <div class="section" id="tab-discography">
+        <h2 class="title">{{ this.$trans('artist.discography', {}, null, true) }}</h2>
+        <album-list :album-list="albumList" :allowSearch="false"></album-list>
+      </div>
+      <div class="section" id="tab-recent">
+        <h2 class="title">{{ this.$trans('artist.recent_tracks', {}, null, true) }}</h2>
+        <track-list :track-list="trackList" :allowSearch="false"></track-list>
+      </div>
+    </vue-tiny-tabs>
+
   </div>
 </template>
 
@@ -15,10 +22,11 @@ import {mapActions} from "vuex";
 import ArtistIcon from "../components/artistIcon";
 import TrackList from "../components/trackList";
 import AlbumList from "../components/albumList";
+import VueTinyTabs from 'vue-tiny-tabs';
 
 export default {
   name: "artistPage",
-  components: { TrackList, ArtistIcon, AlbumList },
+  components: { TrackList, ArtistIcon, AlbumList, VueTinyTabs },
   data () {
     return {
       artist: {},

@@ -34,6 +34,7 @@
         "vue-enhanced-check": "^1.5.5",
         "vue-loader": "^15.10.0",
         "vue-router": "^3.6.5",
+        "vue-tiny-tabs": "^1.0.5",
         "vuex": "^2.5.0",
         "vuex-persistedstate": "^2.7.1",
         "yaml-loader": "^0.8.0"

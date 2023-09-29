@@ -1,0 +1,39 @@
+/*
+This is for tiny-tabs override styles
+ */
+
+.tinytabs {
+  .tabs {
+    margin-left: 5px;
+    display: flex;
+    flex-flow: row wrap;
+
+    .tab {
+      margin: 0 5px 0 0;
+      background: $background;
+      display: block;
+      padding: 5px 10px;
+      text-decoration: none;
+      color: $base-color;
+      font-weight: bold;
+      border-radius: 5px 5px 0 0;
+      border: 1px solid $base-color;
+
+      &:before {
+        height: 0;
+      }
+
+      &.sel {
+        background: $base-color;
+        color: $background;
+        text-shadow: none;
+      }
+    }
+  }
+
+  .section {
+    padding: 5px 10px;
+    border: 1px solid $base-color;
+    border-width: 1px 0 0 0;
+  }
+}

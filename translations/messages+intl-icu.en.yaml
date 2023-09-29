@@ -69,7 +69,7 @@ track:
     error: cannot load tracks
 artist:
   name: artist
-  recent_tracks: 5 most recent tracks
+  recent_tracks: recent tracks
   discography: discography
   list:
     title: artists
