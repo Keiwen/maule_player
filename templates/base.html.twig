@@ -13,6 +13,7 @@
                 artist_list: '{{ url('api_artist_list') }}',
                 album_list: '{{ url('api_album_list') }}',
                 artist_tracks: '{{ url('api_artist_tracks', {id: ':id', limit: ':limit'}) }}',
+                album_tracks: '{{ url('api_album_tracks', {id: ':id'}) }}',
             };
         </script>
 

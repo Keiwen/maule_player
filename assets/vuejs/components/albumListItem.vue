@@ -4,7 +4,9 @@
     <div class="container-fluid row">
 
       <div class="col-2 item-icon">
-        <i class="fa fa-compact-disc"/>
+        <router-link :to="{ name: 'album', params: { album: album }}" class="btn btn-primary album-link">
+          <album-icon />
+        </router-link>
       </div>
 
       <div class="col-10">
@@ -24,9 +26,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import albumIcon from "./albumIcon";
 
 export default {
   name: "albumListItem",
+  components: { albumIcon },
   props: {
     album: {
       type: Object,
@@ -61,9 +65,14 @@ export default {
   margin-right: -15px;
 }
 
-.item-icon svg {
-  height: 100%;
-  max-height: 50px;
+.album-link {
+  width: 50px;
+  height: 50px;
+  svg {
+    margin-left: -5px;
+    height: 100%;
+  }
 }
+
 
 </style>

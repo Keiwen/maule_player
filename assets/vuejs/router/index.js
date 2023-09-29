@@ -4,6 +4,7 @@ import Main from '../pages/main'
 import Artists from '../pages/artists'
 import Artist from '../pages/artist'
 import Albums from '../pages/albums'
+import Album from '../pages/album'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
             path: '/albums/',
             name: 'albums',
             component: Albums
+        },
+        {
+            path: '/album/',
+            name: 'album',
+            component: Album
         }
     ]
 })
