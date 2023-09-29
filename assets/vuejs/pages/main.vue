@@ -9,14 +9,30 @@
     </div>
     <hr/>
 
-    <h2>{{ this.$trans('track.list.title', {}, null, true) }}</h2>
-    <track-list :track-list="trackList" :allowSearch="false"></track-list>
+    <vue-tiny-tabs id="search-tabs" :anchor="false" :closable="false" :hideTitle="true" v-if="!isLoading">
+      <div class="section" id="tab-tracks" v-if="trackList.length">
+        <h2 class="title">
+          {{ this.$trans('track.list.title', {}, null, true) }}
+          <span class="resultCount badge badge-light">{{ trackList.length }}</span>
+        </h2>
+        <track-list :track-list="trackList" :allowSearch="false"></track-list>
+      </div>
+      <div class="section" id="tab-artists" v-if="artistList.length">
+        <h2 class="title">
+          {{ this.$trans('artist.list.title', {}, null, true) }}
+          <span class="resultCount badge badge-light">{{ artistList.length }}</span>
+        </h2>
+        <artist-list :artist-list="artistList" :allowSearch="false"></artist-list>
+      </div>
+      <div class="section" id="tab-albums" v-if="albumList.length">
+        <h2 class="title">
+          {{ this.$trans('album.list.title', {}, null, true) }}
+          <span class="resultCount badge badge-light">{{ albumList.length }}</span>
+        </h2>
+        <album-list :album-list="albumList" :allowSearch="false"></album-list>
+      </div>
+    </vue-tiny-tabs>
 
-    <h2>{{ this.$trans('artist.list.title', {}, null, true) }}</h2>
-    <artist-list :artist-list="artistList" :allowSearch="false"></artist-list>
-
-    <h2>{{ this.$trans('album.list.title', {}, null, true) }}</h2>
-    <album-list :album-list="albumList" :allowSearch="false"></album-list>
   </div>
 </template>
 
@@ -25,11 +41,15 @@ import {useRemoteCall} from "../composables/useRemoteCall";
 import TrackList from "../components/trackList";
 import ArtistList from "../components/artistList";
 import AlbumList from "../components/albumList";
+// NOTE: tiny tabs does not have dynamic title. By default, changing title does not change tab text
+// here we use v-if isLoading on full tiny-tab component. That way, component reload after remote call
+// and then update the texts.
+import VueTinyTabs from 'vue-tiny-tabs';
 import {mapActions} from "vuex";
 
 export default {
   name: "mainPage",
-  components: { TrackList, ArtistList, AlbumList },
+  components: { TrackList, ArtistList, AlbumList, VueTinyTabs },
   data () {
     return {
       remoteCallData: {},
@@ -43,7 +63,7 @@ export default {
   computed: {
     isLoading () {
       return (this.remoteCallData == null && this.remoteCallError == null)
-    },
+    }
   },
   watch: {
     remoteCallData: function(newValue, oldValue) {
@@ -65,6 +85,8 @@ export default {
   methods: {
     ...mapActions(['addError', 'addWarning']),
     updateSearch () {
+      this.remoteCallData = null
+      this.remoteCallError = null
       this.trackList = []
       this.artistList = []
       this.albumList = []
