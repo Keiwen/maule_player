@@ -77,6 +77,7 @@ artist:
     error: cannot load artists
 album:
   name: album
+  all_tracks: tracks
   list:
     title: albums
     search: search for albums
