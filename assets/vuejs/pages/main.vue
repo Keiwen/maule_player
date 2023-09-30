@@ -1,5 +1,12 @@
 <template>
   <div>
+
+    <div class="container btn-group mt-2">
+      <router-link :to="{name: 'settings'}" class="btn btn-dark">
+        <i class="fa fa-gears" /> {{ this.$trans('settings.title', {}, null, true) }}
+      </router-link>
+    </div>
+
     <div class="form-inline row mt-2 mx-2">
       <input class="form-control col-10" type="search" v-model="search" @keyup.enter="updateSearch"
              :placeholder="this.$trans('search.global', {}, null, true)" aria-label="Search">
