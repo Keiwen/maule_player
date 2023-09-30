@@ -90,3 +90,4 @@ album:
 settings:
   title: paramètres
   reset: réinitialiser
+  locale: langue

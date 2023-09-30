@@ -8,6 +8,14 @@
 
         <script>
             const APP_LOCALE = '{{ app.request.locale }}';
+            const LOCALE_NAMES = {
+                en: '{{ 'en'|intlLocaleName('en')|ucfirst }}',
+                fr: '{{ 'fr'|intlLocaleName('fr')|ucfirst }}',
+            };
+            const URL_LOCALE = {
+                en: '{{ getLocalizedUrl('en') }}',
+                fr: '{{ getLocalizedUrl('fr') }}',
+            };
             const URL_API = {
                 search: '{{ url('api_search', {q: ':q'}) }}',
                 track_list: '{{ url('api_track_list') }}',
