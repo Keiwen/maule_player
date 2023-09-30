@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="container btn-group mt-2">
+    <div class="container btn-group btn-group-sm mt-2">
       <router-link :to="{name: 'settings'}" class="btn btn-dark">
         <i class="fa fa-gears" /> {{ this.$trans('settings.title', {}, null, true) }}
       </router-link>
