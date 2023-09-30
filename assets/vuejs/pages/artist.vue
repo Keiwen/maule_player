@@ -12,6 +12,7 @@
         <track-list :track-list="trackList" :allowSearch="false"></track-list>
       </div>
     </vue-tiny-tabs>
+    <loading-icon v-if="isLoading" />
 
   </div>
 </template>
@@ -23,10 +24,11 @@ import ArtistIcon from "../components/artistIcon";
 import TrackList from "../components/trackList";
 import AlbumList from "../components/albumList";
 import VueTinyTabs from 'vue-tiny-tabs';
+import loadingIcon from "../components/loadingIcon";
 
 export default {
   name: "artistPage",
-  components: { TrackList, ArtistIcon, AlbumList, VueTinyTabs },
+  components: { TrackList, ArtistIcon, AlbumList, VueTinyTabs, loadingIcon },
   data () {
     return {
       artist: {},

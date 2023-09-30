@@ -2,6 +2,7 @@
   <div>
     <h1>{{ this.$trans('artist.list.title', {}, null, true) }}</h1>
     <artist-list :artist-list="artistList"></artist-list>
+    <loading-icon v-if="isLoading" />
   </div>
 </template>
 
@@ -9,10 +10,11 @@
 import {useRemoteCall} from "../composables/useRemoteCall";
 import ArtistList from "../components/artistList";
 import {mapActions} from "vuex";
+import loadingIcon from "../components/loadingIcon";
 
 export default {
   name: "artistsPage",
-  components: { ArtistList },
+  components: { ArtistList, loadingIcon },
   data () {
     return {
       remoteCallData: {},

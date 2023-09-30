@@ -2,6 +2,7 @@
   <div>
     <h1>{{ this.$trans('album.list.title', {}, null, true) }}</h1>
     <album-list :album-list="albumList"></album-list>
+    <loading-icon v-if="isLoading" />
   </div>
 </template>
 
@@ -9,10 +10,11 @@
 import {useRemoteCall} from "../composables/useRemoteCall";
 import AlbumList from "../components/albumList";
 import {mapActions} from "vuex";
+import loadingIcon from "../components/loadingIcon";
 
 export default {
   name: "albumsPage",
-  components: { AlbumList },
+  components: { AlbumList, loadingIcon },
   data () {
     return {
       remoteCallData: {},

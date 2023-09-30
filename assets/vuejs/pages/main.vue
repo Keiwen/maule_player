@@ -40,6 +40,8 @@
       </div>
     </vue-tiny-tabs>
 
+    <loading-icon v-if="isLoading" />
+
   </div>
 </template>
 
@@ -53,10 +55,11 @@ import AlbumList from "../components/albumList";
 // and then update the texts.
 import VueTinyTabs from 'vue-tiny-tabs';
 import {mapActions} from "vuex";
+import loadingIcon from "../components/loadingIcon";
 
 export default {
   name: "mainPage",
-  components: { TrackList, ArtistList, AlbumList, VueTinyTabs },
+  components: { TrackList, ArtistList, AlbumList, VueTinyTabs, loadingIcon },
   data () {
     return {
       remoteCallData: {},
@@ -98,6 +101,7 @@ export default {
       this.artistList = []
       this.albumList = []
       if (this.search.length < 3) {
+        this.remoteCallData = {}
         this.addWarning(this.$trans('search.too_short', {}, null, true))
         return
       }

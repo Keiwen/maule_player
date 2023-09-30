@@ -3,6 +3,7 @@
     <h1><album-icon /> {{ album.name }}</h1>
     <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
     <track-list :track-list="trackList" :allowSearch="false"></track-list>
+    <loading-icon v-if="isLoading" />
   </div>
 </template>
 
@@ -11,10 +12,11 @@ import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions} from "vuex";
 import AlbumIcon from "../components/albumIcon";
 import TrackList from "../components/trackList";
+import loadingIcon from "../components/loadingIcon";
 
 export default {
   name: "albumPage",
-  components: { TrackList, AlbumIcon },
+  components: { TrackList, AlbumIcon, loadingIcon },
   data () {
     return {
       album: {},
