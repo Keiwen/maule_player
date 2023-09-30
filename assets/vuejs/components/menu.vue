@@ -11,8 +11,8 @@
       </router-link>
     </div>
     <div class="col-4 text-center">
-      <router-link :to="{name: 'settings'}" class="btn btn-primary btn-menu">
-        <i class="fa fa-gears" />
+      <router-link :to="{name: 'playlist'}" class="btn btn-primary btn-menu">
+        <playlist-icon class="playlist-icon" />
       </router-link>
     </div>
   </div>
@@ -21,10 +21,11 @@
 <script>
 import {mapActions} from "vuex";
 import bandIcon from "./bandIcon";
+import playlistIcon from "./playlistIcon";
 
 export default {
   name: "appMenu",
-  components: { bandIcon },
+  components: { bandIcon, playlistIcon },
   methods: {
     ...mapActions(['resetState'])
   }
@@ -46,6 +47,9 @@ svg {
 }
 
 .band-icon {
+  padding-top: 0;
+}
+.playlist-icon {
   padding-top: 0;
 }
 

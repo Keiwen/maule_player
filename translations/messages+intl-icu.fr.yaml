@@ -91,3 +91,5 @@ settings:
   title: paramètres
   reset: réinitialiser
   locale: langue
+playlist:
+  title: liste de lecture

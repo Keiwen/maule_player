@@ -91,3 +91,5 @@ settings:
   title: settings
   reset: reset
   locale: language
+playlist:
+  title: playlist
