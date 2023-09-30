@@ -4,7 +4,6 @@ user:
   username: username
   password: password
   logged: You are logged in as {username}
-settings: settings
 menu: menu
 cookie.about: about cookies
 cookie.disclaimer: this application is using some cookies to run properly. However, it does *not* use third-party cookies. These cookie does not store any personnal identification data.
@@ -88,3 +87,6 @@ album:
     search: search for albums
     empty: no album available
     error: cannot load albums
+settings:
+  title: settings
+  reset: reset

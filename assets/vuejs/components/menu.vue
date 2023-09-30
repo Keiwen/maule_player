@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-4 text-center">
-      <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu menu-active">
+      <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu">
         <band-icon class="band-icon" />
       </router-link>
     </div>
@@ -11,7 +11,9 @@
       </router-link>
     </div>
     <div class="col-4 text-center">
-      <button class="btn btn-primary btn-menu" @click="resetState">Reset</button>
+      <router-link :to="{name: 'settings'}" class="btn btn-primary btn-menu">
+        <i class="fa fa-gears" />
+      </router-link>
     </div>
   </div>
 </template>

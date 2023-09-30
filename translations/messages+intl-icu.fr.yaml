@@ -4,7 +4,6 @@ user:
   username: nom d'utilisateur
   password: mot de passe
   logged: Vous êtes connecté en tant que {username}
-settings: paramètres
 menu: menu
 cookie.about: À propos des cookies
 cookie.disclaimer: cette application utilise des cookies pour fonctionner correctement. Toutefois, elle n'utilise *pas* de cookie tiers provenant d'autres sites. Ces cookies ne stockent aucune information d’identification personnelle.
@@ -88,3 +87,6 @@ album:
     search: rechercher des albums
     empty: aucun album disponible
     error: impossible de charger les albums
+settings:
+  title: paramètres
+  reset: réinitialiser

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '../pages/main'
+import Settings from "../pages/settings";
 import Artists from '../pages/artists'
 import Artist from '../pages/artist'
 import Albums from '../pages/albums'
@@ -19,6 +20,11 @@ export default new Router({
             path: '/',
             name: 'main',
             component: Main
+        },
+        {
+            path: '/settings',
+            name: 'settings',
+            component: Settings
         },
         {
             path: '/artists/',
