@@ -17,10 +17,12 @@ const persistOptions = {
 export default new Vuex.Store({
   state: {
     currentTrack: {},
+    currentTrackIndex: -1,
     currentPlaylist: []
   },
   getters: {
     currentTrack: state => state.currentTrack,
+    currentTrackIndex: state => state.currentTrackIndex,
     currentPlaylist: state => state.currentPlaylist,
     playedMediaFilepath: state => state.currentTrack.filepath,
     getLimitedTitle: () => (title, limit = 20) => {
@@ -56,13 +58,24 @@ export default new Vuex.Store({
   actions: {
     setCurrentTrack ({commit}, track) {
       commit(types.SET_CURRENT_TRACK, track)
+      commit(types.SET_CURRENT_TRACK_INDEX, -1)
     },
-    addTracksInPlaylist ({commit, dispatch}, tracks) {
+    playTrackInPlaylist ({state, commit}, index) {
+      if (state.currentPlaylist[index] === undefined) return
+      commit(types.SET_CURRENT_TRACK, state.currentPlaylist[index])
+      commit(types.SET_CURRENT_TRACK_INDEX, index)
+    },
+    addTracksInPlaylist ({state, commit, dispatch}, tracks) {
+      const previousPlaylistLength = state.currentPlaylist.length
       commit(types.ADD_TRACKS_IN_PLAYLIST, tracks)
       dispatch('addSuccess', this._vm.$trans('playlist.added', {}, null, true))
+      if (previousPlaylistLength === 0 && state.currentPlaylist.length > 0) {
+        dispatch('playTrackInPlaylist', 0)
+      }
     },
     emptyPlaylist ({commit}) {
       commit(types.EMPTY_PLAYLIST)
+      commit(types.SET_CURRENT_TRACK_INDEX, -1)
     },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
@@ -73,6 +86,9 @@ export default new Vuex.Store({
   mutations: {
     [types.SET_CURRENT_TRACK] (state, track) {
       state.currentTrack = track
+    },
+    [types.SET_CURRENT_TRACK_INDEX] (state, trackIndex) {
+      state.currentTrackIndex = trackIndex
     },
     [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
       state.currentPlaylist = state.currentPlaylist.concat(tracks)
