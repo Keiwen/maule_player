@@ -16,10 +16,12 @@ const persistOptions = {
 
 export default new Vuex.Store({
   state: {
-    currentTrack: {}
+    currentTrack: {},
+    currentPlaylist: []
   },
   getters: {
     currentTrack: state => state.currentTrack,
+    currentPlaylist: state => state.currentPlaylist,
     playedMediaFilepath: state => state.currentTrack.filepath,
     getLimitedTitle: () => (title, limit = 20) => {
       if (title.length <= limit) return title
@@ -55,6 +57,12 @@ export default new Vuex.Store({
     setCurrentTrack ({commit}, track) {
       commit(types.SET_CURRENT_TRACK, track)
     },
+    addTracksInPlaylist ({commit}, tracks) {
+      commit(types.ADD_TRACKS_IN_PLAYLIST, tracks)
+    },
+    emptyPlaylist ({commit}) {
+      commit(types.EMPTY_PLAYLIST)
+    },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
       localStorage.removeItem(persistOptions.key)
@@ -64,6 +72,12 @@ export default new Vuex.Store({
   mutations: {
     [types.SET_CURRENT_TRACK] (state, track) {
       state.currentTrack = track
+    },
+    [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
+      state.currentTrack = state.currentTrack.concat(tracks)
+    },
+    [types.EMPTY_PLAYLIST] (state) {
+      state.currentPlaylist = []
     }
   },
   modules: {

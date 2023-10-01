@@ -93,3 +93,4 @@ settings:
   locale: language
 playlist:
   title: playlist
+  empty: empty playlist

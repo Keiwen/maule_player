@@ -93,3 +93,4 @@ settings:
   locale: langue
 playlist:
   title: liste de lecture
+  empty: vider la playlist
