@@ -7,17 +7,25 @@
       {{ this.$trans('playlist.empty', {}, null, true) }}
     </button>
     <hr/>
+
+    <track-list :track-list="currentPlaylist" :allowSearch="false" :playlist-display="true"></track-list>
+
   </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapGetters, mapActions} from "vuex";
+import TrackList from "../components/trackList";
 
 export default {
   name: "playlistPage",
+  components: { TrackList },
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters(['currentPlaylist'])
   },
   methods: {
     ...mapActions(['emptyPlaylist'])
