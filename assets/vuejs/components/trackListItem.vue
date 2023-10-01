@@ -10,7 +10,7 @@
     <div class="container-fluid row">
 
       <div class="col-2 item-icon">
-        <button class="btn btn-primary btn-play" @click="selectTrack">
+        <button class="btn btn-primary btn-playlist" @click="selectTrack">
           <i class="fa fa-folder-plus" />
         </button>
       </div>
@@ -69,7 +69,7 @@ export default {
   font-weight: bold;
 }
 
-.btn-play {
+.btn-playlist {
   width: 40px;
   height: 40px;
   svg {
