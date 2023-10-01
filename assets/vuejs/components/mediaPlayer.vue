@@ -53,7 +53,12 @@ export default {
       this.percentProgress = 0
       if (this.audioElement !== null) {
         this.audioElement.load() // reload audio component
-        this.audioElement.play()
+        if (newValue.name !== undefined) {
+          this.audioElement.play()
+        } else {
+          this.audioElement.pause()
+          this.playingAudio = false
+        }
       }
       this.playingAudio = true
     }
