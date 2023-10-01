@@ -11,7 +11,7 @@
 
       <div class="col-2 item-icon">
         <button class="btn btn-primary btn-play" @click="selectTrack">
-          <i class="fa fa-play" />
+          <i class="fa fa-folder-plus" />
         </button>
       </div>
       <div class="col-10 row">
@@ -51,9 +51,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setCurrentTrack']),
+    ...mapActions(['addTracksInPlaylist']),
     selectTrack() {
-      this.setCurrentTrack(this.track)
+      this.addTracksInPlaylist([this.track])
     }
   }
 }
@@ -74,6 +74,7 @@ export default {
   height: 40px;
   svg {
     height: 100%;
+    margin-left: -6px;
   }
 }
 

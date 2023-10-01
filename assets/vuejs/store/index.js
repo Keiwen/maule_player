@@ -57,8 +57,9 @@ export default new Vuex.Store({
     setCurrentTrack ({commit}, track) {
       commit(types.SET_CURRENT_TRACK, track)
     },
-    addTracksInPlaylist ({commit}, tracks) {
+    addTracksInPlaylist ({commit, dispatch}, tracks) {
       commit(types.ADD_TRACKS_IN_PLAYLIST, tracks)
+      dispatch('addSuccess', this._vm.$trans('playlist.added', {}, null, true))
     },
     emptyPlaylist ({commit}) {
       commit(types.EMPTY_PLAYLIST)
@@ -74,7 +75,7 @@ export default new Vuex.Store({
       state.currentTrack = track
     },
     [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
-      state.currentTrack = state.currentTrack.concat(tracks)
+      state.currentPlaylist = state.currentPlaylist.concat(tracks)
     },
     [types.EMPTY_PLAYLIST] (state) {
       state.currentPlaylist = []
