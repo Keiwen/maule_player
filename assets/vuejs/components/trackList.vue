@@ -10,7 +10,8 @@
 
     <ul class="list-group">
       <li class="list-group-item container" v-for="track in trackList" v-if="isItemMatchSearch(track.name)">
-        <track-list-item :track="track" />
+        <playlist-track-item :track="track" v-if="playlistDisplay" />
+        <track-list-item :track="track" v-else />
       </li>
     </ul>
   </div>
@@ -18,10 +19,11 @@
 
 <script>
 import trackListItem from "./trackListItem";
+import playlistTrackItem from "./playlistTrackItem";
 
 export default {
   name: "trackList",
-  components: { trackListItem },
+  components: { trackListItem, playlistTrackItem },
   props: {
     trackList: {
       type: Array,
@@ -30,6 +32,10 @@ export default {
     allowSearch: {
       type: Boolean,
       default: true
+    },
+    playlistDisplay: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
