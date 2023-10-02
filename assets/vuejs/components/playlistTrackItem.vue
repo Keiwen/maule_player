@@ -1,7 +1,10 @@
 <template>
-  <div class="row">
+  <div class="row" :class="{'item-active': isCurrent}">
 
     <div class="col-2 item-icon">
+      <button class="btn btn-secondary btn-pause" disabled>
+        <i class="fa fa-pause" />
+      </button>
       <button class="btn btn-primary btn-play" @click="selectTrack">
         <i class="fa fa-play" />
       </button>
@@ -36,7 +39,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getLimitedTitle'])
+    ...mapGetters(['getLimitedTitle', 'currentTrackIndex']),
+    isCurrent () {
+      return this.trackIndex === this.currentTrackIndex
+    }
   },
   methods: {
     ...mapActions(['playTrackInPlaylist']),
@@ -53,11 +59,24 @@ export default {
   font-weight: bold;
 }
 
-.btn-play {
+.btn-play,.btn-pause {
   width: 50px;
   height: 50px;
   svg {
     height: 100%;
+  }
+}
+
+.btn-pause {
+  display: none;
+}
+
+.item-active {
+  .btn-play {
+    display: none;
+  }
+  .btn-pause {
+    display: block;
   }
 }
 
