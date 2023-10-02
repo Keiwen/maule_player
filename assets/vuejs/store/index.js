@@ -25,6 +25,12 @@ export default new Vuex.Store({
     currentTrackIndex: state => state.currentTrackIndex,
     currentPlaylist: state => state.currentPlaylist,
     playedMediaFilepath: state => state.currentTrack.filepath,
+    getNextPlaylistIndex: (state) => () => {
+      const playlistLength = state.currentPlaylist.length
+      if (playlistLength === 0) return -1
+      if ((state.currentTrackIndex + 1) >= playlistLength) return -1
+      return state.currentTrackIndex + 1
+    },
     getLimitedTitle: () => (title, limit = 20) => {
       if (title.length <= limit) return title
       return title.substring(0, limit - 1) + '...'

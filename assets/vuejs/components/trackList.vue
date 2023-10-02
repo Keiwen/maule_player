@@ -9,8 +9,8 @@
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item container" v-for="track in trackList" v-if="isItemMatchSearch(track.name)">
-        <playlist-track-item :track="track" v-if="playlistDisplay" />
+      <li class="list-group-item container" v-for="(track, trackIndex) in trackList" v-if="isItemMatchSearch(track.name)">
+        <playlist-track-item :track="track" :track-index="trackIndex" v-if="playlistDisplay" />
         <track-list-item :track="track" v-else />
       </li>
     </ul>

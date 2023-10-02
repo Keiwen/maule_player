@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import playButton from "./playButton";
 import timeline from "./timeline";
 
@@ -77,7 +77,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTrack', 'getDisplayTime']),
+    ...mapGetters(['currentTrack', 'currentTrackIndex', 'getNextPlaylistIndex', 'getDisplayTime']),
     mediaSrc () {
       return '/media_lib/' + this.currentTrack.filepath;
     },
@@ -92,6 +92,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['playTrackInPlaylist']),
     togglePlay () {
       if (this.audioElement !== null) {
         if (this.audioElement.paused) {
@@ -117,6 +118,10 @@ export default {
     },
     audioEnded (e) {
       this.playingAudio = false
+      const nextIndex = this.getNextPlaylistIndex()
+      if (nextIndex !== -1) {
+        this.playTrackInPlaylist(nextIndex)
+      }
     },
     audioError (e) {
       this.playingAudio = false

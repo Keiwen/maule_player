@@ -29,15 +29,19 @@ export default {
     track: {
       type: Object,
       required: true
+    },
+    trackIndex: {
+      type: Number,
+      required: true
     }
   },
   computed: {
     ...mapGetters(['getLimitedTitle'])
   },
   methods: {
-    ...mapActions(['setCurrentTrack']),
+    ...mapActions(['playTrackInPlaylist']),
     selectTrack() {
-      this.setCurrentTrack(this.track)
+      this.playTrackInPlaylist(this.trackIndex)
     }
   }
 }
