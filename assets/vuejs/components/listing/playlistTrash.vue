@@ -34,16 +34,17 @@ export default {
   opacity: 0.8;
   z-index: 10;
   position: absolute;
-  bottom: 0;
+  bottom: -105px;
   left: 0;
   width: 100%;
   height: 105px;
   border: 5px dashed var(--dark);
   text-align: center;
-  display: none;
+  transition: bottom 0.5s ease-out;
 
   &.show {
-    display: block;
+    bottom: 0;
+    transition: bottom 0.5s ease-out;
   }
 
   .trash-item {
