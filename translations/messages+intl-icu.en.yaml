@@ -82,6 +82,8 @@ artist:
 album:
   name: album
   all_tracks: tracks
+  add_to_playlist: add to playlist
+  set_as_playlist: play all tracks
   list:
     title: albums
     search: search for albums

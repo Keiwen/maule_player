@@ -82,6 +82,8 @@ artist:
 album:
   name: album
   all_tracks: pistes
+  add_to_playlist: ajouter à la liste de lecture
+  set_as_playlist: jouer toutes les pistes
   list:
     title: albums
     search: rechercher des albums

@@ -1,7 +1,23 @@
 <template>
   <div>
     <h1><album-icon /> {{ album.name }}</h1>
-    <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
+    <div class="row">
+      <div class="col-10">
+        <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
+      </div>
+      <div class="col-2 album-actions">
+
+        <div class="btn-group dropleft">
+          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div class="dropdown-menu" style="">
+            <button class="dropdown-item" @click="setAsPlaylist">{{ this.$trans('album.set_as_playlist', {}, null, true) }}</button>
+            <button class="dropdown-item" @click="addInPlaylist">{{ this.$trans('album.add_to_playlist', {}, null, true) }}</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
     <track-list :track-list="trackList" :allowSearch="false"></track-list>
     <loading-icon v-if="isLoading" />
   </div>
@@ -49,12 +65,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
     updateList () {
       const urlToCall = this.$url(URL_API.album_tracks, {id: this.album.id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallData = callData
       this.remoteCallError = callError
+    },
+    addInPlaylist () {
+      if (this.trackList.length === 0) return
+      this.addTracksInPlaylist(this.trackList)
+    },
+    setAsPlaylist () {
+      if (this.trackList.length === 0) return
+      this.emptyPlaylist()
+      this.addInPlaylist()
     }
   }
 }
@@ -64,6 +89,10 @@ export default {
 
 h1 svg {
   max-height: 30px;
+}
+
+.album-actions {
+  margin-top: 5px;
 }
 
 </style>
