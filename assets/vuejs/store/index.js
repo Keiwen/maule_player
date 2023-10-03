@@ -34,6 +34,7 @@ export default new Vuex.Store({
     playedMediaFilepath: state => state.currentTrack.filepath,
     getNextPlaylistIndex: (state) => () => {
       const playlistLength = state.currentPlaylist.length
+      if (state.currentTrackIndex === -1) return -1
       if (playlistLength === 0) return -1
       if ((state.currentTrackIndex + 1) >= playlistLength) return -1
       return state.currentTrackIndex + 1
