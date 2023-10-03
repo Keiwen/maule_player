@@ -8,7 +8,10 @@
       <hr/>
     </div>
 
-    <vue-draggable v-model="orderedTrackList" :options="{animation: 150, handle: '.ddHandle'}">
+    <vue-draggable v-model="orderedTrackList"
+                   :options="{animation: 150, handle: '.ddHandle'}"
+                   id="tracklist"
+                   @start="startDrag" @end="endDrag">
       <div class="list-group-item container" v-for="(track, trackIndex) in orderedTrackList"
           :class="{'playlist-item-active': playlistDisplay && (currentTrackIndex === trackIndex)}"
           v-if="isItemMatchSearch(track.name)">
@@ -23,7 +26,7 @@
 <script>
 import trackListItem from "../listItems/trackListItem";
 import playlistTrackItem from "../listItems/playlistTrackItem";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "trackList",
@@ -55,9 +58,19 @@ export default {
     this.orderedTrackList = this.trackList
   },
   methods: {
+    ...mapActions(['changeTrackIndex']),
     isItemMatchSearch (name) {
       if (this.search === '') return true
       return name.toLowerCase().includes(this.search.toLowerCase())
+    },
+    startDrag (e) {
+      console.log('start drag')
+    },
+    endDrag (e) {
+      if (e.to.id === 'tracklist') {
+        // dropped in playlist
+        this.changeTrackIndex({oldIndex: e.oldIndex, newIndex: e.newIndex})
+      }
     }
   }
 }

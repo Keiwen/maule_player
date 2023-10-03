@@ -4,7 +4,12 @@ import Vuex from 'vuex'
 import messageBag from './modules/messageBag'
 import * as types from './mutation-types'
 import persistedState from 'vuex-persistedstate'
-import {SET_CURRENT_TRACK} from "./mutation-types";
+import {
+  CHANGE_TRACK_INDEX,
+  INSERT_TRACK_IN_PLAYLIST,
+  REMOVE_TRACK_FROM_PLAYLIST,
+  SET_CURRENT_TRACK
+} from "./mutation-types";
 
 Vue.use(Vuex)
 
@@ -79,6 +84,38 @@ export default new Vuex.Store({
         dispatch('playTrackInPlaylist', 0)
       }
     },
+    changeTrackIndex ({state, commit, dispatch}, {oldIndex, newIndex}) {
+      const track = state.currentPlaylist[oldIndex]
+      const isCurrent = (oldIndex === state.currentTrackIndex)
+      dispatch('removeTrackByIndex', {index: oldIndex, loadNextIfCurrent: !isCurrent })
+      dispatch('addTrackInIndex', {track: track, index: newIndex})
+      if (isCurrent) {
+        // update index if current was moved
+        commit(types.SET_CURRENT_TRACK_INDEX, newIndex)
+      }
+    },
+    removeTrackByIndex ({state, commit, dispatch}, {index, loadNextIfCurrent}) {
+      commit(types.REMOVE_TRACK_FROM_PLAYLIST, index)
+      if (state.currentTrackIndex === index) {
+        // if current is removed, play next (use removed index, as current was removed)
+        if (loadNextIfCurrent) {
+          dispatch('playTrackInPlaylist', index)
+        } else {
+          commit(types.SET_CURRENT_TRACK_INDEX, -1)
+        }
+      }
+      if (index < state.currentTrackIndex) {
+        // if a previous is removed, update current index to - 1)
+        commit(types.SET_CURRENT_TRACK_INDEX, state.currentTrackIndex - 1)
+      }
+    },
+    addTrackInIndex ({state, commit}, {track, index}) {
+      commit(types.INSERT_TRACK_IN_PLAYLIST, {track: track, index: index})
+      if (index <= state.currentTrackIndex) {
+        // if added before current one, update current index to + 1)
+        commit(types.SET_CURRENT_TRACK_INDEX, state.currentTrackIndex + 1)
+      }
+    },
     emptyPlaylist ({commit}) {
       commit(types.EMPTY_PLAYLIST)
       commit(types.SET_CURRENT_TRACK_INDEX, -1)
@@ -98,6 +135,12 @@ export default new Vuex.Store({
     },
     [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
       state.currentPlaylist = state.currentPlaylist.concat(tracks)
+    },
+    [types.REMOVE_TRACK_FROM_PLAYLIST] (state, index) {
+      state.currentPlaylist.splice(index, 1);
+    },
+    [types.INSERT_TRACK_IN_PLAYLIST] (state, {track, index}) {
+      state.currentPlaylist.splice(index, 0, track);
     },
     [types.EMPTY_PLAYLIST] (state) {
       state.currentPlaylist = []
