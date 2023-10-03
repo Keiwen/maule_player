@@ -1,6 +1,23 @@
 <template>
   <div class="row" :class="{'item-active': isCurrent}">
 
+    <div class="col-2">
+      <div class="ddHandle btn btn-outline-primary">
+        <i class="fa fa-arrows-alt" />
+        <div class="track-order">{{ trackIndex + 1 }}</div>
+      </div>
+    </div>
+
+    <div class="col-8 row">
+      <div class="col-12">
+        <span class="track-title">{{ getLimitedTitle(track.name, 20) }}</span>
+      </div>
+
+      <div class="col-12">
+        <span class="track-artist">{{ getLimitedTitle(track.artist.name, 20) }}</span>
+      </div>
+    </div>
+
     <div class="col-2 item-icon">
       <button class="btn btn-secondary btn-pause" disabled>
         <i class="fa fa-pause" />
@@ -8,16 +25,6 @@
       <button class="btn btn-primary btn-play" @click="selectTrack">
         <i class="fa fa-play" />
       </button>
-    </div>
-    <div class="col-10 row">
-      <div class="col-12">
-        <span class="track-title">{{ getLimitedTitle(track.name, 25) }}</span>
-      </div>
-
-      <div class="col-12">
-        <span class="track-artist">{{ getLimitedTitle(track.artist.name, 15) }}</span>
-        <span class="track-album">({{ getLimitedTitle(track.album.name, 15) }})</span>
-      </div>
     </div>
 
   </div>
@@ -78,6 +85,19 @@ export default {
   .btn-pause {
     display: block;
   }
+}
+
+.ddHandle {
+  width: 50px;
+  height: 50px;
+  svg {
+    height: 60%;
+    margin-top: -5px;
+  }
+}
+
+.track-order {
+  margin-top: -5px;
 }
 
 </style>

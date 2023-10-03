@@ -8,14 +8,15 @@
       <hr/>
     </div>
 
-    <ul class="list-group">
-      <li class="list-group-item container" v-for="(track, trackIndex) in trackList"
+    <vue-draggable v-model="orderedTrackList" :options="{animation: 150, handle: '.ddHandle'}">
+      <div class="list-group-item container" v-for="(track, trackIndex) in orderedTrackList"
           :class="{'playlist-item-active': playlistDisplay && (currentTrackIndex === trackIndex)}"
           v-if="isItemMatchSearch(track.name)">
         <playlist-track-item :track="track" :track-index="trackIndex" v-if="playlistDisplay" />
         <track-list-item :track="track" v-else />
-      </li>
-    </ul>
+      </div>
+    </vue-draggable>
+
   </div>
 </template>
 
@@ -43,11 +44,15 @@ export default {
   },
   data () {
     return {
-      search: ''
+      search: '',
+      orderedTrackList: []
     }
   },
   computed: {
     ...mapGetters(['currentTrackIndex'])
+  },
+  mounted () {
+    this.orderedTrackList = this.trackList
   },
   methods: {
     isItemMatchSearch (name) {
