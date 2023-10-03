@@ -97,3 +97,4 @@ playlist:
   title: liste de lecture
   empty: vider la playlist
   added: ajouté à la liste
+  removed: retiré de la liste

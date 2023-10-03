@@ -97,3 +97,4 @@ playlist:
   title: playlist
   empty: empty playlist
   added: added in playlist
+  removed: removed from playlist

@@ -59,7 +59,7 @@ export default {
     this.orderedTrackList = this.trackList
   },
   methods: {
-    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex']),
+    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess']),
     isItemMatchSearch (name) {
       if (this.search === '') return true
       return name.toLowerCase().includes(this.search.toLowerCase())
@@ -74,7 +74,8 @@ export default {
         this.changeTrackIndex({oldIndex: e.oldIndex, newIndex: e.newIndex})
       } else if (e.to.id === 'dropzone-trashlist') {
         // dropped in trash
-        this.removeTrackByIndex({index: e.oldIndex})
+        this.removeTrackByIndex({index: e.oldIndex, loadNextIfCurrent: true})
+        this.addSuccess(this.$trans('playlist.removed', {}, null, true))
       }
     }
   }
