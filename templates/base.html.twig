@@ -74,7 +74,8 @@
                 {% endfor %}
             {% endfor %}
 
-            <sweet-modal ref="toastBackup" modal-theme="dark" :icon="toastBackup.icon" :title="toastBackup.title">
+            <sweet-modal ref="toastBackup" modal-theme="dark" :icon="toastBackup.icon"
+                         :title="toastBackup.title" style="display:none;">
                 ${ toastBackup.text }$
             </sweet-modal>
 
