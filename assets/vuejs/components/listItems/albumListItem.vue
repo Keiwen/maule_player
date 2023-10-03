@@ -26,7 +26,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-import albumIcon from "./icons/albumIcon";
+import albumIcon from "../icons/albumIcon";
 
 export default {
   name: "albumListItem",

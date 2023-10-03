@@ -22,7 +22,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-import artistIcon from "./icons/artistIcon";
+import artistIcon from "../icons/artistIcon";
 
 export default {
   name: "artistListItem",

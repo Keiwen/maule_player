@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import artistListItem from "../artistListItem";
+import artistListItem from "../listItems/artistListItem";
 
 export default {
   name: "artistList",

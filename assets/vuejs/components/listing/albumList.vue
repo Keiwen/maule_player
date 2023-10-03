@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import albumListItem from "../albumListItem";
+import albumListItem from "../listItems/albumListItem";
 
 export default {
   name: "albumList",

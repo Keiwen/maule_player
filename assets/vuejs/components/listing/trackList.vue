@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import trackListItem from "../trackListItem";
-import playlistTrackItem from "../playlistTrackItem";
+import trackListItem from "../listItems/trackListItem";
+import playlistTrackItem from "../listItems/playlistTrackItem";
 import {mapGetters} from "vuex";
 
 export default {
