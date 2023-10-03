@@ -23,12 +23,14 @@ export default new Vuex.Store({
   state: {
     currentTrack: {},
     currentTrackIndex: -1,
-    currentPlaylist: []
+    currentPlaylist: [],
+    displayPlaylistTrash: false,
   },
   getters: {
     currentTrack: state => state.currentTrack,
     currentTrackIndex: state => state.currentTrackIndex,
     currentPlaylist: state => state.currentPlaylist,
+    displayPlaylistTrash: state => state.displayPlaylistTrash,
     playedMediaFilepath: state => state.currentTrack.filepath,
     getNextPlaylistIndex: (state) => () => {
       const playlistLength = state.currentPlaylist.length
@@ -120,6 +122,12 @@ export default new Vuex.Store({
       commit(types.EMPTY_PLAYLIST)
       commit(types.SET_CURRENT_TRACK_INDEX, -1)
     },
+    grabPlaylistElement({commit}) {
+      commit(types.SET_DISPLAY_TRASH, true)
+    },
+    dropPlaylistElement({commit}) {
+      commit(types.SET_DISPLAY_TRASH, false)
+    },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
       localStorage.removeItem(persistOptions.key)
@@ -144,6 +152,10 @@ export default new Vuex.Store({
     },
     [types.EMPTY_PLAYLIST] (state) {
       state.currentPlaylist = []
+    },
+    [types.SET_DISPLAY_TRASH] (state, display) {
+      if (display === undefined) display = false
+      state.displayPlaylistTrash = display
     }
   },
   modules: {
