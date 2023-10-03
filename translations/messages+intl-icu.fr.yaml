@@ -79,6 +79,8 @@ artist:
     search: rechercher des artistes
     empty: aucun artiste disponible
     error: impossible de charger les artistes
+  get:
+    error: "impossible de charger l'artiste"
 album:
   name: album
   all_tracks: pistes
@@ -89,6 +91,8 @@ album:
     search: rechercher des albums
     empty: aucun album disponible
     error: impossible de charger les albums
+  get:
+    error: "impossible de charger l'album"
 settings:
   title: paramètres
   reset: réinitialiser

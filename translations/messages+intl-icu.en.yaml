@@ -79,6 +79,8 @@ artist:
     search: search for artists
     empty: no artist available
     error: cannot load artists
+  get:
+    error: cannot load artist
 album:
   name: album
   all_tracks: tracks
@@ -89,6 +91,8 @@ album:
     search: search for albums
     empty: no album available
     error: cannot load albums
+  get:
+    error: cannot load album
 settings:
   title: settings
   reset: reset

@@ -4,7 +4,7 @@
     <div class="container-fluid row">
 
       <div class="col-2 item-icon">
-        <router-link :to="{ name: 'album', params: { album: album }}" class="btn btn-primary album-link">
+        <router-link :to="{ name: 'album', params: { id: album.id, album: album }}" class="btn btn-primary album-link">
           <album-icon />
         </router-link>
       </div>

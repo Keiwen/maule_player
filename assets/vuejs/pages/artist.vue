@@ -36,14 +36,17 @@ export default {
       remoteCallTrackError: null,
       remoteCallAlbumData: {},
       remoteCallAlbumError: null,
+      remoteCallArtistData: {},
+      remoteCallArtistError: null,
       trackList: [],
       albumList: []
     }
   },
   computed: {
     isLoading () {
-      return (this.remoteCallTrackData == null && this.remoteCallTrackError == null
-        && this.remoteCallAlbumData == null && this.remoteCallAlbumError == null)
+      return ((this.remoteCallTrackData == null && this.remoteCallTrackError == null)
+          || (this.remoteCallAlbumData == null && this.remoteCallAlbumError == null)
+          || (this.remoteCallArtistData == null && this.remoteCallArtistError == null))
     },
   },
   watch: {
@@ -66,6 +69,18 @@ export default {
       if (newValue !== null && this.remoteCallAlbumData === null) {
         this.addError(this.$trans('album.list.error', {}, null, true))
       }
+    },
+    remoteCallArtistData: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallArtistError === null) {
+        this.artist = newValue.artist
+        this.updateAlbumList()
+        this.updateTrackList()
+      }
+    },
+    remoteCallArtistError: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallArtistData === null) {
+        this.addError(this.$trans('artist.get.error', {}, null, true))
+      }
     }
   },
   mounted () {
@@ -73,6 +88,8 @@ export default {
       this.artist = this.$route.params.artist
       this.updateAlbumList()
       this.updateTrackList()
+    } else if(this.$route.params.id !== undefined) {
+      this.updateArtistData(this.$route.params.id)
     }
   },
   methods: {
@@ -88,6 +105,12 @@ export default {
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallAlbumData = callData
       this.remoteCallAlbumError = callError
+    },
+    updateArtistData (id) {
+      const urlToCall = this.$url(URL_API.artist_get, {id: id})
+      const {callData, callError} = useRemoteCall(urlToCall)
+      this.remoteCallArtistData = callData
+      this.remoteCallArtistError = callError
     }
   }
 }

@@ -33,7 +33,7 @@ export default new Router({
             component: Artists
         },
         {
-            path: '/artist/',
+            path: '/artist/:id',
             name: 'artist',
             component: Artist
         },
@@ -43,7 +43,7 @@ export default new Router({
             component: Albums
         },
         {
-            path: '/album/',
+            path: '/album/:id',
             name: 'album',
             component: Album
         },

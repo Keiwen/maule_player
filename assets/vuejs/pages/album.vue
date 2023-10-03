@@ -36,41 +36,63 @@ export default {
   data () {
     return {
       album: {},
-      remoteCallData: {},
-      remoteCallError: null,
+      remoteCallTrackData: {},
+      remoteCallTrackError: null,
+      remoteCallAlbumData: {},
+      remoteCallAlbumError: null,
       trackList: []
     }
   },
   computed: {
     isLoading () {
-      return (this.remoteCallData == null && this.remoteCallError == null)
+      return ((this.remoteCallTrackData == null && this.remoteCallTrackError == null)
+          || (this.remoteCallAlbumData == null && this.remoteCallAlbumError == null))
     },
   },
   watch: {
-    remoteCallData: function(newValue, oldValue) {
-      if (newValue !== null && this.remoteCallError === null) {
+    remoteCallTrackData: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallTrackError === null) {
         this.trackList = newValue.tracks
       }
     },
-    remoteCallError: function(newValue, oldValue) {
-      if (newValue !== null && this.remoteCallData === null) {
+    remoteCallTrackError: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallTrackData === null) {
         this.addError(this.$trans('track.list.error', {}, null, true))
+      }
+    },
+    remoteCallAlbumData: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallAlbumError === null) {
+        this.album = newValue.album
+        this.updateTrackList()
+      }
+    },
+    remoteCallAlbumError: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallAlbumData === null) {
+        this.addError(this.$trans('album.get.error', {}, null, true))
       }
     }
   },
   mounted () {
     if (this.$route.params.album !== undefined) {
       this.album = this.$route.params.album
-      this.updateList()
+      this.updateTrackList()
+    } else if(this.$route.params.id !== undefined) {
+      this.updateAlbumData(this.$route.params.id)
     }
   },
   methods: {
     ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
-    updateList () {
+    updateTrackList () {
       const urlToCall = this.$url(URL_API.album_tracks, {id: this.album.id})
       const {callData, callError} = useRemoteCall(urlToCall)
-      this.remoteCallData = callData
-      this.remoteCallError = callError
+      this.remoteCallTrackData = callData
+      this.remoteCallTrackError = callError
+    },
+    updateAlbumData (id) {
+      const urlToCall = this.$url(URL_API.album_get, {id: id})
+      const {callData, callError} = useRemoteCall(urlToCall)
+      this.remoteCallAlbumData = callData
+      this.remoteCallAlbumError = callError
     },
     addInPlaylist () {
       if (this.trackList.length === 0) return
