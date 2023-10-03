@@ -14,7 +14,7 @@ import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
 
 import flashMessage from './components/flashMessage'
 import appMenu from './components/menu'
-import mediaPlayer from './components/mediaPlayer'
+import mediaPlayer from './components/mediaPlayer/mediaPlayer'
 
 /************
  WARNINGS (yeah, multiple)
