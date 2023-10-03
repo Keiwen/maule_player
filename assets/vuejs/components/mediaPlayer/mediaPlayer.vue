@@ -14,12 +14,22 @@
         <div class="row custom-player-timeline">
           <timeline :percent-progress="percentProgress" @change-progress="changeProgress"  />
         </div>
-        <div class="row">
+        <div class="row custom-player-timeview">
+          <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-prev"
+                  @click="playerPrevious">
+            <i class="fa fa-backward-step" />
+          </button>
+
           <span class="custom-player-time">
             <span class="custom-player-current-time">{{ currentTime }}</span>
             /
             <span class="custom-player-duration">{{ duration }}</span>
           </span>
+
+          <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-next"
+                  @click="playerNext" :class="{disabled: !hasNextMedia}" :disabled="!hasNextMedia">
+            <i class="fa fa-forward-step" />
+          </button>
         </div>
       </div>
     </div>
@@ -77,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTrack', 'currentTrackIndex', 'getNextPlaylistIndex', 'getDisplayTime']),
+    ...mapGetters(['currentTrack', 'currentTrackIndex', 'getNextPlaylistIndex', 'getPrevPlaylistIndex', 'getDisplayTime']),
     mediaSrc () {
       return '/media_lib/' + this.currentTrack.filepath;
     },
@@ -89,6 +99,12 @@ export default {
       const trackArtist = this.currentTrack.artist.name
       const trackAlbum = this.currentTrack.album.name
       return trackTitle + ' - ' + trackArtist + ' (' + trackAlbum + ')'
+    },
+    hasNextMedia () {
+      return this.getNextPlaylistIndex() !== -1
+    },
+    hasPrevMedia () {
+      return this.getPrevPlaylistIndex() !== -1
     }
   },
   methods: {
@@ -118,10 +134,7 @@ export default {
     },
     audioEnded (e) {
       this.playingAudio = false
-      const nextIndex = this.getNextPlaylistIndex()
-      if (nextIndex !== -1) {
-        this.playTrackInPlaylist(nextIndex)
-      }
+      this.playerNext()
     },
     audioError (e) {
       this.playingAudio = false
@@ -131,6 +144,28 @@ export default {
     },
     audioPlayed (e) {
       this.playingAudio = true
+    },
+    isTrackConsideredClosedToStart () {
+      if (this.audioElement === null) return false
+      return (this.audioElement.currentTime < 3)
+    },
+    playerPrevious () {
+      if (this.hasPrevMedia && this.isTrackConsideredClosedToStart()) {
+        // go to previous
+        const prevIndex = this.getPrevPlaylistIndex()
+        if (prevIndex !== -1) {
+          this.playTrackInPlaylist(prevIndex)
+        }
+      } else {
+        // start over current track
+        this.changeProgress(0)
+      }
+    },
+    playerNext () {
+      const nextIndex = this.getNextPlaylistIndex()
+      if (nextIndex !== -1) {
+        this.playTrackInPlaylist(nextIndex)
+      }
     }
   }
 }
@@ -156,11 +191,16 @@ export default {
   .play-button {
     background-color: var(--secondary);
   }
-  .custom-player-time {
-    width: 100%;
-    text-align: center;
-    color: var(--light);
-    text-shadow: var(--secondary) 0 0 10px;
+  .custom-player-timeview {
+    .custom-player-prevnext {
+      width: 15%;
+    }
+    .custom-player-time {
+      width: 70%;
+      text-align: center;
+      color: var(--light);
+      text-shadow: var(--secondary) 0 0 10px;
+    }
   }
   .custom-player-text-wrapper {
     max-width: 100%;
