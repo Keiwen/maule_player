@@ -1,5 +1,11 @@
 <template>
   <div>
+    <button class="btn btn-dark" @click="cleanPlaylist">
+      <i class="fa fa-broom" />
+      {{ this.$trans('playlist.empty', {}, null, true) }}
+    </button>
+    <hr/>
+
     <vue-draggable v-model="orderedTrackList"
                    v-bind="{animation: 150, handle: '.ddHandle', group: 'playlist'}"
                    @start="startDrag" @end="endDrag">
@@ -38,12 +44,17 @@ export default {
     this.orderedTrackList = this.trackList
   },
   methods: {
-    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess']),
+    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess', 'emptyPlaylist']),
+    cleanPlaylist () {
+      this.emptyPlaylist()
+      this.orderedTrackList = []
+      this.addSuccess(this.$trans('playlist.removed', {}, null, true))
+    },
     startDrag (e) {
-      this.grabPlaylistElement();
+      this.grabPlaylistElement()
     },
     endDrag (e) {
-      this.dropPlaylistElement();
+      this.dropPlaylistElement()
       if (e.to.id === 'dropzone-tracklist') {
         // dropped in playlist
         this.changeTrackIndex({oldIndex: e.oldIndex, newIndex: e.newIndex})
