@@ -4,12 +4,6 @@ import Vuex from 'vuex'
 import messageBag from './modules/messageBag'
 import * as types from './mutation-types'
 import persistedState from 'vuex-persistedstate'
-import {
-  CHANGE_TRACK_INDEX,
-  INSERT_TRACK_IN_PLAYLIST,
-  REMOVE_TRACK_FROM_PLAYLIST,
-  SET_CURRENT_TRACK
-} from "./mutation-types";
 
 Vue.use(Vuex)
 
