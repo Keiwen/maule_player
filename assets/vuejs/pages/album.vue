@@ -26,13 +26,13 @@
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions} from "vuex";
-import AlbumIcon from "../components/icons/albumIcon";
-import TrackList from "../components/trackList";
+import albumIcon from "../components/icons/albumIcon";
+import trackList from "../components/listing/trackList";
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "albumPage",
-  components: { TrackList, AlbumIcon, loadingIcon },
+  components: { trackList, albumIcon, loadingIcon },
   data () {
     return {
       album: {},

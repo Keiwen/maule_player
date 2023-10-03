@@ -47,19 +47,19 @@
 
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
-import TrackList from "../components/trackList";
-import ArtistList from "../components/artistList";
-import AlbumList from "../components/albumList";
+import trackList from "../components/listing/trackList";
+import artistList from "../components/listing/artistList";
+import albumList from "../components/listing/albumList";
 // NOTE: tiny tabs does not have dynamic title. By default, changing title does not change tab text
 // here we use v-if isLoading on full tiny-tab component. That way, component reload after remote call
 // and then update the texts.
-import VueTinyTabs from 'vue-tiny-tabs';
+import vueTinyTabs from 'vue-tiny-tabs';
 import {mapActions} from "vuex";
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "mainPage",
-  components: { TrackList, ArtistList, AlbumList, VueTinyTabs, loadingIcon },
+  components: { trackList, artistList, albumList, vueTinyTabs, loadingIcon },
   data () {
     return {
       remoteCallData: {},

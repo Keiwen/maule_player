@@ -8,13 +8,13 @@
 
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
-import AlbumList from "../components/albumList";
+import albumList from "../components/listing/albumList";
 import {mapActions} from "vuex";
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "albumsPage",
-  components: { AlbumList, loadingIcon },
+  components: { albumList, loadingIcon },
   data () {
     return {
       remoteCallData: {},

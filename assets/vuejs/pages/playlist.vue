@@ -15,11 +15,11 @@
 
 <script>
 import {mapGetters, mapActions} from "vuex";
-import TrackList from "../components/trackList";
+import trackList from "../components/listing/trackList";
 
 export default {
   name: "playlistPage",
-  components: { TrackList },
+  components: { trackList },
   data () {
     return {
     }

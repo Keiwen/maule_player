@@ -3,27 +3,27 @@
     <div class="container-fluid" v-if="allowSearch">
       <div class="form-inline row">
         <input class="form-control" type="search" v-model="search"
-               :placeholder="this.$trans('artist.list.search', {}, null, true)" aria-label="Search">
+               :placeholder="this.$trans('album.list.search', {}, null, true)" aria-label="Search">
       </div>
       <hr/>
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item container" v-for="artist in artistList" v-if="isItemMatchSearch(artist.name)">
-        <artist-list-item :artist="artist" />
+      <li class="list-group-item container" v-for="album in albumList" v-if="isItemMatchSearch(album.name)">
+        <album-list-item :album="album" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import artistListItem from "./artistListItem";
+import albumListItem from "../albumListItem";
 
 export default {
-  name: "artistList",
-  components: { artistListItem },
+  name: "albumList",
+  components: { albumListItem },
   props: {
-    artistList: {
+    albumList: {
       type: Array,
       required: true
     },

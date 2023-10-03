@@ -20,15 +20,15 @@
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions} from "vuex";
-import ArtistIcon from "../components/icons/artistIcon";
-import TrackList from "../components/trackList";
-import AlbumList from "../components/albumList";
-import VueTinyTabs from 'vue-tiny-tabs';
+import artistIcon from "../components/icons/artistIcon";
+import trackList from "../components/listing/trackList";
+import albumList from "../components/listing/albumList";
+import vueTinyTabs from 'vue-tiny-tabs';
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "artistPage",
-  components: { TrackList, ArtistIcon, AlbumList, VueTinyTabs, loadingIcon },
+  components: { trackList, artistIcon, albumList, vueTinyTabs, loadingIcon },
   data () {
     return {
       artist: {},

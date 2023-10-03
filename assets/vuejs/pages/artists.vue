@@ -8,13 +8,13 @@
 
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
-import ArtistList from "../components/artistList";
+import artistList from "../components/listing/artistList";
 import {mapActions} from "vuex";
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "artistsPage",
-  components: { ArtistList, loadingIcon },
+  components: { artistList, loadingIcon },
   data () {
     return {
       remoteCallData: {},
