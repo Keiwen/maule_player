@@ -102,3 +102,4 @@ playlist:
   empty: empty playlist
   added: added in playlist
   removed: removed from playlist
+  duration: total duration

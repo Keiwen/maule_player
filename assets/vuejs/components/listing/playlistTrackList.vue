@@ -1,9 +1,15 @@
 <template>
   <div>
+    <span>
+      {{ this.$trans('playlist.duration', {}, null, true, true) }}
+      {{ getDisplayTime(currentPlaylistDuration) }}
+    </span>
+
     <button class="btn btn-dark" @click="cleanPlaylist">
       <i class="fa fa-broom" />
       {{ this.$trans('playlist.empty', {}, null, true) }}
     </button>
+
     <hr/>
 
     <vue-draggable v-model="orderedTrackList"
@@ -38,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTrackIndex'])
+    ...mapGetters(['currentTrackIndex', 'currentPlaylistDuration', 'getDisplayTime'])
   },
   mounted () {
     this.orderedTrackList = this.trackList

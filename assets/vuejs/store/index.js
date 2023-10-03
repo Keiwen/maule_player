@@ -18,12 +18,14 @@ export default new Vuex.Store({
     currentTrack: {},
     currentTrackIndex: -1,
     currentPlaylist: [],
+    currentPlaylistDuration: 0,
     displayPlaylistTrash: false,
   },
   getters: {
     currentTrack: state => state.currentTrack,
     currentTrackIndex: state => state.currentTrackIndex,
     currentPlaylist: state => state.currentPlaylist,
+    currentPlaylistDuration: state => state.currentPlaylistDuration,
     displayPlaylistTrash: state => state.displayPlaylistTrash,
     playedMediaFilepath: state => state.currentTrack.filepath,
     getNextPlaylistIndex: (state) => () => {
@@ -145,15 +147,28 @@ export default new Vuex.Store({
     },
     [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
       state.currentPlaylist = state.currentPlaylist.concat(tracks)
+      for (let i = 0; i < tracks.length; i++) {
+        if (tracks[i].duration !== undefined) {
+          state.currentPlaylistDuration += tracks[i].duration
+        }
+      }
     },
     [types.REMOVE_TRACK_FROM_PLAYLIST] (state, index) {
-      state.currentPlaylist.splice(index, 1);
+      const removedTracks = state.currentPlaylist.splice(index, 1)
+      const removedTrack = removedTracks[0]
+      if (removedTrack !== undefined && removedTrack.duration !== undefined) {
+        state.currentPlaylistDuration -= removedTrack.duration
+      }
     },
     [types.INSERT_TRACK_IN_PLAYLIST] (state, {track, index}) {
       state.currentPlaylist.splice(index, 0, track);
+      if (track.duration !== undefined) {
+        state.currentPlaylistDuration += track.duration
+      }
     },
     [types.EMPTY_PLAYLIST] (state) {
       state.currentPlaylist = []
+      state.currentPlaylistDuration = 0
     },
     [types.SET_DISPLAY_TRASH] (state, display) {
       if (display === undefined) display = false
