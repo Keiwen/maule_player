@@ -8,6 +8,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { SweetModal } from 'sweet-modal-vue'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
+import vueDraggable from "vuedraggable";
 
 import transPlugin from "./plugins/transPlugin"
 import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
@@ -53,6 +54,7 @@ Vue.use(transPlugin)
 Vue.use(urlBuilderPlugin)
 
 Vue.component('v-icon', Icon)
+Vue.component('vue-draggable', vueDraggable)
 
 /* eslint-disable no-new */
 new Vue({
