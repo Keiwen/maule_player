@@ -8,18 +8,18 @@
     </button>
     <hr/>
 
-    <track-list :track-list="currentPlaylist" :allowSearch="false" :playlist-display="true"></track-list>
+    <playlist-track-list :track-list="currentPlaylist"></playlist-track-list>
 
   </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from "vuex";
-import trackList from "../components/listing/trackList";
+import playlistTrackList from "../components/listing/playlistTrackList";
 
 export default {
   name: "playlistPage",
-  components: { trackList },
+  components: { playlistTrackList },
   data () {
     return {
     }
