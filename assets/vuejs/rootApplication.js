@@ -16,6 +16,7 @@ import urlBuilderPlugin from "./plugins/urlBuilderPlugin"
 import flashMessage from './components/flashMessage'
 import appMenu from './components/menu'
 import mediaPlayer from './components/mediaPlayer/mediaPlayer'
+import playlistTrash from './components/listing/playlistTrash'
 
 /************
  WARNINGS (yeah, multiple)
@@ -69,7 +70,7 @@ new Vue({
             text: 'Message'
         }
     },
-    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu, mediaPlayer },
+    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu, mediaPlayer, playlistTrash },
     computed: {
         ...mapGetters(['messageBag'])
     },

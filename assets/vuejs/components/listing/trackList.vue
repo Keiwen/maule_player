@@ -9,15 +9,16 @@
     </div>
 
     <vue-draggable v-model="orderedTrackList"
-                   :options="{animation: 150, handle: '.ddHandle'}"
-                   id="tracklist"
+                   v-bind="{animation: 150, handle: '.ddHandle', group: 'playlist'}"
                    @start="startDrag" @end="endDrag">
-      <div class="list-group-item container" v-for="(track, trackIndex) in orderedTrackList"
-          :class="{'playlist-item-active': playlistDisplay && (currentTrackIndex === trackIndex)}"
-          v-if="isItemMatchSearch(track.name)">
-        <playlist-track-item :track="track" :track-index="trackIndex" v-if="playlistDisplay" />
-        <track-list-item :track="track" v-else />
-      </div>
+      <transition-group id="dropzone-tracklist" tag="div">
+        <div class="list-group-item container" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
+             :class="{'playlist-item-active': playlistDisplay && (currentTrackIndex === trackIndex)}"
+             v-if="isItemMatchSearch(track.name)">
+          <playlist-track-item :track="track" :track-index="trackIndex" v-if="playlistDisplay" />
+          <track-list-item :track="track" v-else />
+        </div>
+      </transition-group>
     </vue-draggable>
 
   </div>
@@ -58,18 +59,22 @@ export default {
     this.orderedTrackList = this.trackList
   },
   methods: {
-    ...mapActions(['changeTrackIndex']),
+    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex']),
     isItemMatchSearch (name) {
       if (this.search === '') return true
       return name.toLowerCase().includes(this.search.toLowerCase())
     },
     startDrag (e) {
-      console.log('start drag')
+      this.grabPlaylistElement();
     },
     endDrag (e) {
-      if (e.to.id === 'tracklist') {
+      this.dropPlaylistElement();
+      if (e.to.id === 'dropzone-tracklist') {
         // dropped in playlist
         this.changeTrackIndex({oldIndex: e.oldIndex, newIndex: e.newIndex})
+      } else if (e.to.id === 'dropzone-trashlist') {
+        // dropped in trash
+        this.removeTrackByIndex({index: e.oldIndex})
       }
     }
   }
@@ -84,13 +89,19 @@ export default {
     border: 1px solid var(--primary);
     &.playlist-item-active {
       border: 1px solid var(--secondary);
-      box-shadow: 0px 0px 20px var(--secondary);
+      box-shadow: 0 0 20px var(--secondary);
      }
   }
 
   .track-list-empty {
     font-style: italic;
     font-size: 0.8rem;
+  }
+
+  #dropzone-tracklist {
+    height: 100%;
+    width: 100%;
+    min-height: 400px;
   }
 
 </style>
