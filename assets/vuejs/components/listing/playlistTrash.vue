@@ -3,6 +3,7 @@
     <vue-draggable v-model="trashList"
                    v-bind="{group: 'playlist'}">
       <transition-group :class="{show: displayPlaylistTrash}" tag="div" id="dropzone-trashlist">
+        <i key="icon-trash" class="fa fa-square-minus trash-icon" />
         <div class="trash-item" v-for="(track, trackIndex) in trashList" :key="'key-'+trackIndex">
         </div>
       </transition-group>
@@ -31,7 +32,7 @@ export default {
 
 #dropzone-trashlist {
   background-color: var(--danger);
-  opacity: 0.8;
+  opacity: 0.9;
   z-index: 10;
   position: absolute;
   bottom: -105px;
@@ -49,6 +50,10 @@ export default {
 
   .trash-item {
     display: none;
+  }
+
+  .trash-icon {
+    height: 100%;
   }
 }
 
