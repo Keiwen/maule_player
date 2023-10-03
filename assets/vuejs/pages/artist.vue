@@ -20,11 +20,11 @@
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions} from "vuex";
-import ArtistIcon from "../components/artistIcon";
+import ArtistIcon from "../components/icons/artistIcon";
 import TrackList from "../components/trackList";
 import AlbumList from "../components/albumList";
 import VueTinyTabs from 'vue-tiny-tabs';
-import loadingIcon from "../components/loadingIcon";
+import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "artistPage",

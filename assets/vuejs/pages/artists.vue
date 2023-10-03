@@ -10,7 +10,7 @@
 import {useRemoteCall} from "../composables/useRemoteCall";
 import ArtistList from "../components/artistList";
 import {mapActions} from "vuex";
-import loadingIcon from "../components/loadingIcon";
+import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "artistsPage",

@@ -55,7 +55,7 @@ import AlbumList from "../components/albumList";
 // and then update the texts.
 import VueTinyTabs from 'vue-tiny-tabs';
 import {mapActions} from "vuex";
-import loadingIcon from "../components/loadingIcon";
+import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "mainPage",

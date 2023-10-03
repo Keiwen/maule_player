@@ -26,9 +26,9 @@
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions} from "vuex";
-import AlbumIcon from "../components/albumIcon";
+import AlbumIcon from "../components/icons/albumIcon";
 import TrackList from "../components/trackList";
-import loadingIcon from "../components/loadingIcon";
+import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
   name: "albumPage",

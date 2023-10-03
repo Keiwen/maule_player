@@ -20,8 +20,8 @@
 
 <script>
 import {mapActions} from "vuex";
-import bandIcon from "./bandIcon";
-import playlistIcon from "./playlistIcon";
+import bandIcon from "./icons/bandIcon";
+import playlistIcon from "./icons/playlistIcon";
 
 export default {
   name: "appMenu",
