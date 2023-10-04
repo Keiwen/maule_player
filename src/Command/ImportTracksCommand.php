@@ -85,13 +85,21 @@ class ImportTracksCommand extends Command
             'How many track to consider before stop',
             0
         );
+        $this->addOption('force', null, InputOption::VALUE_NONE,
+            'Force update (this will crawl again whole library)'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->startingDateTime = new \DateTime();
         $output->writeln(sprintf('Last execution was on %s', date('Y-m-d H:i:s', $this->lastExecutionParameter->getParamValue())));
+        $forceUpdate = $input->getOption('force');
+        if ($forceUpdate) {
+            $output->writeln('Force update');
+        }
         $output->writeln(sprintf('Start analyzing mediaLib directory: %s', $this->medialibFolder));
+        $minModifyTime = ($forceUpdate) ? -1 : $this->lastExecutionParameter->getParamValue();
 
         $outputSectionParsing = $output->section();
         $dirParser = new MediaLibDirectoryParser(
@@ -99,7 +107,7 @@ class ImportTracksCommand extends Command
             $this->pathSeparator,
             array('mp3'),
             $outputSectionParsing,
-            $this->lastExecutionParameter->getParamValue()
+            $minModifyTime
         );
         $candidatesCount = $dirParser->getFilesCount();
         $output->writeln(sprintf('Done with %d candidates files', $candidatesCount));
@@ -206,7 +214,7 @@ class ImportTracksCommand extends Command
             }
             $outputSectionEntitiesProgress->clear();
 
-            $output->writeln(sprintf('%d new entities detected, store in DB', count($entitiesToStore)));
+            $output->writeln(sprintf('%d entities detected to create or update, store in DB', count($entitiesToStore)));
         }
 
         if ($input->getOption('no-db')) {
