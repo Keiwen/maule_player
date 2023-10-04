@@ -126,6 +126,9 @@ export default new Vuex.Store({
       commit(types.EMPTY_PLAYLIST)
       commit(types.SET_CURRENT_TRACK_INDEX, -1)
     },
+    shufflePlaylist ({commit}) {
+      commit(types.SHUFFLE_PLAYLIST)
+    },
     grabPlaylistElement({commit}) {
       commit(types.SET_DISPLAY_TRASH, true)
     },
@@ -169,6 +172,34 @@ export default new Vuex.Store({
     [types.EMPTY_PLAYLIST] (state) {
       state.currentPlaylist = []
       state.currentPlaylistDuration = 0
+    },
+    [types.SHUFFLE_PLAYLIST] (state) {
+      let oldIndex = state.currentTrackIndex
+      let countToShuffle = state.currentPlaylist.length
+      let tempElement
+      let randomIndex
+      // while there remain elements to shuffle...
+      while (countToShuffle) {
+        // pick a remaining element...
+        randomIndex = Math.floor(Math.random() * countToShuffle)
+        // decrement elements to shuffle...
+        countToShuffle--
+        // swap picked element with the current element
+        tempElement = state.currentPlaylist[countToShuffle]
+        state.currentPlaylist[countToShuffle] = state.currentPlaylist[randomIndex]
+        state.currentPlaylist[randomIndex] = tempElement
+
+        // update current index if we picked current element
+        if (randomIndex === oldIndex) {
+          state.currentTrackIndex = countToShuffle
+          // cancel old index search
+          oldIndex = -1
+        }
+        // update old index if we swapped current element
+        if (countToShuffle === oldIndex) {
+          oldIndex = randomIndex
+        }
+      }
     },
     [types.SET_DISPLAY_TRASH] (state, display) {
       if (display === undefined) display = false

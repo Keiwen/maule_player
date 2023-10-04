@@ -99,7 +99,8 @@ settings:
   locale: langue
 playlist:
   title: liste de lecture
-  empty: vider la playlist
+  empty: vider la liste
+  shuffle: mélanger la liste
   added: ajouté à la liste
   removed: retiré de la liste
   duration: durée totale

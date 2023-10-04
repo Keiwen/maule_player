@@ -100,6 +100,7 @@ settings:
 playlist:
   title: playlist
   empty: empty playlist
+  shuffle: shuffle playlist
   added: added in playlist
   removed: removed from playlist
   duration: total duration

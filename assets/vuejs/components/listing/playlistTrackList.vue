@@ -10,6 +10,10 @@
 
       <div class="col-2 playlist-actions">
         <side-actions>
+          <button class="dropdown-item" @click="randomizePlaylist">
+            <i class="fa fa-shuffle" />
+            {{ this.$trans('playlist.shuffle', {}, null, true) }}
+          </button>
           <button class="dropdown-item" @click="cleanPlaylist">
             <i class="fa fa-square-minus" />
             {{ this.$trans('playlist.empty', {}, null, true) }}
@@ -62,11 +66,17 @@ export default {
     this.orderedTrackList = this.trackList
   },
   methods: {
-    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess', 'emptyPlaylist']),
+    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess', 'emptyPlaylist', 'shufflePlaylist']),
     cleanPlaylist () {
       this.emptyPlaylist()
       this.orderedTrackList = []
       this.addSuccess(this.$trans('playlist.removed', {}, null, true))
+    },
+    randomizePlaylist () {
+      this.shufflePlaylist()
+      // force ordered track to be empty first, or sometimes changed are not reflected right away
+      this.orderedTrackList = []
+      this.orderedTrackList = this.trackList
     },
     startDrag (e) {
       this.grabPlaylistElement()
