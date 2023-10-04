@@ -1,14 +1,25 @@
 <template>
   <div>
-    <span>
-      {{ this.$trans('playlist.duration', {}, null, true, true) }}
-      {{ getDisplayTime(currentPlaylistDuration) }}
-    </span>
+    <div class="row">
+      <div class="col-10">
+        <span>
+          {{ this.$trans('playlist.duration', {}, null, true, true) }}
+          {{ getDisplayTime(currentPlaylistDuration) }}
+        </span>
+      </div>
 
-    <button class="btn btn-dark" @click="cleanPlaylist">
-      <i class="fa fa-broom" />
-      {{ this.$trans('playlist.empty', {}, null, true) }}
-    </button>
+      <div class="col-2 playlist-actions">
+        <side-actions>
+          <button class="dropdown-item" @click="cleanPlaylist">
+            <i class="fa fa-square-minus" />
+            {{ this.$trans('playlist.empty', {}, null, true) }}
+          </button>
+        </side-actions>
+      </div>
+
+    </div>
+
+
 
     <hr/>
 
@@ -28,10 +39,11 @@
 <script>
 import playlistTrackItem from "../listItems/playlistTrackItem";
 import {mapActions, mapGetters} from "vuex";
+import sideActions from "../sideActions";
 
 export default {
   name: "trackList",
-  components: { playlistTrackItem },
+  components: { playlistTrackItem, sideActions },
   props: {
     trackList: {
       type: Array,
@@ -90,6 +102,10 @@ export default {
     height: 100%;
     width: 100%;
     min-height: 400px;
+  }
+
+  .playlist-actions {
+    margin-top: -10px;
   }
 
 </style>

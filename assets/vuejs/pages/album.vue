@@ -8,8 +8,14 @@
       <div class="col-2 album-actions">
 
         <side-actions>
-          <button class="dropdown-item" @click="setAsPlaylist">{{ this.$trans('album.set_as_playlist', {}, null, true) }}</button>
-          <button class="dropdown-item" @click="addInPlaylist">{{ this.$trans('album.add_to_playlist', {}, null, true) }}</button>
+          <button class="dropdown-item" @click="setAsPlaylist">
+            <i class="fa fa-play" />
+            {{ this.$trans('album.set_as_playlist', {}, null, true) }}
+          </button>
+          <button class="dropdown-item" @click="addInPlaylist">
+            <i class="fa fa-folder-plus" />
+            {{ this.$trans('album.add_to_playlist', {}, null, true) }}
+          </button>
         </side-actions>
 
       </div>
