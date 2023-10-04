@@ -31,7 +31,6 @@
         "sweet-modal-vue": "^2.0.0",
         "vue": "^2.7.12",
         "vue-awesome": "^4.5.0",
-        "vue-enhanced-check": "^1.5.5",
         "vue-loader": "^15.10.0",
         "vue-router": "^3.6.5",
         "vue-tiny-tabs": "^1.0.5",

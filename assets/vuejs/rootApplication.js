@@ -3,7 +3,6 @@ import Vue from 'vue'
 import store from './store'
 import router from './router'
 import CxltToastr from 'cxlt-vue2-toastr'
-import { EnhancedCheck, EnhancedToggle } from 'vue-enhanced-check'
 import { mapGetters, mapActions } from 'vuex'
 import { SweetModal } from 'sweet-modal-vue'
 import 'vue-awesome/icons'
@@ -70,7 +69,7 @@ new Vue({
             text: 'Message'
         }
     },
-    components: { flashMessage, EnhancedCheck, EnhancedToggle, SweetModal, appMenu, mediaPlayer, playlistTrash },
+    components: { flashMessage, SweetModal, appMenu, mediaPlayer, playlistTrash },
     computed: {
         ...mapGetters(['messageBag'])
     },
