@@ -1674,16 +1674,16 @@
         },
         {
             "name": "keiwen/utils",
-            "version": "2.6",
+            "version": "2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Keiwen/Utils.git",
-                "reference": "af3a281d6602a017b595b49c6b1d0335af17f8bd"
+                "reference": "c732709889cb51c4b42c37994784de3fd553c0f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Keiwen/Utils/zipball/af3a281d6602a017b595b49c6b1d0335af17f8bd",
-                "reference": "af3a281d6602a017b595b49c6b1d0335af17f8bd",
+                "url": "https://api.github.com/repos/Keiwen/Utils/zipball/c732709889cb51c4b42c37994784de3fd553c0f2",
+                "reference": "c732709889cb51c4b42c37994784de3fd553c0f2",
                 "shasum": ""
             },
             "require": {
@@ -1705,9 +1705,9 @@
             "description": "Common utils functions",
             "support": {
                 "issues": "https://github.com/Keiwen/Utils/issues",
-                "source": "https://github.com/Keiwen/Utils/tree/2.6"
+                "source": "https://github.com/Keiwen/Utils/tree/2.7"
             },
-            "time": "2023-09-08T14:10:48+00:00"
+            "time": "2023-10-04T16:01:42+00:00"
         },
         {
             "name": "laminas/laminas-code",
