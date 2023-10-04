@@ -102,5 +102,7 @@ playlist:
   empty: empty playlist
   shuffle: shuffle playlist
   added: added in playlist
+  loop: activate playlist loop
+  unloop: deactivate playlist loop
   removed: removed from playlist
   duration: total duration

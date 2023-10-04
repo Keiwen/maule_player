@@ -20,6 +20,7 @@ export default new Vuex.Store({
     currentPlaylist: [],
     currentPlaylistDuration: 0,
     displayPlaylistTrash: false,
+    loopPlaylist: false,
   },
   getters: {
     currentTrack: state => state.currentTrack,
@@ -27,19 +28,26 @@ export default new Vuex.Store({
     currentPlaylist: state => state.currentPlaylist,
     currentPlaylistDuration: state => state.currentPlaylistDuration,
     displayPlaylistTrash: state => state.displayPlaylistTrash,
+    loopPlaylist: state => state.loopPlaylist,
     playedMediaFilepath: state => state.currentTrack.filepath,
     getNextPlaylistIndex: (state) => () => {
       const playlistLength = state.currentPlaylist.length
       if (state.currentTrackIndex === -1) return -1
       if (playlistLength === 0) return -1
-      if ((state.currentTrackIndex + 1) >= playlistLength) return -1
+      if ((state.currentTrackIndex + 1) >= playlistLength) {
+        if (state.loopPlaylist) return 0
+        return -1
+      }
       return state.currentTrackIndex + 1
     },
     getPrevPlaylistIndex: (state) => () => {
       const playlistLength = state.currentPlaylist.length
       if (state.currentTrackIndex === -1) return -1
       if (playlistLength === 0) return -1
-      if ((state.currentTrackIndex - 1) < 0) return -1
+      if ((state.currentTrackIndex - 1) < 0) {
+        if (state.loopPlaylist) return playlistLength - 1
+        return -1
+      }
       return state.currentTrackIndex - 1
     },
     getLimitedTitle: () => (title, limit = 20) => {
@@ -135,6 +143,9 @@ export default new Vuex.Store({
     dropPlaylistElement({commit}) {
       commit(types.SET_DISPLAY_TRASH, false)
     },
+    setLoopPlaylist({commit}, loop) {
+      commit(types.SET_LOOP_PLAYLIST, loop)
+    },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
       localStorage.removeItem(persistOptions.key)
@@ -204,6 +215,10 @@ export default new Vuex.Store({
     [types.SET_DISPLAY_TRASH] (state, display) {
       if (display === undefined) display = false
       state.displayPlaylistTrash = display
+    },
+    [types.SET_LOOP_PLAYLIST] (state, loop) {
+      if (loop === undefined) loop = false
+      state.loopPlaylist = loop
     }
   },
   modules: {

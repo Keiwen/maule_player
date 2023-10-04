@@ -6,10 +6,18 @@
           {{ this.$trans('playlist.duration', {}, null, true, true) }}
           {{ getDisplayTime(currentPlaylistDuration) }}
         </span>
+        <span class="ml-1" v-if="loopPlaylist">
+            <i class="fa fa-repeat" />
+        </span>
       </div>
 
       <div class="col-2 playlist-actions">
         <side-actions>
+          <button class="dropdown-item" @click="switchLoopPlaylist">
+            <i class="fa fa-repeat" />
+            <span v-if="loopPlaylist">{{ this.$trans('playlist.unloop', {}, null, true) }}</span>
+            <span v-else>{{ this.$trans('playlist.loop', {}, null, true) }}</span>
+          </button>
           <button class="dropdown-item" @click="randomizePlaylist">
             <i class="fa fa-shuffle" />
             {{ this.$trans('playlist.shuffle', {}, null, true) }}
@@ -60,13 +68,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTrackIndex', 'currentPlaylistDuration', 'getDisplayTime'])
+    ...mapGetters(['currentTrackIndex', 'currentPlaylistDuration', 'getDisplayTime', 'loopPlaylist'])
   },
   mounted () {
     this.orderedTrackList = this.trackList
   },
   methods: {
-    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex', 'addSuccess', 'emptyPlaylist', 'shufflePlaylist']),
+    ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex',
+      'addSuccess', 'emptyPlaylist', 'shufflePlaylist', 'setLoopPlaylist']),
     cleanPlaylist () {
       this.emptyPlaylist()
       this.orderedTrackList = []
@@ -91,6 +100,9 @@ export default {
         this.removeTrackByIndex({index: e.oldIndex, loadNextIfCurrent: true})
         this.addSuccess(this.$trans('playlist.removed', {}, null, true))
       }
+    },
+    switchLoopPlaylist () {
+      this.setLoopPlaylist(!this.loopPlaylist)
     }
   }
 }

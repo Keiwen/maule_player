@@ -102,5 +102,7 @@ playlist:
   empty: vider la liste
   shuffle: mélanger la liste
   added: ajouté à la liste
+  loop: activer la répétition
+  unloop: désactiver la répétition
   removed: retiré de la liste
   duration: durée totale
