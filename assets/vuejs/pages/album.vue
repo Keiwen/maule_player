@@ -7,14 +7,10 @@
       </div>
       <div class="col-2 album-actions">
 
-        <div class="btn-group dropleft">
-          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          </button>
-          <div class="dropdown-menu" style="">
-            <button class="dropdown-item" @click="setAsPlaylist">{{ this.$trans('album.set_as_playlist', {}, null, true) }}</button>
-            <button class="dropdown-item" @click="addInPlaylist">{{ this.$trans('album.add_to_playlist', {}, null, true) }}</button>
-          </div>
-        </div>
+        <side-actions>
+          <button class="dropdown-item" @click="setAsPlaylist">{{ this.$trans('album.set_as_playlist', {}, null, true) }}</button>
+          <button class="dropdown-item" @click="addInPlaylist">{{ this.$trans('album.add_to_playlist', {}, null, true) }}</button>
+        </side-actions>
 
       </div>
     </div>
@@ -29,10 +25,11 @@ import {mapActions} from "vuex";
 import albumIcon from "../components/icons/albumIcon";
 import trackList from "../components/listing/trackList";
 import loadingIcon from "../components/icons/loadingIcon";
+import sideActions from "../components/sideActions";
 
 export default {
   name: "albumPage",
-  components: { trackList, albumIcon, loadingIcon },
+  components: { trackList, albumIcon, loadingIcon, sideActions },
   data () {
     return {
       album: {},
