@@ -106,7 +106,7 @@ class ImportTracksCommand extends Command
             $this->medialibFolder,
             $this->pathSeparator,
             array('mp3'),
-            null,
+            null, // $outputSectionParsing set here to null to avoid too many logs
             $minModifyTime
         );
         $candidatesCount = $dirParser->getFilesCount();
