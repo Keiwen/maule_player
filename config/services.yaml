@@ -48,3 +48,8 @@ services:
         arguments:
             $medialibFolder: '%medialib_folder%'
             $pathSeparator : '%media_path_separator%'
+
+    App\Command\DetectExtensionCommand:
+        arguments:
+            $medialibFolder: '%medialib_folder%'
+            $pathSeparator : '%media_path_separator%'
