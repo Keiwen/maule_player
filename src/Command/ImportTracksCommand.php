@@ -135,6 +135,8 @@ class ImportTracksCommand extends Command
                     $audioInfo = new Mp3Info($fullPathToFile, true);
                     $this->addTrackToCandidate($fileRelPath, $audioInfo);
                 } catch (\Exception $e) {
+                    $output->writeln(sprintf('     Exception on reading MP3 tags for file %s: %s', $fileRelPath, $e->getMessage()));
+                } catch (\Error $e) {
                     $output->writeln(sprintf('     Error on reading MP3 tags for file %s: %s', $fileRelPath, $e->getMessage()));
                 }
                 if ($limit > 0 && $fileIndex >= $limit) {
@@ -221,10 +223,9 @@ class ImportTracksCommand extends Command
                     }
                 }
             }
-            $outputSectionEntitiesProgress->clear();
-
-            $output->writeln(sprintf('%d entities detected to create or update, store in DB', count($entitiesToStore)));
         }
+        $outputSectionEntitiesProgress->clear();
+        $output->writeln(sprintf('%d entities detected to create or update, store in DB', count($entitiesToStore)));
 
         if ($input->getOption('no-db')) {
             $output->writeln('Running as a test, no DB storage');
