@@ -209,8 +209,8 @@ class ImportTracksCommand extends Command
                         ->setArtist($artist)
                         ->setAlbum($album)
                         ->setFilepath($filepath)
-                        ->setTrackNumber($metadata->tags['track'] ?? null)
-                        ->setYear($metadata->tags['year'] ?? null)
+                        ->setTrackNumber((int) $metadata->tags['track'] ?? null)
+                        ->setYear((int) $metadata->tags['year'] ?? null)
                         ->setDuration($metadata->duration)
                         ->setImportDate($this->startingDateTime)
                     ;
