@@ -126,8 +126,12 @@ class ImportTracksCommand extends Command
                 $percent = round(($fileIndex / $candidatesCount) * 100);
                 $fileRelPath = str_replace($this->medialibFolder, '', $fullPathToFile);
                 $outputSectionMetadata->overwrite($percent . '%');
-                $audioInfo = new Mp3Info($fullPathToFile, true);
-                $this->addTrackToCandidate($fileRelPath, $audioInfo);
+                try {
+                    $audioInfo = new Mp3Info($fullPathToFile, true);
+                    $this->addTrackToCandidate($fileRelPath, $audioInfo);
+                } catch (\Exception $e) {
+                    $output->writeln(sprintf('     Error on reading MP3 tags for file %s: %s', $fileRelPath, $e->getMessage()));
+                }
                 if ($limit > 0 && $fileIndex >= $limit) {
                     break;
                 }
