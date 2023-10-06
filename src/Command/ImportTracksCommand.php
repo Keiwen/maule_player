@@ -106,10 +106,15 @@ class ImportTracksCommand extends Command
             $this->medialibFolder,
             $this->pathSeparator,
             array('mp3'),
-            $outputSectionParsing,
+            null,
             $minModifyTime
         );
         $candidatesCount = $dirParser->getFilesCount();
+        $ignoredByExtension = $dirParser->getIgnoredByExtensions();
+        foreach ($ignoredByExtension as $extension => $pathList) {
+            $outputSectionParsing->writeln(sprintf('     Ignored %d files with extension %s', count($pathList), $extension));
+        }
+        $outputSectionParsing->writeln(sprintf('     Ignored %d files that were not modified since last execution', count($dirParser->getIgnoredByTimestamp())));
         $output->writeln(sprintf('Done with %d candidates files', $candidatesCount));
 
         $limit = $input->getOption('limit');
