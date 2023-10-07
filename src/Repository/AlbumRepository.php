@@ -104,7 +104,7 @@ class AlbumRepository extends ServiceEntityRepository
     public function searchByArtist(Artist $artist, string $order = self::ORDER_RECENT, int $limit = 0, int $offset = 0): array
     {
         $qb = $this->createQueryBuilder('al')
-            ->from(Track::class, 't')
+            ->innerJoin('al.tracks', 't')
             ->where('t.artist = :artist')
             ->setParameter('artist', $artist)
             ->groupBy('al.id')
