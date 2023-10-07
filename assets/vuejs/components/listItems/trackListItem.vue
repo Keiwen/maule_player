@@ -3,7 +3,7 @@
 
     <div class="container-fluid row">
       <div class="col-12">
-        <span class="track-title">{{ getLimitedTitle(track.name, 28) }}</span>
+        <span class="track-title">{{ getLimitedTitle(track.name, 26) }}</span>
       </div>
     </div>
 
