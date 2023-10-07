@@ -11,7 +11,7 @@
 
       <div class="col-10">
         <div class="col-12">
-          <span class="album-title">{{ getLimitedTitle(album.name, 25) }}</span>
+          <span class="album-title">{{ getLimitedTitle(album.name, 22) }}</span>
           <span class="trackCount badge badge-pill badge-secondary">{{ album.tracksCount }}</span>
         </div>
         <div class="col-12">

@@ -10,7 +10,7 @@
 
     <div class="col-8 row">
       <div class="col-12">
-        <span class="track-title">{{ getLimitedTitle(track.name, 20) }}</span>
+        <span class="track-title">{{ getLimitedTitle(track.name, 18) }}</span>
       </div>
 
       <div class="col-12">
