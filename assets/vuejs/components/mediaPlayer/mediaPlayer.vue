@@ -2,7 +2,7 @@
   <div class="audio-container">
     <div class="custom-player-container row">
       <div class="col-12 custom-player-text-wrapper">
-        <div class="row custom-player-text">{{ mediaText }}</div>
+        <span class="row custom-player-text" :class="{'custom-player-text-animated': titleWidthTooLarge}" id="audio_player_title">{{ mediaText }}</span>
       </div>
 
       <div class="custom-player-play">
@@ -50,6 +50,7 @@ export default {
   data () {
     return {
       audioElement: null,
+      audioTitleElement: null,
       duration: '',
       currentTime: '',
       percentProgress: 0,
@@ -83,6 +84,7 @@ export default {
       this.audioElement.addEventListener('pause', this.audioPaused)
       this.audioElement.addEventListener('play', this.audioPlayed)
     }
+    this.audioTitleElement = document.getElementById('audio_player_title')
   },
   computed: {
     ...mapGetters(['currentTrack', 'currentTrackIndex', 'getNextPlaylistIndex', 'getPrevPlaylistIndex', 'getDisplayTime']),
@@ -103,6 +105,14 @@ export default {
     },
     hasPrevMedia () {
       return this.getPrevPlaylistIndex() !== -1
+    },
+    titleWidthTooLarge () {
+      if (this.audioTitleElement === null) return false
+      if (!getComputedStyle) return true
+      const elementStyle = getComputedStyle(this.audioTitleElement)
+      // compute text width: offsetWidth property include padding
+      const textWidth = this.audioTitleElement.offsetWidth - parseFloat(elementStyle.paddingLeft) - parseFloat(elementStyle.paddingRight)
+      return textWidth >= this.$root.windowSize.width
     }
   },
   methods: {
@@ -225,10 +235,12 @@ export default {
       text-shadow: var(--secondary) 0 0 10px;
       white-space: nowrap;
       display: inline-block;
-      animation: movingText 10s infinite linear;
-      padding-left: 100%;
-      &:hover {
-        animation-play-state: paused;
+      &.custom-player-text-animated {
+        animation: movingText 10s infinite linear;
+        padding-left: 100%;
+        &:hover {
+          animation-play-state: paused;
+        }
       }
   }
   }
