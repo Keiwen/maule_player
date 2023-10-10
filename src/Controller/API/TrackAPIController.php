@@ -4,6 +4,8 @@ namespace App\Controller\API;
 
 use App\Entity\Track;
 use App\Repository\TrackRepository;
+use Keiwen\Cacofony\Http\Request;
+use Keiwen\Utils\Sanitize\StringSanitizer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +26,13 @@ class TrackAPIController extends APIController
      * @OA\Get (
      *     summary="Get tracks",
      *     description="Get all tracks informations",
+     *     @OA\Parameter (
+     *          name="limit",
+     *          in="query",
+     *          description="Maximum number of tracks returned. 0 or empty to get all tracks.",
+     *          example="0",
+     *          @OA\Schema(type="integer")
+     *     ),
      *     @OA\Response (
      *          response=200,
      *          description="List of tracks",
@@ -38,9 +47,10 @@ class TrackAPIController extends APIController
      *     )
      * )
      */
-    public function list(TrackRepository $trackRepository): JsonResponse
+    public function list(TrackRepository $trackRepository, Request $request): JsonResponse
     {
-        $trackObjects = $trackRepository->findAllFullTrack();
+        $limit = $request->getRequestParam('limit', StringSanitizer::FILTER_INT, 0);
+        $trackObjects = $trackRepository->findAllFullTrack($limit);
         $tracks = array();
         foreach ($trackObjects as $trackObject) {
             $track = $trackObject->toArray();
