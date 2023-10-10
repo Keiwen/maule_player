@@ -2,19 +2,19 @@
   <div class="row" :class="{'item-active': isCurrent}">
 
     <div class="col-2">
-      <div class="ddHandle btn btn-outline-primary">
-        <i class="fa fa-arrows-alt" />
-        <div class="track-order">{{ trackIndex + 1 }}</div>
-      </div>
+      <router-link :to="{ name: 'track', params: { id: track.id, track: track }}" class="btn btn-primary track-link">
+        <track-icon />
+      </router-link>
     </div>
 
-    <div class="col-8 row">
+    <div class="col-8 row ddHandle">
       <div class="col-12">
         <span class="track-title">{{ getLimitedTitle(track.name, 18) }}</span>
       </div>
 
       <div class="col-12">
-        <span class="track-artist">{{ getLimitedTitle(track.artist.name, 20) }}</span>
+        #{{ trackIndex + 1 }}
+        <span class="track-artist">{{ getLimitedTitle(track.artist.name, 17) }}</span>
       </div>
     </div>
 
@@ -32,9 +32,13 @@
 
 <script>
 import {mapGetters, mapActions} from "vuex";
+import trackIcon from "../icons/trackIcon";
+import TrackIcon from "../icons/trackIcon";
 
 export default {
   name: "playlistTrackItem",
+  components: {TrackIcon},
+  component: { trackIcon },
   props: {
     track: {
       type: Object,
@@ -87,12 +91,12 @@ export default {
   }
 }
 
-.ddHandle {
+.track-link {
   width: 50px;
   height: 50px;
   svg {
-    height: 60%;
-    margin-top: -5px;
+    height: 100%;
+    margin-left: -6px;
   }
 }
 
