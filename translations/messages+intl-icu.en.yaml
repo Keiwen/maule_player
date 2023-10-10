@@ -95,7 +95,9 @@ album:
     error: cannot load album
 settings:
   title: settings
-  reset: reset
+  about: about
+  version: version
+  reset: reset local history
   locale: language
 playlist:
   title: playlist

@@ -95,7 +95,9 @@ album:
     error: "impossible de charger l'album"
 settings:
   title: paramètres
-  reset: réinitialiser
+  about: à propos
+  version: version
+  reset: réinitialiser l'historique local
   locale: langue
 playlist:
   title: liste de lecture

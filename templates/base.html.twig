@@ -7,6 +7,7 @@
         <title>{{ global_app_name }}</title>
 
         <script>
+            const APP_VERSION = '{{ global_app_version }}';
             const APP_LOCALE = '{{ app.request.locale }}';
             const LOCALE_NAMES = {
                 en: '{{ 'en'|intlLocaleName('en')|ucfirst }}',

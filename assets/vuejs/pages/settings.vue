@@ -11,7 +11,8 @@
       </a>
     </div>
 
-    <h2>{{ this.$trans('settings.reset', {}, null, true) }}</h2>
+    <h2>{{ this.$trans('settings.about', {}, null, true) }}</h2>
+    <p>{{ this.$trans('settings.version', {}, null, true, true) }} {{ currentVersion }}</p>
     <button class="btn btn-warning" @click="resetState">{{ this.$trans('settings.reset', {}, null, true) }}</button>
 
   </div>
@@ -25,12 +26,14 @@ export default {
   data () {
     return {
       locales: [],
-      currentLocale: ''
+      currentLocale: '',
+      currentVersion: ''
     }
   },
   mounted () {
     this.locales = Object.keys(URL_LOCALE)
     this.currentLocale = APP_LOCALE
+    this.currentVersion = APP_VERSION
   },
   methods: {
     ...mapActions(['resetState']),
