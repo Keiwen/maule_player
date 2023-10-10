@@ -19,10 +19,10 @@
     </div>
 
     <div class="col-2 item-icon">
-      <button class="btn btn-secondary btn-pause" disabled>
+      <button class="btn btn-light btn-pause" disabled>
         <i class="fa fa-pause" />
       </button>
-      <button class="btn btn-primary btn-play" @click="selectTrack">
+      <button class="btn btn-secondary btn-play" @click="selectTrack">
         <i class="fa fa-play" />
       </button>
     </div>
