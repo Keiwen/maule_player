@@ -65,11 +65,16 @@ track:
   year: year
   track_number: '#'
   filepath: filepath
+  import_date: imported at
+  link_artist: see artist
+  link_album: see album
   list:
     title: tracks
     search: search for tracks
     empty: no track available
     error: cannot load tracks
+  get:
+    error: cannot load track
 artist:
   name: artist
   recent_tracks: recent tracks

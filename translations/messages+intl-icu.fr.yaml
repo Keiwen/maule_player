@@ -65,11 +65,16 @@ track:
   year: année
   track_number: '#'
   filepath: chemin
+  import_date: importée le
+  link_artist: "voir l'artiste"
+  link_album: "voir l'album"
   list:
     title: pistes
     search: rechercher des pistes
     empty: aucune piste disponible
     error: impossible de charger les pistes
+  get:
+    error: impossible de charger la piste
 artist:
   name: artiste
   recent_tracks: pistes récentes
