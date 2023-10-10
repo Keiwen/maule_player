@@ -61,6 +61,7 @@ search:
   too_short: "il semble que votre requête de recherche soit trop courte. Veuillez fournir une requête plus détaillée"
   empty: aucun résultat trouvé
   no_idea: "Vous ne savez pas qu'écouter ? Activez une lecture aléatoire"
+  tracks: pistes
 track:
   title: titre
   year: année

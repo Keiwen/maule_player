@@ -51,7 +51,7 @@
                  @keyup.enter="randomPlay" aria-label="random limit"  aria-describedby="random-limit-description">
           <div class="input-group-append">
             <span class="input-group-text" id="random-limit-description">
-              {{ this.$trans('track.list.title', {}, null, true) }}
+              {{ this.$trans('search.tracks') }}
             </span>
           </div>
         </div>

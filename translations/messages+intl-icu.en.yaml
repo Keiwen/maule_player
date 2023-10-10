@@ -61,6 +61,7 @@ search:
   too_short: "It looks like your search query is too short. Please provide a more detailed query"
   empty: no result found
   no_idea: no idea about what to listen? Play at random!
+  tracks: tracks
 track:
   title: title
   year: year
