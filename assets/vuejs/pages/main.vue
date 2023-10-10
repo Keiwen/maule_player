@@ -42,6 +42,26 @@
 
     <loading-icon v-if="isLoading" />
 
+    <div v-if="noIdea">
+      {{ this.$trans('search.no_idea', {}, null, true) }}
+      <div class="form-inline row mt-2 mx-2">
+
+        <div class="input-group col-10">
+          <input class="form-control" v-model="randomLimit" type="text"
+                 @keyup.enter="randomPlay" aria-label="random limit"  aria-describedby="random-limit-description">
+          <div class="input-group-append">
+            <span class="input-group-text" id="random-limit-description">
+              {{ this.$trans('track.list.title', {}, null, true) }}
+            </span>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary col-2" type="submit" @click="randomPlay">
+          <i class="fa fa-play" />
+        </button>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -64,10 +84,14 @@ export default {
     return {
       remoteCallData: {},
       remoteCallError: null,
+      remoteCallRandomData: {},
+      remoteCallRandomError: null,
       search: '',
       trackList: [],
       artistList: [],
-      albumList: []
+      albumList: [],
+      noIdea: true,
+      randomLimit: 20,
     }
   },
   computed: {
@@ -90,11 +114,23 @@ export default {
       if (newValue !== null && this.remoteCallData === null) {
         this.addError(this.$trans('track.list.error', {}, null, true))
       }
+    },
+    remoteCallRandomData: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallRandomError === null) {
+        this.emptyPlaylist()
+        this.addTracksInPlaylist(newValue.tracks)
+      }
+    },
+    remoteCallRandomError: function(newValue, oldValue) {
+      if (newValue !== null && this.remoteCallRandomData === null) {
+        this.addError(this.$trans('track.list.error', {}, null, true))
+      }
     }
   },
   methods: {
-    ...mapActions(['addError', 'addWarning']),
+    ...mapActions(['addError', 'addWarning', 'addTracksInPlaylist', 'emptyPlaylist']),
     updateSearch () {
+      this.noIdea = false
       this.remoteCallData = null
       this.remoteCallError = null
       this.trackList = []
@@ -109,6 +145,14 @@ export default {
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallData = callData
       this.remoteCallError = callError
+    },
+    randomPlay () {
+      this.remoteCallRandomData = null
+      this.remoteCallRandomError = null
+      const urlToCall = this.$url(URL_API.track_list, {limit: this.randomLimit, randomize: 1})
+      const {callData, callError} = useRemoteCall(urlToCall)
+      this.remoteCallRandomData = callData
+      this.remoteCallRandomError = callError
     }
   }
 }
