@@ -6,6 +6,7 @@ import Artists from '../pages/artists'
 import Artist from '../pages/artist'
 import Albums from '../pages/albums'
 import Album from '../pages/album'
+import Track from '../pages/track'
 import Playlist from "../pages/playlist";
 
 Vue.use(Router)
@@ -51,6 +52,11 @@ export default new Router({
             path: '/playlist/',
             name: 'playlist',
             component: Playlist
+        },
+        {
+            path: '/track/:id',
+            name: 'track',
+            component: Track
         }
     ]
 })
