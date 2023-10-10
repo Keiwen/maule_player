@@ -226,7 +226,7 @@ export default {
       white-space: nowrap;
       display: inline-block;
       animation: movingText 10s infinite linear;
-      padding-left: 50%;
+      padding-left: 100%;
       &:hover {
         animation-play-state: paused;
       }
