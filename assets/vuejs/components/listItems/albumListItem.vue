@@ -12,9 +12,9 @@
       <div class="col-10">
         <div class="col-12">
           <span class="album-title">{{ getLimitedTitle(album.name, 22) }}</span>
-          <span class="trackCount badge badge-pill badge-secondary">{{ album.tracksCount }}</span>
+          <span class="trackCount badge badge-pill badge-secondary" v-if="!simpleView">{{ album.tracksCount }}</span>
         </div>
-        <div class="col-12">
+        <div class="col-12" v-if="!simpleView">
           <span class="albumYear">{{ album.year }}</span>
           <span class="albumDuration">{{ albumDuration }}</span>
         </div>
@@ -35,6 +35,10 @@ export default {
     album: {
       type: Object,
       required: true
+    },
+    simpleView: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
