@@ -1,37 +1,14 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-10">
-        <span>
-          {{ this.$trans('playlist.duration', {}, null, true, true) }}
-          {{ getDisplayTime(currentPlaylistDuration) }}
-        </span>
-        <span class="ml-1" v-if="loopPlaylist">
-            <i class="fa fa-repeat" />
-        </span>
-      </div>
-
-      <div class="col-2 playlist-actions">
-        <side-actions>
-          <button class="dropdown-item" @click="switchLoopPlaylist">
-            <i class="fa fa-repeat" />
-            <span v-if="loopPlaylist">{{ this.$trans('playlist.unloop', {}, null, true) }}</span>
-            <span v-else>{{ this.$trans('playlist.loop', {}, null, true) }}</span>
-          </button>
-          <button class="dropdown-item" @click="randomizePlaylist">
-            <i class="fa fa-shuffle" />
-            {{ this.$trans('playlist.shuffle', {}, null, true) }}
-          </button>
-          <button class="dropdown-item" @click="cleanPlaylist">
-            <i class="fa fa-square-minus" />
-            {{ this.$trans('playlist.empty', {}, null, true) }}
-          </button>
-        </side-actions>
-      </div>
-
+    <div class="row col-12">
+      <span>
+        {{ this.$trans('playlist.duration', {}, null, true, true) }}
+        {{ getDisplayTime(currentPlaylistDuration) }}
+      </span>
+      <span class="ml-1" v-if="loopPlaylist">
+          <i class="fa fa-repeat" />
+      </span>
     </div>
-
-
 
     <hr/>
 
@@ -75,18 +52,7 @@ export default {
   },
   methods: {
     ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex',
-      'addSuccess', 'emptyPlaylist', 'shufflePlaylist', 'setLoopPlaylist']),
-    cleanPlaylist () {
-      this.emptyPlaylist()
-      this.orderedTrackList = []
-      this.addSuccess(this.$trans('playlist.removed', {}, null, true))
-    },
-    randomizePlaylist () {
-      this.shufflePlaylist()
-      // force ordered track to be empty first, or sometimes changed are not reflected right away
-      this.orderedTrackList = []
-      this.orderedTrackList = this.trackList
-    },
+      'addSuccess']),
     startDrag (e) {
       this.grabPlaylistElement()
     },
@@ -100,9 +66,6 @@ export default {
         this.removeTrackByIndex({index: e.oldIndex, loadNextIfCurrent: true})
         this.addSuccess(this.$trans('playlist.removed', {}, null, true))
       }
-    },
-    switchLoopPlaylist () {
-      this.setLoopPlaylist(!this.loopPlaylist)
     }
   }
 }
@@ -124,10 +87,6 @@ export default {
     height: 100%;
     width: 100%;
     min-height: 400px;
-  }
-
-  .playlist-actions {
-    margin-top: -10px;
   }
 
 </style>
