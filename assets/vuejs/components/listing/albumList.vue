@@ -2,14 +2,14 @@
   <div>
     <div class="container-fluid" v-if="allowSearch">
       <div class="form-inline row">
-        <input class="form-control" type="search" v-model="search"
+        <input class="form-control album-search" type="search" v-model="search"
                :placeholder="this.$trans('album.list.search', {}, null, true)" aria-label="Search">
       </div>
       <hr/>
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item container" v-for="album in albumList" v-if="isItemMatchSearch(album.name)">
+      <li class="list-group-item" v-for="album in albumList" v-if="isItemMatchSearch(album.name)">
         <album-list-item :album="album" />
       </li>
     </ul>
@@ -47,6 +47,10 @@ export default {
 </script>
 
 <style scoped>
+
+  .form-control.album-search {
+    width: 100%;
+  }
 
   .list-group-item {
     background-color: transparent;
