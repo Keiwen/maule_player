@@ -1,22 +1,18 @@
 <template>
-  <div class="row">
+  <div>
 
-    <div class="container-fluid row">
-
-      <div class="col-2 item-icon">
-        <router-link :to="{ name: 'artist', params: { id: artist.id, artist: artist }}" class="btn btn-primary artist-link">
-          <artist-icon />
-        </router-link>
-      </div>
-
-      <div class="col-10">
-        <div class="col-12">
-          <span class="artist-title">{{ getLimitedTitle(artist.name, 22) }}</span>
-          <span class="trackCount badge badge-pill badge-secondary" v-if="!simpleView">{{ artist.tracksCount }}</span>
-        </div>
-      </div>
-
+    <div class="item-icon">
+      <router-link :to="{ name: 'artist', params: { id: artist.id, artist: artist }}" class="btn btn-primary artist-link">
+        <artist-icon />
+      </router-link>
     </div>
+
+    <div class="item-text">
+        <span class="artist-title">{{ getLimitedTitle(artist.name, titleLimit) }}</span>
+    </div>
+
+    <div class="trackCount badge badge-pill badge-secondary" v-if="!simpleView">{{ artist.tracksCount }}</div>
+
   </div>
 </template>
 
@@ -38,7 +34,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getLimitedTitle'])
+    ...mapGetters(['getLimitedTitle']),
+    titleLimit () {
+      if (this.$root.screenWidthClass === 'xl') return 150
+      if (this.$root.screenWidthClass === 'lg') return 100
+      if (this.$root.screenWidthClass === 'md') return 80
+      if (this.$root.screenWidthClass === 'sm') return 50
+      return 22
+    }
   }
 }
 </script>
@@ -49,21 +52,26 @@ export default {
   font-weight: bold;
 }
 
+.item-icon {
+  float: left;
+  margin-right: 10px;
+  .artist-link {
+    height: var(--simple-button-size);
+    width: var(--simple-button-size);
+    svg {
+      margin-left: -5px;
+      height: 100%;
+    }
+  }
+}
+
 .trackCount {
   font-size: 90%;
   position: absolute;
-  right: 0;
-  margin-right: -15px;
+  right: 5px;
+  top: 5px;
 }
 
-.artist-link {
-  width: 50px;
-  height: 50px;
-  svg {
-    margin-left: -5px;
-    height: 100%;
-  }
-}
 
 
 </style>
