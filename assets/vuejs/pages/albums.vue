@@ -45,6 +45,7 @@ export default {
   methods: {
     ...mapActions(['addError']),
     updateList () {
+      this.albumList = []
       const urlToCall = this.$url(URL_API.album_list, {})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallData = callData

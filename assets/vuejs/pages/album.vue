@@ -86,12 +86,14 @@ export default {
   methods: {
     ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
     updateTrackList () {
+      this.trackList = []
       const urlToCall = this.$url(URL_API.album_tracks, {id: this.album.id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
       this.remoteCallTrackError = callError
     },
     updateAlbumData (id) {
+      this.album = {}
       const urlToCall = this.$url(URL_API.album_get, {id: id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallAlbumData = callData

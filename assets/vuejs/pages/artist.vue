@@ -9,7 +9,7 @@
       </div>
       <div class="section" id="tab-recent">
         <h2 class="title">{{ this.$trans('artist.recent_tracks', {}, null, true) }}</h2>
-        <track-list :track-list="trackList" :allowSearch="false"></track-list>
+        <track-list :track-list="recentTrackList" :allowSearch="false"></track-list>
       </div>
     </vue-tiny-tabs>
     <loading-icon v-if="isLoading" />
@@ -95,18 +95,21 @@ export default {
   methods: {
     ...mapActions(['addError']),
     updateTrackList () {
+      this.trackList = []
       const urlToCall = this.$url(URL_API.artist_tracks, {id: this.artist.id, limit: 5})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
       this.remoteCallTrackError = callError
     },
     updateAlbumList () {
+      this.albumList = []
       const urlToCall = this.$url(URL_API.artist_albums, {id: this.artist.id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallAlbumData = callData
       this.remoteCallAlbumError = callError
     },
     updateArtistData (id) {
+      this.artist = {}
       const urlToCall = this.$url(URL_API.artist_get, {id: id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallArtistData = callData
