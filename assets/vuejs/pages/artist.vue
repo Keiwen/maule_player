@@ -1,6 +1,26 @@
 <template>
   <div>
-    <h1><artist-icon /> {{ artist.name }}</h1>
+
+    <div class="row">
+      <div class="col-10">
+        <h1><artist-icon /> {{ artist.name }}</h1>
+      </div>
+      <div class="col-2 artist-actions">
+
+        <side-actions>
+          <button class="dropdown-item" @click="setAsPlaylist">
+            <i class="fa fa-play" />
+            {{ this.$trans('artist.set_as_playlist', {}, null, true) }}
+          </button>
+          <button class="dropdown-item" @click="addInPlaylist">
+            <i class="fa fa-folder-plus" />
+            {{ this.$trans('artist.add_to_playlist', {}, null, true) }}
+          </button>
+        </side-actions>
+
+      </div>
+    </div>
+
 
     <vue-tiny-tabs id="artist-tabs" :anchor="false" :closable="false" :hideTitle="true">
       <div class="section" id="tab-discography">
@@ -25,10 +45,11 @@ import trackList from "../components/listing/trackList";
 import albumList from "../components/listing/albumList";
 import vueTinyTabs from 'vue-tiny-tabs';
 import loadingIcon from "../components/icons/loadingIcon";
+import sideActions from "../components/sideActions";
 
 export default {
   name: "artistPage",
-  components: { trackList, artistIcon, albumList, vueTinyTabs, loadingIcon },
+  components: { trackList, artistIcon, albumList, vueTinyTabs, loadingIcon, sideActions },
   data () {
     return {
       artist: {},
@@ -38,6 +59,7 @@ export default {
       remoteCallAlbumError: null,
       remoteCallArtistData: {},
       remoteCallArtistError: null,
+      recentTrackList: [],
       trackList: [],
       albumList: []
     }
@@ -53,6 +75,7 @@ export default {
     remoteCallTrackData: function(newValue, oldValue) {
       if (newValue !== null && this.remoteCallTrackError === null) {
         this.trackList = newValue.tracks
+        this.recentTrackList = newValue.tracks.slice(0, 5)
       }
     },
     remoteCallTrackError: function(newValue, oldValue) {
@@ -93,10 +116,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
     updateTrackList () {
       this.trackList = []
-      const urlToCall = this.$url(URL_API.artist_tracks, {id: this.artist.id, limit: 5})
+      this.recentTrackList = []
+      const urlToCall = this.$url(URL_API.artist_tracks, {id: this.artist.id, limit: 0})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
       this.remoteCallTrackError = callError
@@ -114,6 +138,15 @@ export default {
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallArtistData = callData
       this.remoteCallArtistError = callError
+    },
+    addInPlaylist () {
+      if (this.trackList.length === 0) return
+      this.addTracksInPlaylist(this.trackList)
+    },
+    setAsPlaylist () {
+      if (this.trackList.length === 0) return
+      this.emptyPlaylist()
+      this.addInPlaylist()
     }
   }
 }
@@ -123,6 +156,10 @@ export default {
 
 h1 svg {
   max-height: 30px;
+}
+
+.artist-actions {
+  margin-top: 5px;
 }
 
 </style>

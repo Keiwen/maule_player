@@ -74,6 +74,8 @@ artist:
   name: artist
   recent_tracks: recent tracks
   discography: discography
+  add_to_playlist: add to playlist
+  set_as_playlist: play all tracks
   list:
     title: artists
     search: search for artists

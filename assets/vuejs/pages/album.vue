@@ -1,9 +1,8 @@
 <template>
   <div>
-    <h1><album-icon /> {{ album.name }}</h1>
     <div class="row">
       <div class="col-10">
-        <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
+        <h1><album-icon /> {{ album.name }}</h1>
       </div>
       <div class="col-2 album-actions">
 
@@ -20,6 +19,8 @@
 
       </div>
     </div>
+
+    <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
     <track-list :track-list="trackList" :allowSearch="false"></track-list>
     <loading-icon v-if="isLoading" />
   </div>

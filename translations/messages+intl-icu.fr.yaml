@@ -74,6 +74,8 @@ artist:
   name: artiste
   recent_tracks: pistes récentes
   discography: discographie
+  add_to_playlist: ajouter à la liste de lecture
+  set_as_playlist: jouer toutes les pistes
   list:
     title: artistes
     search: rechercher des artistes
