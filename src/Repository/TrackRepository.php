@@ -48,11 +48,12 @@ class TrackRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int $limit
      * @return Track[]
      */
-    public function findAllFullTrack()
+    public function findAllFullTrack(int $limit = 0)
     {
-        return $this->findFullTracksBy(array(), self::ORDER_NAME);
+        return $this->findFullTracksBy(array(), self::ORDER_NAME, $limit);
     }
 
     public function add(Track $entity, bool $flush = false): void
