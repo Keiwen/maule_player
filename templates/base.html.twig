@@ -19,13 +19,13 @@
             };
             const URL_API = {
                 search: '{{ url('api_search', {q: ':q'}) }}',
-                track_list: '{{ url('api_track_list') }}',
+                track_list: '{{ url('api_track_list', {limit: ':limit', randomize: ':randomize'})|raw }}',
                 track_get: '{{ url('api_track_get', {id: ':id'}) }}',
                 artist_list: '{{ url('api_artist_list') }}',
                 artist_get: '{{ url('api_artist_get', {id: ':id'}) }}',
                 album_list: '{{ url('api_album_list') }}',
                 album_get: '{{ url('api_album_get', {id: ':id'}) }}',
-                artist_tracks: '{{ url('api_artist_tracks', {id: ':id', limit: ':limit'}) }}',
+                artist_tracks: '{{ url('api_artist_tracks', {id: ':id', limit: ':limit'})|raw }}',
                 album_tracks: '{{ url('api_album_tracks', {id: ':id'}) }}',
                 artist_albums: '{{ url('api_artist_albums', {id: ':id'}) }}',
             };
