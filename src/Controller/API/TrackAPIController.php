@@ -33,6 +33,13 @@ class TrackAPIController extends APIController
      *          example="0",
      *          @OA\Schema(type="integer")
      *     ),
+     *     @OA\Parameter (
+     *          name="randomize",
+     *          in="query",
+     *          description="",
+     *          example="false",
+     *          @OA\Schema(type="boolean")
+     *     ),
      *     @OA\Response (
      *          response=200,
      *          description="List of tracks",
@@ -50,7 +57,12 @@ class TrackAPIController extends APIController
     public function list(TrackRepository $trackRepository, Request $request): JsonResponse
     {
         $limit = $request->getRequestParam('limit', StringSanitizer::FILTER_INT, 0);
-        $trackObjects = $trackRepository->findAllFullTrack($limit);
+        $randomize = $request->getRequestParam('randomize', StringSanitizer::FILTER_BOOLEAN, false);
+        $trackObjects = $trackRepository->findAllFullTrack($randomize ? 0 : $limit);
+        if ($randomize) {
+            shuffle($trackObjects);
+            $trackObjects = array_slice($trackObjects, 0, $limit);
+        }
         $tracks = array();
         foreach ($trackObjects as $trackObject) {
             $track = $trackObject->toArray();
