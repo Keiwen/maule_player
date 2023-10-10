@@ -1,30 +1,28 @@
 <template>
-  <div class="container audio-container">
+  <div class="audio-container">
     <div class="custom-player-container row">
       <div class="col-12 custom-player-text-wrapper">
         <div class="row custom-player-text">{{ mediaText }}</div>
       </div>
 
-      <div class="col-2 custom-player-play">
-        <div class="row">
-          <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
-        </div>
+      <div class="custom-player-play">
+        <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
       </div>
-      <div class="col-10 custom-player-middle">
-        <div class="row custom-player-timeline">
+      <div class="custom-player-data">
+        <div class="custom-player-timeline">
           <timeline :percent-progress="percentProgress" @change-progress="changeProgress"  />
         </div>
-        <div class="row custom-player-timeview">
+        <div class="custom-player-timeview">
           <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-prev"
                   @click="playerPrevious">
             <i class="fa fa-backward-step" />
           </button>
 
-          <span class="custom-player-time">
+          <div class="custom-player-time">
             <span class="custom-player-current-time">{{ currentTime }}</span>
             /
             <span class="custom-player-duration">{{ duration }}</span>
-          </span>
+          </div>
 
           <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-next"
                   @click="playerNext" :class="{disabled: !hasNextMedia}" :disabled="!hasNextMedia">
@@ -188,15 +186,31 @@ export default {
 
 .custom-player-container {
   background-color: var(--primary);
-  .play-button {
-    background-color: var(--secondary);
+  .custom-player-play {
+    float: left;
+    width: var(--play-button-size);
+    height: var(--play-button-size);
+    margin-right: 10px;
+    .play-button {
+      background-color: var(--secondary);
+    }
   }
+  .custom-player-data {
+    float: right;
+    width: -webkit-calc(100% - var(--play-button-size) - 10px);
+    width:    -moz-calc(100% - var(--play-button-size) - 10px);
+    width:         calc(100% - var(--play-button-size) - 10px);
+  }
+
   .custom-player-timeview {
     .custom-player-prevnext {
-      width: 15%;
+      width: var(--simple-button-size);
     }
     .custom-player-time {
-      width: 70%;
+      display: inline-block;
+      width: -webkit-calc(100% - 2*(var(--simple-button-size)) - 10px);
+      width:    -moz-calc(100% - 2*(var(--simple-button-size)) - 10px);
+      width:         calc(100% - 2*(var(--simple-button-size)) - 10px);
       text-align: center;
       color: var(--light);
       text-shadow: var(--secondary) 0 0 10px;
@@ -212,7 +226,7 @@ export default {
       white-space: nowrap;
       display: inline-block;
       animation: movingText 10s infinite linear;
-      padding-left: 100%;
+      padding-left: 50%;
       &:hover {
         animation-play-state: paused;
       }

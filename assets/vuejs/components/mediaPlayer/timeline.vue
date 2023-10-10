@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 
 .custom-player-timeline {
-  width: 98%;
+  width: 99%;
   input[type="range"] {
     width: 100%;
     cursor: pointer;
@@ -45,19 +45,19 @@ export default {
 
     //CHROME
     &::-webkit-slider-runnable-track {
-      height: 5px;
+      height: var(--timeline-slider-track-height);
       background: rgba(0, 0, 0, 0.3);
     }
     &::-webkit-slider-thumb {
       position: relative;
       -webkit-appearance: none;
       box-sizing: content-box;
-      height: 18px;
-      width: 18px;
+      height: var(--timeline-slider-thumb-size);
+      width: var(--timeline-slider-thumb-size);
       border-radius: 50%;
       background-color: var(--secondary);
       border: 1px solid var(--light);
-      margin: -8px 0 0 0;
+      margin: var(--timeline-slider-thumb-margin) 0 0 0;
     }
     &:active::-webkit-slider-thumb {
       transform: scale(1.2);
@@ -68,17 +68,17 @@ export default {
     &::before {
       position: absolute;
       content: "";
-      top: 12px;
+      top: var(--timeline-slider-track-margin);
       left: 0;
       width: var(--custom-player-percent-progress);
-      height: 5px;
+      height: var(--timeline-slider-track-height);
       background-color: var(--dark);
     }
 
 
     //FIREFOX
     &::-moz-range-track {
-      height: 5px;
+      height: var(--timeline-slider-track-height);
       background: rgba(0, 0, 0, 0.3);
     }
     &::-moz-range-progress {
@@ -88,12 +88,12 @@ export default {
       position: relative;
       -webkit-appearance: none;
       box-sizing: content-box;
-      height: 18px;
-      width: 18px;
+      height: var(--timeline-slider-thumb-size);
+      width: var(--timeline-slider-thumb-size);
       border-radius: 50%;
       background-color: var(--secondary);
       border: 1px solid var(--light);
-      margin: -8px 0 0 0;
+      margin: var(--timeline-slider-thumb-margin) 0 0 0;
     }
     &:active::-moz-range-thumb {
       transform: scale(1.2);
@@ -103,7 +103,7 @@ export default {
     //EDGE
     &::-ms-track {
       width: 100%;
-      height: 5px;
+      height: var(--timeline-slider-track-height);
       background: transparent;
       border: solid transparent;
       color: transparent;
@@ -118,12 +118,12 @@ export default {
       position: relative;
       -webkit-appearance: none;
       box-sizing: content-box;
-      height: 18px;
-      width: 18px;
+      height: var(--timeline-slider-thumb-size);
+      width: var(--timeline-slider-thumb-size);
       border-radius: 50%;
       background-color: var(--secondary);
       border: 1px solid var(--light);
-      margin: -8px 0 0 0;
+      margin: var(--timeline-slider-thumb-margin) 0 0 0;
     }
     &:active::-ms-thumb {
       transform: scale(1.2);
