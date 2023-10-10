@@ -15,14 +15,19 @@
       <album-list-item :album="track.album" :simple-view="true" v-if="track.album"></album-list-item>
 
       <div class="row">
-        <div class="col-4">
+        <div class="col-3">
           {{ this.$trans('track.track_number', {}, null, true) }}{{ track.trackNumber }}
         </div>
-        <div class="col-4">
+        <div class="col-3">
           {{ track.year }}
         </div>
-        <div class="col-4">
+        <div class="col-3">
           {{ getDisplayTime(track.duration) }}
+        </div>
+        <div class="col-3">
+          <button class="btn btn-secondary btn-playlist" @click="selectTrack">
+            <i class="fa fa-folder-plus" />
+          </button>
         </div>
       </div>
 
@@ -99,6 +104,9 @@ export default {
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
       this.remoteCallTrackError = callError
+    },
+    selectTrack() {
+      this.addTracksInPlaylist([this.track])
     }
   }
 }
@@ -113,6 +121,15 @@ h1 svg {
 .dropdown-item {
   svg {
     height: 20px;
+  }
+}
+
+.btn-playlist {
+  width: 40px;
+  height: 40px;
+  svg {
+    height: 100%;
+    margin-left: -6px;
   }
 }
 
