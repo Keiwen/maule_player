@@ -67,11 +67,25 @@ new Vue({
             title: 'Title',
             icon: 'info',
             text: 'Message'
+        },
+        windowSize: {
+            height: window.innerHeight,
+            width: window.innerWidth
         }
     },
     components: { flashMessage, SweetModal, appMenu, mediaPlayer, playlistTrash },
     computed: {
-        ...mapGetters(['messageBag'])
+        ...mapGetters(['messageBag']),
+        screenWidthClass () {
+            // based on bootstrap size
+            // https://getbootstrap.com/docs/4.4/layout/grid/#grid-options
+            if (this.windowSize.width >= 1200) return 'xl'
+            if (this.windowSize.width >= 992) return 'lg'
+            if (this.windowSize.width >= 768) return 'md'
+            if (this.windowSize.width >= 576) return 'sm'
+            return 'xs'
+            // use this.$root.screenWidthClass in component
+        }
     },
     watch: {
         messageBag: function (newValue, oldValue) {
@@ -122,8 +136,22 @@ new Vue({
             )
         }
     },
+    mounted () {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        })
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.onResize);
+    },
     methods: {
-        ...mapActions(['nextMessage'])
+        ...mapActions(['nextMessage']),
+        onResize() {
+            this.windowSize = {
+                height: window.innerHeight,
+                width: window.innerWidth
+            }
+        }
     }
 
 
