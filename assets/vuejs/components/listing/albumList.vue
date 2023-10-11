@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import listItem from "../listItems/listItem";
+import listItem from "./listItem";
 import {mapGetters} from "vuex";
 
 export default {

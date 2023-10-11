@@ -12,7 +12,7 @@
       </router-link>
     </div>
 
-    <div class="item-box">
+    <div class="item-box" :class="{'item-box-action': hasAction}">
       <div class="item-text">
         <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
       </div>
@@ -20,13 +20,18 @@
         <span class="item-sub-text">{{ subText }}</span>
       </div>
 
-      <div class="item-tag-top" :class="{'item-tag-top-low': itemTitle}" v-if="!simpleView">
+      <div class="item-tag-top" :class="{'item-tag-top-low': itemTitle, 'item-tag-action': hasAction}" v-if="!simpleView">
         <slot name="tag_top"></slot>
       </div>
-      <div class="item-tag-bottom" v-if="!simpleView">
+      <div class="item-tag-bottom" :class="{'item-tag-action': hasAction}" v-if="!simpleView">
         <slot name="tag_bottom"></slot>
       </div>
     </div>
+
+    <div :class="{'item-action': hasAction}">
+      <slot name="actions"></slot>
+    </div>
+
 
   </div>
 </template>
@@ -77,6 +82,9 @@ export default {
       }
       return ''
     },
+    hasAction () {
+      return !!this.$slots.actions
+    },
     titleLimit () {
       if (this.$root.screenWidthClass === 'xl') return 150
       if (this.$root.screenWidthClass === 'lg') return 100
@@ -96,6 +104,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.item-box {
+  float: left;
+  width: -webkit-calc(100% - (var(--simple-button-size)) - 10px);
+  width:    -moz-calc(100% - (var(--simple-button-size)) - 10px);
+  width:         calc(100% - (var(--simple-button-size)) - 10px);
+  &.item-box-action {
+    width: -webkit-calc(100% - 2*(var(--simple-button-size)) - 10px);
+    width:    -moz-calc(100% - 2*(var(--simple-button-size)) - 10px);
+    width:         calc(100% - 2*(var(--simple-button-size)) - 10px);
+  }
+}
 
 .item-title {
   font-size: 1.2rem;
@@ -119,6 +139,19 @@ export default {
   }
 }
 
+.item-action {
+  float: right;
+  .btn {
+    height: var(--simple-button-size);
+    width: var(--simple-button-size);
+    svg {
+      height: 100%;
+      margin-left: -5px;
+    }
+  }
+}
+
+
 .item-tag-top {
   position: absolute;
   right: 5px;
@@ -134,8 +167,24 @@ export default {
   bottom: 5px;
 }
 
+.item-tag-action {
+  right: -webkit-calc(var(--simple-button-size) + 15px);
+  right:    -moz-calc(var(--simple-button-size) + 15px);
+  right:         calc(var(--simple-button-size) + 15px);
+}
+
 .badge {
   font-size: 90%;
+}
+
+.item-action {
+  float: right;
+  height: var(--simple-button-size);
+  width: var(--simple-button-size);
+  svg {
+    height: 100%;
+    margin-left: -5px;
+  }
 }
 
 

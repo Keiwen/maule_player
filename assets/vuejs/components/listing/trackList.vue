@@ -10,8 +10,23 @@
 
     <ul class="list-group">
       <li class="list-group-item" v-for="(track, trackIndex) in trackList" :key="'key-'+trackIndex"
-           v-if="isItemMatchSearch(track.name)">
-        <track-list-item :track="track" />
+          v-if="isItemMatchSearch(track.name)">
+        <list-item item-type="track" :item="track" :item-title="track.name"
+                   :link-route-param="{ name: 'track', params: { id: track.id, track: track }}">
+
+          <template v-slot:tag_top>
+            <div>{{ track.year }}</div>
+          </template>
+          <template v-slot:tag_bottom>
+            <div>{{ getDisplayTime(track.duration) }}</div>
+          </template>
+          <template v-slot:actions>
+            <button class="btn btn-secondary btn-playlist" @click="selectTrack(track)">
+              <i class="fa fa-folder-plus" />
+            </button>
+          </template>
+
+        </list-item>
       </li>
     </ul>
 
@@ -19,13 +34,12 @@
 </template>
 
 <script>
-import trackListItem from "../listItems/trackListItem";
-import playlistTrackItem from "../listItems/playlistTrackItem";
+import listItem from "./listItem";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "trackList",
-  components: { trackListItem, playlistTrackItem },
+  components: { listItem },
   props: {
     trackList: {
       type: Array,
@@ -42,9 +56,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentTrackIndex'])
+    ...mapGetters(['currentTrackIndex', 'getDisplayTime'])
   },
   methods: {
+    ...mapActions(['addTracksInPlaylist']),
+    selectTrack(track) {
+      this.addTracksInPlaylist([track])
+    },
     isItemMatchSearch (name) {
       if (this.search === '') return true
       return name.toLowerCase().includes(this.search.toLowerCase())

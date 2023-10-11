@@ -60,7 +60,7 @@ import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions, mapGetters} from "vuex";
 import trackIcon from "../components/icons/trackIcon";
 import loadingIcon from "../components/icons/loadingIcon";
-import listItem from "../components/listItems/listItem";
+import listItem from "../components/listing/listItem";
 
 export default {
   name: "trackPage",

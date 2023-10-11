@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import listItem from "../listItems/listItem";
+import listItem from "./listItem";
 
 export default {
   name: "artistList",
