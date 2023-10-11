@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="item-title" v-if="itemTitle">
+      {{ getLimitedTitle(itemTitle, titleLimit) }}
+    </div>
 
     <div class="item-icon">
       <router-link :to="linkRouteParam" class="btn btn-primary item-link">
@@ -17,7 +20,7 @@
         <span class="item-sub-text">{{ subText }}</span>
       </div>
 
-      <div class="item-tag-top" v-if="!simpleView">
+      <div class="item-tag-top" :class="{'item-tag-top-low': itemTitle}" v-if="!simpleView">
         <slot name="tag_top"></slot>
       </div>
       <div class="item-tag-bottom" v-if="!simpleView">
@@ -46,6 +49,9 @@ export default {
       type: String,
       required: true
     },
+    itemTitle: {
+      type: String,
+    },
     linkRouteParam: {
       type: Object,
     },
@@ -57,10 +63,18 @@ export default {
   computed: {
     ...mapGetters(['getLimitedTitle']),
     mainText () {
+      if (this.itemType === 'track') {
+        return this.getLimitedTitle(this.item.artist.name, this.smallTitleLimit)
+      }
       return this.item.name
     },
     subText () {
       if (this.itemType === 'album') return this.item.year
+      if (this.itemType === 'track') {
+        const trackNumber = '#' + this.item.trackNumber
+        const albumName = this.getLimitedTitle(this.item.album.name, this.smallTitleLimit - 5)
+        return trackNumber + ' ' + albumName
+      }
       return ''
     },
     titleLimit () {
@@ -69,12 +83,24 @@ export default {
       if (this.$root.screenWidthClass === 'md') return 80
       if (this.$root.screenWidthClass === 'sm') return 50
       return 22
+    },
+    smallTitleLimit () {
+      if (this.$root.screenWidthClass === 'xl') return 140
+      if (this.$root.screenWidthClass === 'lg') return 90
+      if (this.$root.screenWidthClass === 'md') return 70
+      if (this.$root.screenWidthClass === 'sm') return 45
+      return 18
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.item-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
 .item-main-text {
   font-weight: bold;
@@ -97,6 +123,9 @@ export default {
   position: absolute;
   right: 5px;
   top: 5px;
+  &.item-tag-top-low {
+    top: 30px;
+  }
 }
 
 .item-tag-bottom {
