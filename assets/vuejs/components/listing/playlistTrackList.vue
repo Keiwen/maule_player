@@ -15,11 +15,11 @@
     <vue-draggable v-model="orderedTrackList"
                    v-bind="{animation: 150, handle: '.ddHandle', group: 'playlist'}"
                    @start="startDrag" @end="endDrag">
-      <transition-group id="dropzone-tracklist" tag="div">
-        <div class="list-group-item" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
+      <transition-group id="dropzone-tracklist" tag="ul" class="list-group">
+        <li class="list-group-item" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
              :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
           <playlist-track-item :track="track" :track-index="trackIndex" />
-        </div>
+        </li>
       </transition-group>
     </vue-draggable>
   </div>
