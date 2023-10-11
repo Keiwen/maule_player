@@ -1,26 +1,18 @@
 <template>
   <div>
 
-    <div class="row">
-      <div class="col-10">
-        <h1><artist-icon /> {{ artist.name }}</h1>
-      </div>
-      <div class="col-2 artist-actions">
+    <h1><artist-icon /> {{ artist.name }}</h1>
 
-        <side-actions>
-          <button class="dropdown-item" @click="setAsPlaylist">
-            <i class="fa fa-play" />
-            {{ this.$trans('artist.set_as_playlist', {}, null, true) }}
-          </button>
-          <button class="dropdown-item" @click="addInPlaylist">
-            <i class="fa fa-folder-plus" />
-            {{ this.$trans('artist.add_to_playlist', {}, null, true) }}
-          </button>
-        </side-actions>
-
-      </div>
-    </div>
-
+    <side-actions>
+      <button class="dropdown-item" @click="setAsPlaylist">
+        <i class="fa fa-play" />
+        {{ this.$trans('artist.set_as_playlist', {}, null, true) }}
+      </button>
+      <button class="dropdown-item" @click="addInPlaylist">
+        <i class="fa fa-folder-plus" />
+        {{ this.$trans('artist.add_to_playlist', {}, null, true) }}
+      </button>
+    </side-actions>
 
     <vue-tiny-tabs id="artist-tabs" :anchor="false" :closable="false" :hideTitle="true">
       <div class="section" id="tab-discography">
@@ -158,8 +150,5 @@ h1 svg {
   max-height: 30px;
 }
 
-.artist-actions {
-  margin-top: 5px;
-}
 
 </style>

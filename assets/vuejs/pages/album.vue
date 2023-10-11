@@ -1,24 +1,17 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-10">
-        <h1><album-icon /> {{ album.name }}</h1>
-      </div>
-      <div class="col-2 album-actions">
+    <h1><album-icon /> {{ album.name }}</h1>
 
-        <side-actions>
-          <button class="dropdown-item" @click="setAsPlaylist">
-            <i class="fa fa-play" />
-            {{ this.$trans('album.set_as_playlist', {}, null, true) }}
-          </button>
-          <button class="dropdown-item" @click="addInPlaylist">
-            <i class="fa fa-folder-plus" />
-            {{ this.$trans('album.add_to_playlist', {}, null, true) }}
-          </button>
-        </side-actions>
-
-      </div>
-    </div>
+    <side-actions>
+      <button class="dropdown-item" @click="setAsPlaylist">
+        <i class="fa fa-play" />
+        {{ this.$trans('album.set_as_playlist', {}, null, true) }}
+      </button>
+      <button class="dropdown-item" @click="addInPlaylist">
+        <i class="fa fa-folder-plus" />
+        {{ this.$trans('album.add_to_playlist', {}, null, true) }}
+      </button>
+    </side-actions>
 
     <h2>{{ this.$trans('album.all_tracks', {}, null, true) }}</h2>
     <track-list :track-list="trackList" :allowSearch="false"></track-list>
@@ -117,10 +110,6 @@ export default {
 
 h1 svg {
   max-height: 30px;
-}
-
-.album-actions {
-  margin-top: 5px;
 }
 
 </style>
