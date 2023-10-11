@@ -20,8 +20,7 @@
             :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
           <list-item item-type="playlist" :item="track" :item-index="trackIndex"
                      :class="{'item-active': (trackIndex === currentTrackIndex)}"
-                     :draggable="true"
-                     :link-route-param="{ name: 'track', params: { id: track.id, track: track }}">
+                     :draggable="true" >
             <template v-slot:actions>
               <button class="btn btn-light btn-pause" disabled>
                 <i class="fa fa-pause" />

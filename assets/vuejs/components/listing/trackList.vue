@@ -11,8 +11,7 @@
     <ul class="list-group">
       <li class="list-group-item" v-for="(track, trackIndex) in trackList" :key="'key-'+trackIndex"
           v-if="isItemMatchSearch(track.name)">
-        <list-item item-type="track" :item="track" :item-title="track.name"
-                   :link-route-param="{ name: 'track', params: { id: track.id, track: track }}">
+        <list-item item-type="track" :item="track" :item-title="track.name">
 
           <template v-slot:tag_top>
             <div>{{ track.year }}</div>

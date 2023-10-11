@@ -99,8 +99,8 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.params.track !== undefined) {
-      this.track = this.$route.params.track
+    if (this.$route.params.item !== undefined) {
+      this.track = this.$route.params.item
     } else if(this.$route.params.id !== undefined) {
       this.updateTrackData(this.$route.params.id)
     }

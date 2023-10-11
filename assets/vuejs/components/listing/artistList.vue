@@ -10,8 +10,7 @@
 
     <ul class="list-group">
       <li class="list-group-item" v-for="artist in artistList" v-if="isItemMatchSearch(artist.name)">
-        <list-item item-type="artist" :item="artist"
-                   :link-route-param="{ name: 'artist', params: { id: artist.id, artist: artist }}">
+        <list-item item-type="artist" :item="artist">
           <template v-slot:tag_top>
             <div class="trackCount badge badge-pill badge-secondary">{{ artist.tracksCount }}</div>
           </template>

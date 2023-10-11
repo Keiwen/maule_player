@@ -99,8 +99,8 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.params.artist !== undefined) {
-      this.artist = this.$route.params.artist
+    if (this.$route.params.item !== undefined) {
+      this.artist = this.$route.params.item
       this.updateAlbumList()
       this.updateTrackList()
     } else if(this.$route.params.id !== undefined) {

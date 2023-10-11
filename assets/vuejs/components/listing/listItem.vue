@@ -5,7 +5,7 @@
     </div>
 
     <div class="item-icon">
-      <router-link :to="linkRouteParam" class="btn btn-primary item-link">
+      <router-link :to="routeParameters" class="btn btn-primary item-link">
         <artist-icon v-if="itemType === 'artist'" />
         <album-icon v-if="itemType === 'album'" />
         <track-icon v-if="itemType === 'track'" />
@@ -58,9 +58,6 @@ export default {
     itemTitle: {
       type: String,
     },
-    linkRouteParam: {
-      type: Object,
-    },
     itemIndex: {
       type: Number,
       default: 0
@@ -98,6 +95,15 @@ export default {
     },
     hasAction () {
       return !!this.$slots.actions
+    },
+    routeParameters () {
+      let routeName = 'track'
+      if (this.itemType === 'artist') routeName = 'artist'
+      if (this.itemType === 'album') routeName = 'album'
+      return {
+        name: routeName,
+        params: { id: this.item.id, item: this.item }
+      }
     },
     titleLimit () {
       if (this.$root.screenWidthClass === 'xl') return 150

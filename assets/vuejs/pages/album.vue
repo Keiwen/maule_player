@@ -70,8 +70,8 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.params.album !== undefined) {
-      this.album = this.$route.params.album
+    if (this.$route.params.item !== undefined) {
+      this.album = this.$route.params.item
       this.updateTrackList()
     } else if(this.$route.params.id !== undefined) {
       this.updateAlbumData(this.$route.params.id)
