@@ -156,5 +156,3 @@ new Vue({
 
 
 })
-
-console.log('vue loaded');
