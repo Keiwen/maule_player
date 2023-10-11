@@ -10,18 +10,27 @@
 
     <ul class="list-group">
       <li class="list-group-item" v-for="album in albumList" v-if="isItemMatchSearch(album.name)">
-        <album-list-item :album="album" />
+        <list-item item-type="album" :item="album"
+                   :link-route-param="{ name: 'album', params: { id: album.id, album: album }}">
+          <template v-slot:tag_top>
+            <div class="trackCount badge badge-pill badge-secondary">{{ album.tracksCount }}</div>
+          </template>
+          <template v-slot:tag_bottom>
+            <div class="">{{ getDisplayTime(album.totalDuration) }}</div>
+          </template>
+        </list-item>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import albumListItem from "../listItems/albumListItem";
+import listItem from "../listItems/listItem";
+import {mapGetters} from "vuex";
 
 export default {
   name: "albumList",
-  components: { albumListItem },
+  components: { listItem },
   props: {
     albumList: {
       type: Array,
@@ -36,6 +45,9 @@ export default {
     return {
       search: ''
     }
+  },
+  computed: {
+    ...mapGetters(['getDisplayTime']),
   },
   methods: {
     isItemMatchSearch (name) {

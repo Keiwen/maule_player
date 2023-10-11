@@ -13,8 +13,16 @@
         <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
     </div>
 
+    <div class="item-text-compl" v-if="!simpleView">
+      <span class="item-sub-text">{{ subText }}</span>
+    </div>
+
+
     <div class="item-tag-top" v-if="!simpleView">
       <slot name="tag_top"></slot>
+    </div>
+    <div class="item-tag-bottom" v-if="!simpleView">
+      <slot name="tag_bottom"></slot>
     </div>
 
   </div>
@@ -51,6 +59,10 @@ export default {
     mainText () {
       return this.item.name
     },
+    subText () {
+      if (this.itemType === 'album') return this.item.year
+      return ''
+    },
     titleLimit () {
       if (this.$root.screenWidthClass === 'xl') return 150
       if (this.$root.screenWidthClass === 'lg') return 100
@@ -85,6 +97,12 @@ export default {
   position: absolute;
   right: 5px;
   top: 5px;
+}
+
+.item-tag-bottom {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
 
 .badge {

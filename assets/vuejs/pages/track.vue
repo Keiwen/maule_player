@@ -7,12 +7,16 @@
 
       <ul class="list-group">
         <li class="list-group-item">
-          <list-item item-type="artist" :item="track.artist"
+          <list-item item-type="artist" :item="track.artist" :simple-view="true"
+                     v-if="track.artist"
                      :link-route-param="{ name: 'artist', params: { id: track.artist.id, artist: track.artist }}">
           </list-item>
         </li>
         <li class="list-group-item">
-          <album-list-item :album="track.album" :simple-view="true" v-if="track.album"></album-list-item>
+          <list-item item-type="album" :item="track.album" :simple-view="true"
+                     v-if="track.album"
+                     :link-route-param="{ name: 'album', params: { id: track.album.id, artist: track.album }}">
+          </list-item>
         </li>
         <li class="list-group-item">
           <div class="track-data">
@@ -56,12 +60,11 @@ import {useRemoteCall} from "../composables/useRemoteCall";
 import {mapActions, mapGetters} from "vuex";
 import trackIcon from "../components/icons/trackIcon";
 import loadingIcon from "../components/icons/loadingIcon";
-import albumListItem from "../components/listItems/albumListItem";
 import listItem from "../components/listItems/listItem";
 
 export default {
   name: "trackPage",
-  components: { trackIcon, loadingIcon, albumListItem, listItem },
+  components: { trackIcon, loadingIcon, listItem },
   data () {
     return {
       track: {},
