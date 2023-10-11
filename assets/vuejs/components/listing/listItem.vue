@@ -207,5 +207,8 @@ export default {
   }
 }
 
+.ddHandle {
+  cursor: move;
+}
 
 </style>
