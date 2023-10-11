@@ -2,16 +2,20 @@
   <div>
 
     <div class="item-icon">
-      <router-link :to="{ name: 'artist', params: { id: artist.id, artist: artist }}" class="btn btn-primary artist-link">
-        <artist-icon />
+      <router-link :to="linkRouteParam" class="btn btn-primary item-link">
+        <artist-icon v-if="itemType === 'artist'" />
+        <album-icon v-if="itemType === 'album'" />
+        <track-icon v-if="itemType === 'track'" />
       </router-link>
     </div>
 
     <div class="item-text">
-        <span class="artist-title">{{ getLimitedTitle(artist.name, titleLimit) }}</span>
+        <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
     </div>
 
-    <div class="trackCount badge badge-pill badge-secondary" v-if="!simpleView">{{ artist.tracksCount }}</div>
+    <div class="item-tag-top" v-if="!simpleView">
+      <slot name="tag_top"></slot>
+    </div>
 
   </div>
 </template>
@@ -19,14 +23,23 @@
 <script>
 import {mapGetters} from "vuex";
 import artistIcon from "../icons/artistIcon";
+import albumIcon from "../icons/albumIcon";
+import trackIcon from "../icons/trackIcon";
 
 export default {
-  name: "artistListItem",
-  components: { artistIcon },
+  name: "listItem",
+  components: { artistIcon, albumIcon, trackIcon },
   props: {
-    artist: {
+    item: {
       type: Object,
       required: true
+    },
+    itemType: {
+      type: String,
+      required: true
+    },
+    linkRouteParam: {
+      type: Object,
     },
     simpleView: {
       type: Boolean,
@@ -35,6 +48,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getLimitedTitle']),
+    mainText () {
+      return this.item.name
+    },
     titleLimit () {
       if (this.$root.screenWidthClass === 'xl') return 150
       if (this.$root.screenWidthClass === 'lg') return 100
@@ -48,14 +64,14 @@ export default {
 
 <style lang="scss" scoped>
 
-.artist-title {
+.item-main-text {
   font-weight: bold;
 }
 
 .item-icon {
   float: left;
   margin-right: 10px;
-  .artist-link {
+  .item-link {
     height: var(--simple-button-size);
     width: var(--simple-button-size);
     svg {
@@ -65,13 +81,15 @@ export default {
   }
 }
 
-.trackCount {
-  font-size: 90%;
+.item-tag-top {
   position: absolute;
   right: 5px;
   top: 5px;
 }
 
+.badge {
+  font-size: 90%;
+}
 
 
 </style>
