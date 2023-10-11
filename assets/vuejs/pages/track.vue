@@ -1,34 +1,38 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-12">
-        <h1><track-icon /> {{ track.name }}</h1>
-      </div>
-    </div>
+    <h1><track-icon /> {{ track.name }}</h1>
 
     <loading-icon v-if="isLoading" />
     <div v-else>
 
-      <div class="mt-2"></div>
-      <artist-list-item :artist="track.artist" :simple-view="true" v-if="track.artist"></artist-list-item>
-      <div class="mt-2"></div>
-      <album-list-item :album="track.album" :simple-view="true" v-if="track.album"></album-list-item>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <artist-list-item :artist="track.artist" :simple-view="true" v-if="track.artist"></artist-list-item>
+        </li>
+        <li class="list-group-item">
+          <album-list-item :album="track.album" :simple-view="true" v-if="track.album"></album-list-item>
+        </li>
+        <li class="list-group-item">
+          <div class="track-data">
+            <div>
+              {{ this.$trans('track.track_number', {}, null, true) }}{{ track.trackNumber }}
+              ({{ track.year }})
+            </div>
+            <div>
+              {{ getDisplayTime(track.duration) }}
+            </div>
+          </div>
+
+          <div class="item-action">
+            <button class="btn btn-secondary btn-playlist" @click="selectTrack">
+              <i class="fa fa-folder-plus" />
+            </button>
+          </div>
+
+        </li>
+      </ul>
 
       <div class="row">
-        <div class="col-3">
-          {{ this.$trans('track.track_number', {}, null, true) }}{{ track.trackNumber }}
-        </div>
-        <div class="col-3">
-          {{ track.year }}
-        </div>
-        <div class="col-3">
-          {{ getDisplayTime(track.duration) }}
-        </div>
-        <div class="col-3">
-          <button class="btn btn-secondary btn-playlist" @click="selectTrack">
-            <i class="fa fa-folder-plus" />
-          </button>
-        </div>
       </div>
 
 
@@ -124,14 +128,27 @@ h1 svg {
   }
 }
 
+.track-data {
+  float: left;
+}
+
+.list-group-item {
+  background-color: transparent;
+  padding: .2rem 0.5rem;
+  border: 1px solid var(--primary);
+}
+
+
 .btn-playlist {
-  width: 40px;
-  height: 40px;
+  float: right;
+  height: var(--simple-button-size);
+  width: var(--simple-button-size);
   svg {
     height: 100%;
-    margin-left: -6px;
+    margin-left: -5px;
   }
 }
+
 
 .track-actions {
   margin-top: 5px;
