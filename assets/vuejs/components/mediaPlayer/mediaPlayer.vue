@@ -1,9 +1,8 @@
 <template>
   <div class="audio-container">
     <div class="custom-player-container row">
-      <div class="col-12 custom-player-text-wrapper">
-        <span class="row custom-player-text" :class="{'custom-player-text-animated': titleWidthTooLarge}" id="audio_player_title">{{ mediaText }}</span>
-      </div>
+
+      <media-title class="col-12" :media-text="mediaText"></media-title>
 
       <div class="custom-player-play">
         <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
@@ -21,7 +20,6 @@
       </div>
     </div>
 
-
     <audio controls id="audio_player">
       <source :src="mediaSrc">
     </audio>
@@ -29,18 +27,18 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 import playButton from "./playButton";
 import timeline from "./timeline";
 import timeView from "./timeView";
+import mediaTitle from "./mediaTitle";
 
 export default {
   name: "mediaPlayer",
-  components: { playButton, timeline, timeView },
+  components: { playButton, timeline, timeView, mediaTitle },
   data () {
     return {
       audioElement: null,
-      audioTitleElement: null,
       duration: 0,
       currentTime: 0,
       percentProgress: 0,
@@ -74,7 +72,6 @@ export default {
       this.audioElement.addEventListener('pause', this.audioPaused)
       this.audioElement.addEventListener('play', this.audioPlayed)
     }
-    this.audioTitleElement = document.getElementById('audio_player_title')
   },
   computed: {
     ...mapGetters(['currentTrack']),
@@ -89,18 +86,9 @@ export default {
       const trackArtist = this.currentTrack.artist.name
       const trackAlbum = this.currentTrack.album.name
       return trackTitle + ' - ' + trackArtist + ' (' + trackAlbum + ')'
-    },
-    titleWidthTooLarge () {
-      if (this.audioTitleElement === null) return false
-      if (!getComputedStyle) return true
-      const elementStyle = getComputedStyle(this.audioTitleElement)
-      // compute text width: offsetWidth property include padding
-      const textWidth = this.audioTitleElement.offsetWidth - parseFloat(elementStyle.paddingLeft) - parseFloat(elementStyle.paddingRight)
-      return textWidth >= this.$root.windowSize.width
     }
   },
   methods: {
-    ...mapActions(['playTrackInPlaylist']),
     togglePlay () {
       if (this.audioElement !== null) {
         if (this.audioElement.paused) {
@@ -147,15 +135,6 @@ export default {
   width: 100%;
 }
 
-@keyframes movingText {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
-}
-
 .custom-player-container {
   background-color: var(--primary);
   .custom-player-play {
@@ -174,26 +153,7 @@ export default {
     width:         calc(100% - var(--play-button-size) - 10px);
   }
 
-  .custom-player-text-wrapper {
-    max-width: 100%;
-    overflow: hidden;
-    .custom-player-text {
-      font-size: x-large;
-      color: var(--light);
-      text-shadow: var(--secondary) 0 0 10px;
-      white-space: nowrap;
-      display: inline-block;
-      &.custom-player-text-animated {
-        animation: movingText 10s infinite linear;
-        padding-left: 100%;
-        &:hover {
-          animation-play-state: paused;
-        }
-      }
-  }
-  }
 }
-
 
 audio {
   display: none;
