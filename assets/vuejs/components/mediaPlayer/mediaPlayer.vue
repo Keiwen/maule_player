@@ -8,27 +8,16 @@
       <div class="custom-player-play">
         <play-button :playing="playingAudio" @click-play="togglePlay" color="var(--light)" />
       </div>
+
       <div class="custom-player-data">
         <div class="custom-player-timeline">
           <timeline :percent-progress="percentProgress" @change-progress="changeProgress"  />
         </div>
-        <div class="custom-player-timeview">
-          <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-prev"
-                  @click="playerPrevious">
-            <i class="fa fa-backward-step" />
-          </button>
 
-          <div class="custom-player-time">
-            <span class="custom-player-current-time">{{ currentTime }}</span>
-            /
-            <span class="custom-player-duration">{{ duration }}</span>
-          </div>
+        <time-view :duration="duration"
+                   :current-time="currentTime"
+                   @restart-track="changeProgress(0)"></time-view>
 
-          <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-next"
-                  @click="playerNext" :class="{disabled: !hasNextMedia}" :disabled="!hasNextMedia">
-            <i class="fa fa-forward-step" />
-          </button>
-        </div>
       </div>
     </div>
 
@@ -43,16 +32,17 @@
 import {mapActions, mapGetters} from "vuex";
 import playButton from "./playButton";
 import timeline from "./timeline";
+import timeView from "./timeView";
 
 export default {
   name: "mediaPlayer",
-  components: { playButton, timeline },
+  components: { playButton, timeline, timeView },
   data () {
     return {
       audioElement: null,
       audioTitleElement: null,
-      duration: '',
-      currentTime: '',
+      duration: 0,
+      currentTime: 0,
       percentProgress: 0,
       playingAudio: false,
     }
@@ -73,8 +63,8 @@ export default {
     }
   },
   mounted () {
-    this.duration = this.getDisplayTime(0)
-    this.currentTime = this.getDisplayTime(0)
+    this.duration = 0
+    this.currentTime = 0
     this.audioElement = document.getElementById("audio_player")
     if (this.audioElement !== null) {
       this.audioElement.addEventListener('loadedmetadata', this.audioLoaded)
@@ -87,7 +77,7 @@ export default {
     this.audioTitleElement = document.getElementById('audio_player_title')
   },
   computed: {
-    ...mapGetters(['currentTrack', 'currentTrackIndex', 'getNextPlaylistIndex', 'getPrevPlaylistIndex', 'getDisplayTime']),
+    ...mapGetters(['currentTrack']),
     mediaSrc () {
       return '/media_lib/' + this.currentTrack.filepath;
     },
@@ -99,12 +89,6 @@ export default {
       const trackArtist = this.currentTrack.artist.name
       const trackAlbum = this.currentTrack.album.name
       return trackTitle + ' - ' + trackArtist + ' (' + trackAlbum + ')'
-    },
-    hasNextMedia () {
-      return this.getNextPlaylistIndex() !== -1
-    },
-    hasPrevMedia () {
-      return this.getPrevPlaylistIndex() !== -1
     },
     titleWidthTooLarge () {
       if (this.audioTitleElement === null) return false
@@ -134,10 +118,10 @@ export default {
     },
     audioLoaded (e) {
       this.percentProgress = 0
-      this.duration = this.getDisplayTime(this.audioElement.duration)
+      this.duration = this.audioElement.duration
     },
     audioTimeUpdate (e) {
-      this.currentTime = this.getDisplayTime(Math.floor(this.audioElement.currentTime))
+      this.currentTime = Math.floor(this.audioElement.currentTime)
       this.percentProgress = Math.round((this.audioElement.currentTime / this.audioElement.duration) * 100)
     },
     audioEnded (e) {
@@ -152,28 +136,6 @@ export default {
     },
     audioPlayed (e) {
       this.playingAudio = true
-    },
-    isTrackConsideredClosedToStart () {
-      if (this.audioElement === null) return false
-      return (this.audioElement.currentTime < 3)
-    },
-    playerPrevious () {
-      if (this.hasPrevMedia && this.isTrackConsideredClosedToStart()) {
-        // go to previous
-        const prevIndex = this.getPrevPlaylistIndex()
-        if (prevIndex !== -1) {
-          this.playTrackInPlaylist(prevIndex)
-        }
-      } else {
-        // start over current track
-        this.changeProgress(0)
-      }
-    },
-    playerNext () {
-      const nextIndex = this.getNextPlaylistIndex()
-      if (nextIndex !== -1) {
-        this.playTrackInPlaylist(nextIndex)
-      }
     }
   }
 }
@@ -212,20 +174,6 @@ export default {
     width:         calc(100% - var(--play-button-size) - 10px);
   }
 
-  .custom-player-timeview {
-    .custom-player-prevnext {
-      width: var(--simple-button-size);
-    }
-    .custom-player-time {
-      display: inline-block;
-      width: -webkit-calc(100% - 2*(var(--simple-button-size)) - 10px);
-      width:    -moz-calc(100% - 2*(var(--simple-button-size)) - 10px);
-      width:         calc(100% - 2*(var(--simple-button-size)) - 10px);
-      text-align: center;
-      color: var(--light);
-      text-shadow: var(--secondary) 0 0 10px;
-    }
-  }
   .custom-player-text-wrapper {
     max-width: 100%;
     overflow: hidden;
