@@ -73,16 +73,6 @@ export default {
 
 <style lang="scss" scoped>
 
-  .list-group-item {
-    background-color: transparent;
-    padding: .2rem 0.5rem;
-    border: 1px solid var(--primary);
-    &.playlist-item-active {
-      border: 1px solid var(--secondary);
-      box-shadow: 0 0 20px var(--secondary);
-     }
-  }
-
   #dropzone-tracklist {
     height: 100%;
     width: 100%;

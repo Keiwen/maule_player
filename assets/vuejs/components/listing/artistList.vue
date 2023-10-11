@@ -57,10 +57,4 @@ export default {
     width: 100%;
   }
 
-  .list-group-item {
-    background-color: transparent;
-    padding: .2rem 0.5rem;
-    border: 1px solid var(--primary);
-  }
-
 </style>
