@@ -172,6 +172,7 @@ export default new Vuex.Store({
       const removedTrack = removedTracks[0]
       if (removedTrack !== undefined && removedTrack.duration !== undefined) {
         state.currentPlaylistDuration -= removedTrack.duration
+        if (state.currentPlaylistDuration < 0) state.currentPlaylistDuration = 0
       }
     },
     [types.INSERT_TRACK_IN_PLAYLIST] (state, {track, index}) {
