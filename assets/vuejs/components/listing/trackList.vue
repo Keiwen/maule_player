@@ -2,14 +2,14 @@
   <div>
     <div class="container-fluid" v-if="allowSearch">
       <div class="form-inline row">
-        <input class="form-control" type="search" v-model="search"
+        <input class="form-control track-search" type="search" v-model="search"
                :placeholder="this.$trans('track.list.search', {}, null, true)" aria-label="Search">
       </div>
       <hr/>
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item container" v-for="(track, trackIndex) in trackList" :key="'key-'+trackIndex"
+      <li class="list-group-item" v-for="(track, trackIndex) in trackList" :key="'key-'+trackIndex"
            v-if="isItemMatchSearch(track.name)">
         <track-list-item :track="track" />
       </li>
@@ -54,6 +54,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .form-control.track-search {
+    width: 100%;
+  }
 
   .list-group-item {
     background-color: transparent;
