@@ -9,10 +9,11 @@
         <artist-icon v-if="itemType === 'artist'" />
         <album-icon v-if="itemType === 'album'" />
         <track-icon v-if="itemType === 'track'" />
+        <track-icon v-if="itemType === 'playlist'" />
       </router-link>
     </div>
 
-    <div class="item-box" :class="{'item-box-action': hasAction}">
+    <div class="item-box" :class="{'item-box-action': hasAction, 'ddHandle': draggable}">
       <div class="item-text">
         <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
       </div>
@@ -60,7 +61,15 @@ export default {
     linkRouteParam: {
       type: Object,
     },
+    itemIndex: {
+      type: Number,
+      default: 0
+    },
     simpleView: {
+      type: Boolean,
+      default: false
+    },
+    draggable: {
       type: Boolean,
       default: false
     }
@@ -79,6 +88,11 @@ export default {
         const trackNumber = '#' + this.item.trackNumber
         const albumName = this.getLimitedTitle(this.item.album.name, this.smallTitleLimit - 5)
         return trackNumber + ' ' + albumName
+      }
+      if (this.itemType === 'playlist') {
+        const index = '#' + (this.itemIndex + 1)
+        const artistName = this.getLimitedTitle(this.item.artist.name, this.smallTitleLimit)
+        return index + ' ' + artistName
       }
       return ''
     },

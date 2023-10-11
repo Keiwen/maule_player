@@ -17,8 +17,21 @@
                    @start="startDrag" @end="endDrag">
       <transition-group id="dropzone-tracklist" tag="ul" class="list-group">
         <li class="list-group-item" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
-             :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
-          <playlist-track-item :track="track" :track-index="trackIndex" />
+            :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
+          <list-item item-type="playlist" :item="track" :item-index="trackIndex"
+                     :class="{'item-active': (trackIndex === currentTrackIndex)}"
+                     :draggable="true"
+                     :link-route-param="{ name: 'track', params: { id: track.id, track: track }}">
+            <template v-slot:actions>
+              <button class="btn btn-light btn-pause" disabled>
+                <i class="fa fa-pause" />
+              </button>
+              <button class="btn btn-secondary btn-play" @click="selectTrack(trackIndex)">
+                <i class="fa fa-play" />
+              </button>
+            </template>
+
+          </list-item>
         </li>
       </transition-group>
     </vue-draggable>
@@ -26,13 +39,13 @@
 </template>
 
 <script>
-import playlistTrackItem from "../listItems/playlistTrackItem";
+import listItem from "./listItem";
 import {mapActions, mapGetters} from "vuex";
 import sideActions from "../sideActions";
 
 export default {
   name: "trackList",
-  components: { playlistTrackItem, sideActions },
+  components: { listItem, sideActions },
   props: {
     trackList: {
       type: Array,
@@ -52,7 +65,10 @@ export default {
   },
   methods: {
     ...mapActions(['changeTrackIndex', 'grabPlaylistElement', 'dropPlaylistElement', 'removeTrackByIndex',
-      'addSuccess']),
+      'addSuccess', 'playTrackInPlaylist']),
+    selectTrack(playlistIndex) {
+      this.playTrackInPlaylist(playlistIndex)
+    },
     startDrag (e) {
       this.grabPlaylistElement()
     },
@@ -78,5 +94,19 @@ export default {
     width: 100%;
     min-height: 400px;
   }
+
+  .btn-pause {
+    display: none;
+  }
+
+  .item-active {
+    .btn-play {
+      display: none;
+    }
+    .btn-pause {
+      display: block;
+    }
+  }
+
 
 </style>
