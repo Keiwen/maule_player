@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row col-12">
+    <div>
       <span>
         {{ this.$trans('playlist.duration', {}, null, true, true) }}
         {{ getDisplayTime(currentPlaylistDuration) }}
@@ -16,7 +16,7 @@
                    v-bind="{animation: 150, handle: '.ddHandle', group: 'playlist'}"
                    @start="startDrag" @end="endDrag">
       <transition-group id="dropzone-tracklist" tag="div">
-        <div class="list-group-item container" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
+        <div class="list-group-item" v-for="(track, trackIndex) in orderedTrackList" :key="'key-'+trackIndex"
              :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
           <playlist-track-item :track="track" :track-index="trackIndex" />
         </div>
