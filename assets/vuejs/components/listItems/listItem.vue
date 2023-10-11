@@ -9,20 +9,20 @@
       </router-link>
     </div>
 
-    <div class="item-text">
+    <div class="item-box">
+      <div class="item-text">
         <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
-    </div>
+      </div>
+      <div class="item-text-compl" v-if="!simpleView">
+        <span class="item-sub-text">{{ subText }}</span>
+      </div>
 
-    <div class="item-text-compl" v-if="!simpleView">
-      <span class="item-sub-text">{{ subText }}</span>
-    </div>
-
-
-    <div class="item-tag-top" v-if="!simpleView">
-      <slot name="tag_top"></slot>
-    </div>
-    <div class="item-tag-bottom" v-if="!simpleView">
-      <slot name="tag_bottom"></slot>
+      <div class="item-tag-top" v-if="!simpleView">
+        <slot name="tag_top"></slot>
+      </div>
+      <div class="item-tag-bottom" v-if="!simpleView">
+        <slot name="tag_bottom"></slot>
+      </div>
     </div>
 
   </div>
