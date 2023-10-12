@@ -1,6 +1,8 @@
 # Maule Player
 Media AUdio Library Experience Player
 
+EN / FR documentation in `docs` folder
+
 ## Why this project?
 I have multiple audio files on a computer/server,
 and I want to play them with other connected devices,
@@ -15,6 +17,7 @@ It could also be used as demo for a
 Symfony/VueJS Progressive Web App
 (for development and for showcase).
 
+## How will it work?
 This application should be deployed on said
 computer/server.
 We could link any media directory to load it in
@@ -24,133 +27,9 @@ could access to application.
 We do not manage users as this application
 aimed to be quite 'private'.
 
-## Setup
-All steps described in this section
-are based on computer/server
-that will run the application,
-not on connected devices that will use it.
-
-### Requirements
-This application require PHP, a SQL DataBase,
-as well as package managers composer and NPM.
-It could use a built-in server such as WAMP/LAMP.
-
-### Initialization
-In the application target directory,
-copy the source code. You can download it directly.
-
-If you are using Git, you will be able
-to easily update the application.
-In target empty directory, initialize wth git:
-
-``git remote add origin
-https://github.com/Keiwen/maule_player.git``
-
-Or clone the project to create the target directory
-
-``git clone
-https://github.com/Keiwen/maule_player.git``
-
-
----
-In directory, copy ``.env`` file
-to create ``.env.local`` file.
-You will need to change:
-- APP_ENV: use ``prod`` to run like a production application
-- DATABASE_URL: set up you own DB connexion
-- USER_PASSWORD_MAULE_ADMIN: set up the admin password
-- MEDIA_PATH_SEPARATOR: ``/`` if you are on linux
-
-You will need to configure your server
-(see [Symfony 5.4 server configuration](https://symfony.com/doc/5.4/setup/web_server_configuration.html#apache))
-
-For example, if you are using WAMP, define a vhost pointing to
-``public`` folder. The directory containing
-the code itself can be located anywhere.
-Then modify your ``httpd-vhosts.conf``
-accordingly. It may include:
-```
-    <Directory /var/www/project/public>
-        AllowOverride None
-        Require all granted
-        FallbackResource /index.php
-    </Directory>
-```
-Check that your apache server is allowed through the firewall
-(application ``httpd.exe`` in apache bin folder)
-
-If you want to define your application on a 
-specific port, add a listen port to apache,
-let's say ``8081``.
-It should change ``httpd.conf`` with
-``Listen 0.0.0.0:${MYPORT8081}``.
-You can now change your ``httpd-vhosts.conf``
-defining your vhost with this variable
-
-```
-<VirtualHost *:${MYPORT8081}>
-```
-Then if your server have IP 192.168.1.X,
-you will be able to access your application,
-from another device in the network,
-by entering in your browser
-``192.168.1.X:8081``
-
----
-
-Create ``/public/media_lib/`` directory if not exists.
-
-Then follow update process once before
-you can use the application
-
-### Update
-If you are using Git, you can update source code:
-
-``git pull origin main``
-
-Then update PHP libraries with composer
-
-``composer install --no-dev --optimize-autoloader``
-
-Ensure your database is also up-to-date
-
-``php bin/console doctrine:migrations:migrate``
-
-Update JavaScript libraries with NPM with
-``npm install``
-
-Rebuild locally with
-``npm run build``
-
-Finally clear the application cache
-
-``php bin/console cache:clear``
-
-### Media Lib directory
-All media files will be tracked inside
-``/public/media_lib/`` directory.
-At initialization, there is an existing
-``/public/media_lib_samples`` folder with some files.
-You can copy it inside ``/public/media_lib/``
-if needed or ignore it.
-
-The easiest way to add some directory in Media Lib
-is to add a symlink.
-Instead of copying the directory where you
-store your media files, it will create a link.
-Application will have access to all files
-without having them in both places.
-You can execute the script included in bin folder
-``add_media_symlink.bat`` as administrator.
-This script will prompt for the targeted folder,
-the name of the link, and then will create the symlink.
-
-Once medias are added in Media Lib,
-open a command interface in application folder
-and run
-
-``php bin/console app:import-tracks``
-
-That will check all files inside Media Lib and
-load them all to the application DataBase.
+## Can I try it?
+Yes, feel free to use
+[demo site](https://maule.demo.keiwen.fr).
+Note that due to music rights,
+this site will only provide a single artist.
 
