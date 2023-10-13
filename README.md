@@ -1,7 +1,7 @@
 # Maule Player
 Media AUdio Library Experience Player
 
-EN / FR documentation in `docs` folder
+[EN / FR documentation](https://keiwen.github.io/maule_player/)
 
 ## Why this project?
 I have multiple audio files on a computer/server,
