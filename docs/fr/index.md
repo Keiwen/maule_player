@@ -21,7 +21,7 @@ Le menu est affiché en bas de page.
 * Section 3 - contenu : au milieu de l'écran
 est affiché le contenu de chaque page.
 
-## Menu
+### Menu
 Le menu propose 3 boutons :
 * Artistes: à gauche, le bouton permet l'accès
 à la liste des artistes et de naviguer parmi eux.

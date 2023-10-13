@@ -20,7 +20,7 @@ displayed on the bottom of the page.
 * Section 3 - page content: this is the main content
 of the page, display in the middle of your screen.
 
-## Menu
+### Menu
 Menu displays 3 buttons:
 * Artists: on the left, you can access to artist 
 list and navigate through them
