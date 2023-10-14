@@ -6,7 +6,7 @@
 parameters:
     app_locale: en|fr|transCode
     app_name: 'Maule player'
-    app_version: '0.5.0'
+    app_version: '0.5.1'
     media_path_separator: '%env(MEDIA_PATH_SEPARATOR)%'
     # below parameter use previous parameter pathSeparator, bit complex to read ;)
     medialib_folder: '%kernel.project_dir%%media_path_separator%public%media_path_separator%media_lib%media_path_separator%'
