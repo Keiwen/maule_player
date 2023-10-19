@@ -73,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getDisplayTime']),
+    ...mapGetters(['getDisplayTime', 'getTrack']),
     isLoading () {
       return (this.remoteCallTrackData == null && this.remoteCallTrackError == null)
     },
@@ -90,6 +90,7 @@ export default {
     remoteCallTrackData: function(newValue, oldValue) {
       if (newValue !== null && this.remoteCallTrackError === null) {
         this.track = newValue.track
+        this.storeTracks([this.track])
       }
     },
     remoteCallTrackError: function(newValue, oldValue) {
@@ -106,9 +107,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist', 'storeTracks']),
     updateTrackData (id) {
       this.track = {}
+      this.track = this.getTrack(id)
+      if (this.track.id !== undefined) {
+        return
+      }
       const urlToCall = this.$url(URL_API.track_get, {id: id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
