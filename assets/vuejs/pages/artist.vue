@@ -31,7 +31,7 @@
 
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import artistIcon from "../components/icons/artistIcon";
 import trackList from "../components/listing/trackList";
 import albumList from "../components/listing/albumList";
@@ -57,6 +57,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getArtist']),
     isLoading () {
       return ((this.remoteCallTrackData == null && this.remoteCallTrackError == null)
           || (this.remoteCallAlbumData == null && this.remoteCallAlbumError == null)
@@ -90,6 +91,7 @@ export default {
         this.artist = newValue.artist
         this.updateAlbumList()
         this.updateTrackList()
+        this.storeArtists([this.artist])
       }
     },
     remoteCallArtistError: function(newValue, oldValue) {
@@ -108,7 +110,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist', 'storeArtists']),
     updateTrackList () {
       this.trackList = []
       this.recentTrackList = []
@@ -126,6 +128,8 @@ export default {
     },
     updateArtistData (id) {
       this.artist = {}
+      this.artist = this.getArtist(id)
+      if (this.artist.id !== undefined) return
       const urlToCall = this.$url(URL_API.artist_get, {id: id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallArtistData = callData

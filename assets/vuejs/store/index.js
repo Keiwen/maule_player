@@ -27,6 +27,11 @@ export default new Vuex.Store({
     temp: {
       displayPlaylistTrash: false,
     },
+    medialib: {
+      artists: {},
+      albums: {},
+      tracks: {},
+    }
   },
   getters: {
     currentTrack: state => state.playlist.currentTrack,
@@ -83,7 +88,36 @@ export default new Vuex.Store({
         displayTime = partHours + ':' + displayTime
       }
       return displayTime
-
+    },
+    getArtists: (state) => () => {
+      let artists = []
+      for (const [key, value] of Object.entries(state.medialib.artists)) {
+        artists.push(value);
+      }
+      return artists
+    },
+    getArtist: (state) => (id) => {
+      return state.medialib.artists[id] ?? {}
+    },
+    getAlbums: (state) => () => {
+      let albums = []
+      for (const [key, value] of Object.entries(state.medialib.albums)) {
+        albums.push(value);
+      }
+      return albums
+    },
+    getAlbum: (state) => (id) => {
+      return state.medialib.albums[id] ?? {}
+    },
+    getTracks: (state) => () => {
+      let tracks = []
+      for (const [key, value] of Object.entries(state.medialib.tracks)) {
+        tracks.push(value);
+      }
+      return tracks
+    },
+    getTrack: (state) => (id) => {
+      return state.medialib.tracks[id] ?? {}
     }
   },
   actions: {
@@ -151,6 +185,21 @@ export default new Vuex.Store({
     },
     setLoopPlaylist({commit}, loop) {
       commit(types.SET_LOOP_PLAYLIST, loop)
+    },
+    storeArtists({commit}, artists) {
+      for (let i = 0; i < artists.length; i++) {
+        commit(types.STORE_ARTIST, artists[i])
+      }
+    },
+    storeAlbums({commit}, albums) {
+      for (let i = 0; i < albums.length; i++) {
+        commit(types.STORE_ALBUM, albums[i])
+      }
+    },
+    storeTracks({commit}, tracks) {
+      for (let i = 0; i < tracks.length; i++) {
+        commit(types.STORE_TRACK, tracks[i])
+      }
     },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
@@ -226,6 +275,18 @@ export default new Vuex.Store({
     [types.SET_LOOP_PLAYLIST] (state, loop) {
       if (loop === undefined) loop = false
       state.playlist.loopPlaylist = loop
+    },
+    [types.STORE_ARTIST] (state, artist) {
+      if (artist.id === undefined) return
+      state.medialib.artists[artist.id] = artist
+    },
+    [types.STORE_ALBUM] (state, album) {
+      if (album.id === undefined) return
+      state.medialib.albums[album.id] = album
+    },
+    [types.STORE_TRACK] (state, track) {
+      if (track.id === undefined) return
+      state.medialib.tracks[track.id] = track
     }
   },
   modules: {
