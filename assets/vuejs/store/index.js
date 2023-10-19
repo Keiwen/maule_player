@@ -10,45 +10,51 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 const persistOptions = {
-  key: 'maule_player'
+  key: 'maule_player',
+  // select below which attribute to persist
+  paths: ['playlist']
 }
 
 export default new Vuex.Store({
   state: {
-    currentTrack: {},
-    currentTrackIndex: -1,
-    currentPlaylist: [],
-    currentPlaylistDuration: 0,
-    displayPlaylistTrash: false,
-    loopPlaylist: false,
+    playlist: {
+      currentTrack: {},
+      currentTrackIndex: -1,
+      currentPlaylist: [],
+      currentPlaylistDuration: 0,
+      loopPlaylist: false,
+    },
+    temp: {
+      displayPlaylistTrash: false,
+    },
   },
   getters: {
-    currentTrack: state => state.currentTrack,
-    currentTrackIndex: state => state.currentTrackIndex,
-    currentPlaylist: state => state.currentPlaylist,
-    currentPlaylistDuration: state => state.currentPlaylistDuration,
-    displayPlaylistTrash: state => state.displayPlaylistTrash,
-    loopPlaylist: state => state.loopPlaylist,
-    playedMediaFilepath: state => state.currentTrack.filepath,
+    currentTrack: state => state.playlist.currentTrack,
+    currentTrackIndex: state => state.playlist.currentTrackIndex,
+    currentPlaylist: state => state.playlist.currentPlaylist,
+    currentPlaylistDuration: state => state.playlist.currentPlaylistDuration,
+    displayPlaylistTrash: state => state.temp.displayPlaylistTrash,
+    loopPlaylist: state => state.playlist.loopPlaylist,
+    playedMediaFilepath: state => state.playlist.currentTrack.filepath,
     getNextPlaylistIndex: (state) => () => {
-      const playlistLength = state.currentPlaylist.length
-      if (state.currentTrackIndex === -1) return -1
+      const playlistLength = state.playlist.currentPlaylist.length
+      if (state.playlist.currentTrackIndex === -1) return -1
       if (playlistLength === 0) return -1
-      if ((state.currentTrackIndex + 1) >= playlistLength) {
-        if (state.loopPlaylist) return 0
+      if ((state.playlist.currentTrackIndex + 1) >= playlistLength) {
+        if (state.playlist.loopPlaylist) return 0
         return -1
       }
-      return state.currentTrackIndex + 1
+      return state.playlist.currentTrackIndex + 1
     },
     getPrevPlaylistIndex: (state) => () => {
-      const playlistLength = state.currentPlaylist.length
-      if (state.currentTrackIndex === -1) return -1
+      const playlistLength = state.playlist.currentPlaylist.length
+      if (state.playlist.currentTrackIndex === -1) return -1
       if (playlistLength === 0) return -1
-      if ((state.currentTrackIndex - 1) < 0) {
-        if (state.loopPlaylist) return playlistLength - 1
+      if ((state.playlist.currentTrackIndex - 1) < 0) {
+        if (state.playlist.loopPlaylist) return playlistLength - 1
         return -1
       }
-      return state.currentTrackIndex - 1
+      return state.playlist.currentTrackIndex - 1
     },
     getLimitedTitle: () => (title, limit = 20) => {
       if (title.length <= limit) return title
@@ -86,21 +92,21 @@ export default new Vuex.Store({
       commit(types.SET_CURRENT_TRACK_INDEX, -1)
     },
     playTrackInPlaylist ({state, commit}, index) {
-      if (state.currentPlaylist[index] === undefined) return
-      commit(types.SET_CURRENT_TRACK, state.currentPlaylist[index])
+      if (state.playlist.currentPlaylist[index] === undefined) return
+      commit(types.SET_CURRENT_TRACK, state.playlist.currentPlaylist[index])
       commit(types.SET_CURRENT_TRACK_INDEX, index)
     },
     addTracksInPlaylist ({state, commit, dispatch}, tracks) {
-      const previousPlaylistLength = state.currentPlaylist.length
+      const previousPlaylistLength = state.playlist.currentPlaylist.length
       commit(types.ADD_TRACKS_IN_PLAYLIST, tracks)
       dispatch('addSuccess', this._vm.$trans('playlist.added', {}, null, true))
-      if (previousPlaylistLength === 0 && state.currentPlaylist.length > 0) {
+      if (previousPlaylistLength === 0 && state.playlist.currentPlaylist.length > 0) {
         dispatch('playTrackInPlaylist', 0)
       }
     },
     changeTrackIndex ({state, commit, dispatch}, {oldIndex, newIndex}) {
-      const track = state.currentPlaylist[oldIndex]
-      const isCurrent = (oldIndex === state.currentTrackIndex)
+      const track = state.playlist.currentPlaylist[oldIndex]
+      const isCurrent = (oldIndex === state.playlist.currentTrackIndex)
       dispatch('removeTrackByIndex', {index: oldIndex, loadNextIfCurrent: !isCurrent })
       dispatch('addTrackInIndex', {track: track, index: newIndex})
       if (isCurrent) {
@@ -110,7 +116,7 @@ export default new Vuex.Store({
     },
     removeTrackByIndex ({state, commit, dispatch}, {index, loadNextIfCurrent}) {
       commit(types.REMOVE_TRACK_FROM_PLAYLIST, index)
-      if (state.currentTrackIndex === index) {
+      if (state.playlist.currentTrackIndex === index) {
         // if current is removed, play next (use removed index, as current was removed)
         if (loadNextIfCurrent) {
           dispatch('playTrackInPlaylist', index)
@@ -118,16 +124,16 @@ export default new Vuex.Store({
           commit(types.SET_CURRENT_TRACK_INDEX, -1)
         }
       }
-      if (index < state.currentTrackIndex) {
+      if (index < state.playlist.currentTrackIndex) {
         // if a previous is removed, update current index to - 1)
-        commit(types.SET_CURRENT_TRACK_INDEX, state.currentTrackIndex - 1)
+        commit(types.SET_CURRENT_TRACK_INDEX, state.playlist.currentTrackIndex - 1)
       }
     },
     addTrackInIndex ({state, commit}, {track, index}) {
       commit(types.INSERT_TRACK_IN_PLAYLIST, {track: track, index: index})
-      if (index <= state.currentTrackIndex) {
+      if (index <= state.playlist.currentTrackIndex) {
         // if added before current one, update current index to + 1)
-        commit(types.SET_CURRENT_TRACK_INDEX, state.currentTrackIndex + 1)
+        commit(types.SET_CURRENT_TRACK_INDEX, state.playlist.currentTrackIndex + 1)
       }
     },
     emptyPlaylist ({commit}) {
@@ -154,40 +160,40 @@ export default new Vuex.Store({
   },
   mutations: {
     [types.SET_CURRENT_TRACK] (state, track) {
-      state.currentTrack = track
+      state.playlist.currentTrack = track
     },
     [types.SET_CURRENT_TRACK_INDEX] (state, trackIndex) {
-      state.currentTrackIndex = trackIndex
+      state.playlist.currentTrackIndex = trackIndex
     },
     [types.ADD_TRACKS_IN_PLAYLIST] (state, tracks) {
-      state.currentPlaylist = state.currentPlaylist.concat(tracks)
+      state.playlist.currentPlaylist = state.playlist.currentPlaylist.concat(tracks)
       for (let i = 0; i < tracks.length; i++) {
         if (tracks[i].duration !== undefined) {
-          state.currentPlaylistDuration += tracks[i].duration
+          state.playlist.currentPlaylistDuration += tracks[i].duration
         }
       }
     },
     [types.REMOVE_TRACK_FROM_PLAYLIST] (state, index) {
-      const removedTracks = state.currentPlaylist.splice(index, 1)
+      const removedTracks = state.playlist.currentPlaylist.splice(index, 1)
       const removedTrack = removedTracks[0]
       if (removedTrack !== undefined && removedTrack.duration !== undefined) {
-        state.currentPlaylistDuration -= removedTrack.duration
-        if (state.currentPlaylistDuration < 0) state.currentPlaylistDuration = 0
+        state.playlist.currentPlaylistDuration -= removedTrack.duration
+        if (state.playlist.currentPlaylistDuration < 0) state.playlist.currentPlaylistDuration = 0
       }
     },
     [types.INSERT_TRACK_IN_PLAYLIST] (state, {track, index}) {
-      state.currentPlaylist.splice(index, 0, track);
+      state.playlist.currentPlaylist.splice(index, 0, track);
       if (track.duration !== undefined) {
-        state.currentPlaylistDuration += track.duration
+        state.playlist.currentPlaylistDuration += track.duration
       }
     },
     [types.EMPTY_PLAYLIST] (state) {
-      state.currentPlaylist = []
-      state.currentPlaylistDuration = 0
+      state.playlist.currentPlaylist = []
+      state.playlist.currentPlaylistDuration = 0
     },
     [types.SHUFFLE_PLAYLIST] (state) {
-      let oldIndex = state.currentTrackIndex
-      let countToShuffle = state.currentPlaylist.length
+      let oldIndex = state.playlist.currentTrackIndex
+      let countToShuffle = state.playlist.currentPlaylist.length
       let tempElement
       let randomIndex
       // while there remain elements to shuffle...
@@ -197,13 +203,13 @@ export default new Vuex.Store({
         // decrement elements to shuffle...
         countToShuffle--
         // swap picked element with the current element
-        tempElement = state.currentPlaylist[countToShuffle]
-        state.currentPlaylist[countToShuffle] = state.currentPlaylist[randomIndex]
-        state.currentPlaylist[randomIndex] = tempElement
+        tempElement = state.playlist.currentPlaylist[countToShuffle]
+        state.playlist.currentPlaylist[countToShuffle] = state.playlist.currentPlaylist[randomIndex]
+        state.playlist.currentPlaylist[randomIndex] = tempElement
 
         // update current index if we picked current element
         if (randomIndex === oldIndex) {
-          state.currentTrackIndex = countToShuffle
+          state.playlist.currentTrackIndex = countToShuffle
           // cancel old index search
           oldIndex = -1
         }
@@ -215,11 +221,11 @@ export default new Vuex.Store({
     },
     [types.SET_DISPLAY_TRASH] (state, display) {
       if (display === undefined) display = false
-      state.displayPlaylistTrash = display
+      state.temp.displayPlaylistTrash = display
     },
     [types.SET_LOOP_PLAYLIST] (state, loop) {
       if (loop === undefined) loop = false
-      state.loopPlaylist = loop
+      state.playlist.loopPlaylist = loop
     }
   },
   modules: {
