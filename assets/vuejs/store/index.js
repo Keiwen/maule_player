@@ -29,7 +29,10 @@ export default new Vuex.Store({
     },
     medialib: {
       artists: {},
+      albumsByArtist: {},
       albums: {},
+      tracksByAlbum: {},
+      tracksByArtist: {},
       tracks: {},
     }
   },
@@ -99,20 +102,45 @@ export default new Vuex.Store({
     getArtist: (state) => (id) => {
       return state.medialib.artists[id] ?? {}
     },
-    getAlbums: (state) => () => {
+    getAlbums: (state) => (fromArtistId) => {
       let albums = []
-      for (const [key, value] of Object.entries(state.medialib.albums)) {
-        albums.push(value);
+      if (fromArtistId != null) {
+        const albumsId = state.medialib.albumsByArtist[fromArtistId] ?? []
+        for (let i; i < albumsId.length; i++) {
+          if (state.medialib.albums[albumsId[i]].id !== undefined) {
+            albums.push(state.medialib.albums[albumsId[i]])
+          }
+        }
+      } else {
+        for (const [key, value] of Object.entries(state.medialib.albums)) {
+          albums.push(value);
+        }
       }
       return albums
     },
     getAlbum: (state) => (id) => {
       return state.medialib.albums[id] ?? {}
     },
-    getTracks: (state) => () => {
+    getTracks: (state) => (fromAlbumId, fromArtistId) => {
       let tracks = []
-      for (const [key, value] of Object.entries(state.medialib.tracks)) {
-        tracks.push(value);
+      if (fromAlbumId != null) {
+        const tracksId = state.medialib.tracksByAlbum[fromAlbumId] ?? []
+        for (let i; i < tracksId.length; i++) {
+          if (state.medialib.tracks[tracksId[i]].id !== undefined) {
+            tracks.push(state.medialib.tracks[tracksId[i]])
+          }
+        }
+      } else if (fromArtistId != null) {
+        const tracksId = state.medialib.tracksByArtist[fromArtistId] ?? []
+        for (let i; i < tracksId.length; i++) {
+          if (state.medialib.tracks[tracksId[i]].id !== undefined) {
+            tracks.push(state.medialib.tracks[tracksId[i]])
+          }
+        }
+      } else {
+        for (const [key, value] of Object.entries(state.medialib.tracks)) {
+          tracks.push(value);
+        }
       }
       return tracks
     },
