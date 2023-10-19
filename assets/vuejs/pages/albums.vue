@@ -9,7 +9,7 @@
 <script>
 import {useRemoteCall} from "../composables/useRemoteCall";
 import albumList from "../components/listing/albumList";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import loadingIcon from "../components/icons/loadingIcon";
 
 export default {
@@ -23,6 +23,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getAlbums']),
     isLoading () {
       return (this.remoteCallData == null && this.remoteCallError == null)
     },
@@ -31,6 +32,7 @@ export default {
     remoteCallData: function(newValue, oldValue) {
       if (newValue !== null && this.remoteCallError === null) {
         this.albumList = newValue.albums
+        this.storeAlbums(this.albumList)
       }
     },
     remoteCallError: function(newValue, oldValue) {
@@ -43,9 +45,11 @@ export default {
     this.updateList()
   },
   methods: {
-    ...mapActions(['addError']),
+    ...mapActions(['addError', 'storeAlbums']),
     updateList () {
       this.albumList = []
+      this.albumList = this.getAlbums()
+      if (this.albumList.length !== 0) return
       const urlToCall = this.$url(URL_API.album_list, {})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallData = callData
