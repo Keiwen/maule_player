@@ -62,7 +62,7 @@ export default {
       if (newValue !== null && this.remoteCallAlbumError === null) {
         this.album = newValue.album
         this.updateTrackList()
-        this.storeAlbums(this.album)
+        this.storeAlbums([this.album])
       }
     },
     remoteCallAlbumError: function(newValue, oldValue) {
