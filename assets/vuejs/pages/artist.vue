@@ -129,7 +129,11 @@ export default {
     updateArtistData (id) {
       this.artist = {}
       this.artist = this.getArtist(id)
-      if (this.artist.id !== undefined) return
+      if (this.artist.id !== undefined) {
+        this.updateAlbumList()
+        this.updateTrackList()
+        return
+      }
       const urlToCall = this.$url(URL_API.artist_get, {id: id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallArtistData = callData
