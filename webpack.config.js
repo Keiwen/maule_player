@@ -14,6 +14,11 @@ Encore
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
+    .copyFiles({
+        from: './public/img',
+        to: 'images/[path][name].[ext]',
+    })
+
     /*
      * ENTRY CONFIG
      *
@@ -84,6 +89,35 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    // Below you can define the base of manifest.json file
+    .configureManifestPlugin( (options) => {
+        options.seed = {
+            "short_name": "Maule",
+            "name": "Maule player",
+            "start_url": "/",
+            "icons": [{
+                    "src": "/build/images/512.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+            },
+                {
+                    "src": "/build/images/256.png",
+                    "sizes": "256x256",
+                    "type": "image/png"
+                },
+                {
+                    "src": "/build/images/192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ],
+            "background_color": "#FDAD72",
+            "theme_color": "#66275C",
+            "display": "standalone",
+            "orientation": "portrait",
+        }
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
