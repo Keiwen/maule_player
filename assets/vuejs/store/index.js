@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import messageBag from './modules/messageBag'
 import * as types from './mutation-types'
 import persistedState from 'vuex-persistedstate'
+import artist from "../pages/artist";
 
 Vue.use(Vuex)
 
@@ -106,8 +107,8 @@ export default new Vuex.Store({
       let albums = []
       if (fromArtistId != null) {
         const albumsId = state.medialib.albumsByArtist[fromArtistId] ?? []
-        for (let i; i < albumsId.length; i++) {
-          if (state.medialib.albums[albumsId[i]].id !== undefined) {
+        for (let i = 0; i < albumsId.length; i++) {
+          if (state.medialib.albums[albumsId[i]] != null) {
             albums.push(state.medialib.albums[albumsId[i]])
           }
         }
@@ -125,15 +126,15 @@ export default new Vuex.Store({
       let tracks = []
       if (fromAlbumId != null) {
         const tracksId = state.medialib.tracksByAlbum[fromAlbumId] ?? []
-        for (let i; i < tracksId.length; i++) {
-          if (state.medialib.tracks[tracksId[i]].id !== undefined) {
+        for (let i = 0; i < tracksId.length; i++) {
+          if (state.medialib.tracks[tracksId[i]] != null) {
             tracks.push(state.medialib.tracks[tracksId[i]])
           }
         }
       } else if (fromArtistId != null) {
         const tracksId = state.medialib.tracksByArtist[fromArtistId] ?? []
-        for (let i; i < tracksId.length; i++) {
-          if (state.medialib.tracks[tracksId[i]].id !== undefined) {
+        for (let i = 0; i < tracksId.length; i++) {
+          if (state.medialib.tracks[tracksId[i]] != null) {
             tracks.push(state.medialib.tracks[tracksId[i]])
           }
         }
@@ -229,6 +230,21 @@ export default new Vuex.Store({
         commit(types.STORE_TRACK, tracks[i])
       }
     },
+    storeAlbumsByArtist({commit}, {artist, albums}) {
+      for (let i = 0; i < albums.length; i++) {
+        commit(types.STORE_ALBUM_BY_ARTIST, {artist: artist, album: albums[i]})
+      }
+    },
+    storeTracksByArtist({commit}, {artist, tracks}) {
+      for (let i = 0; i < tracks.length; i++) {
+        commit(types.STORE_TRACK_BY_ARTIST, {artist: artist, track: tracks[i]})
+      }
+    },
+    storeTracksByAlbum({commit}, {album, tracks}) {
+      for (let i = 0; i < tracks.length; i++) {
+        commit(types.STORE_TRACK_BY_ALBUM, {album: album, track: tracks[i]})
+      }
+    },
     resetState () {
       // call this.$store.dispatch('resetState') from a component action
       localStorage.removeItem(persistOptions.key)
@@ -315,6 +331,27 @@ export default new Vuex.Store({
     [types.STORE_TRACK] (state, track) {
       if (track.id === undefined) return
       state.medialib.tracks[track.id] = track
+    },
+    [types.STORE_ALBUM_BY_ARTIST] (state, {artist, album}) {
+      if (artist.id === undefined) return
+      if (album.id === undefined) return
+      if (state.medialib.albumsByArtist[artist.id] == null) state.medialib.albumsByArtist[artist.id] = []
+      if (state.medialib.albumsByArtist[artist.id].includes(album.id)) return
+      state.medialib.albumsByArtist[artist.id].push(album.id)
+    },
+    [types.STORE_TRACK_BY_ARTIST] (state, {artist, track}) {
+      if (artist.id === undefined) return
+      if (track.id === undefined) return
+      if (state.medialib.tracksByArtist[artist.id] == null) state.medialib.tracksByArtist[artist.id] = []
+      if (state.medialib.tracksByArtist[artist.id].includes(track.id)) return
+      state.medialib.tracksByArtist[artist.id].push(track.id)
+    },
+    [types.STORE_TRACK_BY_ALBUM] (state, {album, track}) {
+      if (album.id === undefined) return
+      if (track.id === undefined) return
+      if (state.medialib.tracksByAlbum[album.id] == null) state.medialib.tracksByAlbum[album.id] = []
+      if (state.medialib.tracksByAlbum[album.id].includes(track.id)) return
+      state.medialib.tracksByAlbum[album.id].push(track.id)
     }
   },
   modules: {
