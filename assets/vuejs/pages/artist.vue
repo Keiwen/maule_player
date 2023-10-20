@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getArtist']),
+    ...mapGetters(['getArtist', 'getAlbums', 'getTracks']),
     isLoading () {
       return ((this.remoteCallTrackData == null && this.remoteCallTrackError == null)
           || (this.remoteCallAlbumData == null && this.remoteCallAlbumError == null)
@@ -69,6 +69,8 @@ export default {
       if (newValue !== null && this.remoteCallTrackError === null) {
         this.trackList = newValue.tracks
         this.recentTrackList = newValue.tracks.slice(0, 5)
+        this.storeTracks(this.trackList)
+        this.storeTracksByArtist({artist: this.artist, tracks: this.trackList})
       }
     },
     remoteCallTrackError: function(newValue, oldValue) {
@@ -79,6 +81,8 @@ export default {
     remoteCallAlbumData: function(newValue, oldValue) {
       if (newValue !== null && this.remoteCallAlbumError === null) {
         this.albumList = newValue.albums
+        this.storeAlbums(this.albumList)
+        this.storeAlbumsByArtist({artist: this.artist, albums: this.albumList})
       }
     },
     remoteCallAlbumError: function(newValue, oldValue) {
@@ -110,10 +114,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist', 'storeArtists']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist', 'storeArtists',
+                  'storeAlbums', 'storeTracks', 'storeAlbumsByArtist', 'storeTracksByArtist']),
     updateTrackList () {
       this.trackList = []
       this.recentTrackList = []
+      this.trackList = this.getTracks(null, this.artist.id)
+      if (this.trackList.length !== 0) {
+        this.recentTrackList = this.trackList.slice(0, 5)
+        return
+      }
       const urlToCall = this.$url(URL_API.artist_tracks, {id: this.artist.id, limit: 0})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
@@ -121,6 +131,10 @@ export default {
     },
     updateAlbumList () {
       this.albumList = []
+      this.albumList = this.getAlbums(this.artist.id)
+      if (this.albumList.length !== 0) {
+        return
+      }
       const urlToCall = this.$url(URL_API.artist_albums, {id: this.artist.id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallAlbumData = callData

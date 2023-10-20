@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAlbum']),
+    ...mapGetters(['getAlbum', 'getTracks']),
     isLoading () {
       return ((this.remoteCallTrackData == null && this.remoteCallTrackError == null)
           || (this.remoteCallAlbumData == null && this.remoteCallAlbumError == null))
@@ -51,6 +51,8 @@ export default {
     remoteCallTrackData: function(newValue, oldValue) {
       if (newValue !== null && this.remoteCallTrackError === null) {
         this.trackList = newValue.tracks
+        this.storeTracks(this.trackList)
+        this.storeTracksByAlbum({album: this.album, tracks: this.trackList})
       }
     },
     remoteCallTrackError: function(newValue, oldValue) {
@@ -80,9 +82,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist', 'storeAlbums']),
+    ...mapActions(['addError', 'addTracksInPlaylist', 'emptyPlaylist',
+                  'storeAlbums', 'storeTracks', 'storeTracksByAlbum']),
     updateTrackList () {
       this.trackList = []
+      this.trackList = this.getTracks(this.album.id)
+      if (this.trackList.length !== 0) {
+        return
+      }
       const urlToCall = this.$url(URL_API.album_tracks, {id: this.album.id})
       const {callData, callError} = useRemoteCall(urlToCall)
       this.remoteCallTrackData = callData
