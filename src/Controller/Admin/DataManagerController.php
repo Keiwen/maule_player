@@ -31,7 +31,7 @@ class DataManagerController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Data Manager')
-            ->setFaviconPath('/img/main_icon_bw.png')
+            ->setFaviconPath('/build/images/main_icon_bw.png')
         ;
     }
 

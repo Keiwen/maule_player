@@ -39,7 +39,7 @@ svg {
   padding-top: 12px;
 }
 .btn-menu-middle {
-  background-image: url("../../../public/img/main_icon.png");
+  background-image: url("../../images/main_icon.png");
   background-size: 90px;
   svg {
     display:none;

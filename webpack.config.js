@@ -15,7 +15,7 @@ Encore
     //.setManifestKeyPrefix('build/')
 
     .copyFiles({
-        from: './public/img',
+        from: './assets/images',
         to: 'images/[path][name].[ext]',
         // here we do not use hash because manifest file will fail to load with hash
         // to: 'images/[path][name].[hash:8].[ext]',

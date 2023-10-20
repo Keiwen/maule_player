@@ -6,7 +6,7 @@
     <div>
       <a class="btn btn-dark mr-2" :href="getLocaleUrl(locale)" v-for="locale in locales"
          :disabled="locale === currentLocale" :class="{'disabled': locale === currentLocale}">
-        <img :src="'/img/flags/'+locale+'.png'" class="mr-2 img-icon-locale" />
+        <img :src="'/build/images/flags/'+locale+'.png'" class="mr-2 img-icon-locale" />
         {{ getLocaleName(locale) }}
       </a>
     </div>
