@@ -115,5 +115,7 @@ playlist:
   added: added in playlist
   loop: activate playlist loop
   unloop: deactivate playlist loop
+  start_reordering: activate reordering
+  stop_reordering: deactivate reordering
   removed: removed from playlist
   duration: total duration

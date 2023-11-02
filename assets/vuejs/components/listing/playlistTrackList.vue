@@ -20,7 +20,7 @@
             :class="{'playlist-item-active': (currentTrackIndex === trackIndex)}">
           <list-item item-type="playlist" :item="track" :item-index="trackIndex"
                      :class="{'item-active': (trackIndex === currentTrackIndex)}"
-                     :draggable="true" >
+                     :draggable="allowReorder" >
             <template v-slot:actions>
               <button class="btn btn-light btn-pause" disabled>
                 <i class="fa fa-pause" />
@@ -49,6 +49,10 @@ export default {
     trackList: {
       type: Array,
       required: true
+    },
+    allowReorder: {
+      type: Boolean,
+      required: false
     }
   },
   data () {

@@ -1,19 +1,24 @@
 <template>
-  <div>
+  <div :class="{'ddHandle': draggable}">
     <div class="item-title" v-if="itemTitle">
       {{ getLimitedTitle(itemTitle, titleLimit) }}
     </div>
 
     <div class="item-icon">
-      <router-link :to="routeParameters" class="btn btn-primary item-link">
-        <artist-icon v-if="itemType === 'artist'" />
-        <album-icon v-if="itemType === 'album'" />
-        <track-icon v-if="itemType === 'track'" />
-        <track-icon v-if="itemType === 'playlist'" />
-      </router-link>
+      <div v-if="draggable" class="item-drag">
+        <i class="fa fa-up-down-left-right"></i>
+      </div>
+      <div v-else>
+        <router-link :to="routeParameters" class="btn btn-primary item-link">
+          <artist-icon v-if="itemType === 'artist'" />
+          <album-icon v-if="itemType === 'album'" />
+          <track-icon v-if="itemType === 'track'" />
+          <track-icon v-if="itemType === 'playlist'" />
+        </router-link>
+      </div>
     </div>
 
-    <div class="item-box" :class="{'item-box-action': hasAction, 'ddHandle': draggable}">
+    <div class="item-box" :class="{'item-box-action': hasAction}">
       <div class="item-text">
         <span class="item-main-text">{{ getLimitedTitle(mainText, titleLimit) }}</span>
       </div>
@@ -29,7 +34,7 @@
       </div>
     </div>
 
-    <div :class="{'item-action': hasAction}">
+    <div :class="{'item-action': hasAction}" v-if="!draggable">
       <slot name="actions"></slot>
     </div>
 
@@ -149,7 +154,7 @@ export default {
 .item-icon {
   float: left;
   margin-right: 10px;
-  .item-link {
+  .item-link,.item-drag {
     height: var(--simple-button-size);
     width: var(--simple-button-size);
     svg {
@@ -157,6 +162,10 @@ export default {
       height: 100%;
     }
   }
+}
+
+.item-drag {
+  color: var(--primary);
 }
 
 .item-action {
