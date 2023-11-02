@@ -20,7 +20,7 @@
             <div>{{ getDisplayTime(track.duration) }}</div>
           </template>
           <template v-slot:actions>
-            <button class="btn btn-secondary btn-playlist" @click="selectTrack(track)">
+            <button class="btn btn-secondary btn-playlist" @click="selectTrack(track)" aria-label="Play track">
               <i class="fa fa-folder-plus" />
             </button>
           </template>

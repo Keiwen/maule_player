@@ -10,7 +10,7 @@
     <div class="form-inline row mt-2 mx-2">
       <input class="form-control col-10" type="search" v-model="search" @keyup.enter="updateSearch"
              :placeholder="this.$trans('search.global', {}, null, true)" aria-label="Search">
-      <button class="btn btn-primary col-2" type="submit" @click="updateSearch">
+      <button class="btn btn-primary col-2" type="submit" @click="updateSearch" aria-label="Submit search">
         <i class="fa fa-search" />
       </button>
     </div>
@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <button class="btn btn-secondary col-2" type="submit" @click="randomPlay">
+        <button class="btn btn-secondary col-2" type="submit" @click="randomPlay" aria-label="Submit random tracks">
           <i class="fa fa-play" />
         </button>
       </div>

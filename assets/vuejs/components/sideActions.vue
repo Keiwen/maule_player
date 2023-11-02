@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group dropleft side-actions">
-    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open side actions">
     </button>
     <div class="dropdown-menu" style="">
       <slot></slot>

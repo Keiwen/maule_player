@@ -30,7 +30,7 @@
           </div>
 
           <div class="item-action">
-            <button class="btn btn-secondary btn-playlist" @click="selectTrack">
+            <button class="btn btn-secondary btn-playlist" @click="selectTrack" aria-label="Play track">
               <i class="fa fa-folder-plus" />
             </button>
           </div>

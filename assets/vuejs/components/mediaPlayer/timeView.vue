@@ -1,6 +1,7 @@
 <template>
   <div class="custom-player-timeview">
     <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-prev"
+            aria-label="Previous track"
             @click="playerPrevious">
       <i class="fa fa-backward-step" />
     </button>
@@ -12,6 +13,7 @@
     </div>
 
     <button class="btn btn-secondary custom-player-prevnext custom-player-prevnext-next"
+            aria-label="Next track"
             @click="playerNext" :class="{disabled: !hasNextMedia}" :disabled="!hasNextMedia">
       <i class="fa fa-forward-step" />
     </button>

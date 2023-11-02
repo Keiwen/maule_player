@@ -22,10 +22,10 @@
                      :class="{'item-active': (trackIndex === currentTrackIndex)}"
                      :draggable="allowReorder" >
             <template v-slot:actions>
-              <button class="btn btn-light btn-pause" disabled>
+              <button class="btn btn-light btn-pause" disabled aria-label="Pause track">
                 <i class="fa fa-pause" />
               </button>
-              <button class="btn btn-secondary btn-play" @click="selectTrack(trackIndex)">
+              <button class="btn btn-secondary btn-play" @click="selectTrack(trackIndex)" aria-label="Play track">
                 <i class="fa fa-play" />
               </button>
             </template>
