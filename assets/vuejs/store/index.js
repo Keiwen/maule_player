@@ -216,31 +216,37 @@ export default new Vuex.Store({
       commit(types.SET_LOOP_PLAYLIST, loop)
     },
     storeArtists({commit}, artists) {
+      return; // MLP-108
       for (let i = 0; i < artists.length; i++) {
         commit(types.STORE_ARTIST, artists[i])
       }
     },
     storeAlbums({commit}, albums) {
+      return; // MLP-108
       for (let i = 0; i < albums.length; i++) {
         commit(types.STORE_ALBUM, albums[i])
       }
     },
     storeTracks({commit}, tracks) {
+      return; // MLP-108
       for (let i = 0; i < tracks.length; i++) {
         commit(types.STORE_TRACK, tracks[i])
       }
     },
     storeAlbumsByArtist({commit}, {artist, albums}) {
+      return; // MLP-108
       for (let i = 0; i < albums.length; i++) {
         commit(types.STORE_ALBUM_BY_ARTIST, {artist: artist, album: albums[i]})
       }
     },
     storeTracksByArtist({commit}, {artist, tracks}) {
+      return; // MLP-108
       for (let i = 0; i < tracks.length; i++) {
         commit(types.STORE_TRACK_BY_ARTIST, {artist: artist, track: tracks[i]})
       }
     },
     storeTracksByAlbum({commit}, {album, tracks}) {
+      return; // MLP-108
       for (let i = 0; i < tracks.length; i++) {
         commit(types.STORE_TRACK_BY_ALBUM, {album: album, track: tracks[i]})
       }
