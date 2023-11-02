@@ -1,6 +1,6 @@
 <template>
   <div class="custom-player-timeline" :style="cssVars">
-    <input type="range" max="100" :value="percentProgress" @change="changeTime">
+    <input type="range" max="100" :value="percentProgress" @change="changeTime" aria-label="Player timeline">
   </div>
 </template>
 
