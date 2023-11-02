@@ -1,17 +1,17 @@
 <template>
   <div class="row">
     <div class="col-4 text-center">
-      <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu">
+      <router-link :to="{name: 'artists'}" class="btn btn-primary btn-menu" aria-label="Navigate to artists">
         <band-icon class="band-icon" />
       </router-link>
     </div>
     <div class="col-4 text-center">
-      <router-link :to="{name: 'main'}" class="btn btn-primary btn-menu btn-menu-middle">
+      <router-link :to="{name: 'main'}" class="btn btn-primary btn-menu btn-menu-middle" aria-label="Navigate to homepage">
         <i class="fa fa-home" />
       </router-link>
     </div>
     <div class="col-4 text-center">
-      <router-link :to="{name: 'playlist'}" class="btn btn-primary btn-menu">
+      <router-link :to="{name: 'playlist'}" class="btn btn-primary btn-menu" aria-label="Navigate to playlist">
         <playlist-icon class="playlist-icon" />
       </router-link>
     </div>

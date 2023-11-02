@@ -10,10 +10,10 @@
       </div>
       <div v-else>
         <router-link :to="routeParameters" class="btn btn-primary item-link">
-          <artist-icon v-if="itemType === 'artist'" />
-          <album-icon v-if="itemType === 'album'" />
-          <track-icon v-if="itemType === 'track'" />
-          <track-icon v-if="itemType === 'playlist'" />
+          <artist-icon v-if="itemType === 'artist'" aria-label="Navigate to artist" />
+          <album-icon v-if="itemType === 'album'" aria-label="Navigate to album" />
+          <track-icon v-if="itemType === 'track'" aria-label="Navigate to track" />
+          <track-icon v-if="itemType === 'playlist'" aria-label="Navigate to track" />
         </router-link>
       </div>
     </div>
